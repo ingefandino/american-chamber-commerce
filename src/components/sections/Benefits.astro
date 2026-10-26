@@ -1,0 +1,115 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+interface BenefitItem {
+  title: string;
+  text: string;
+  href: string;
+  ctaLabel: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  items: BenefitItem[];
+  surface?: boolean;
+}
+
+const { eyebrow, title, lead, items, surface = false } = Astro.props;
+---
+
+<section class:list={["section", { "section--surface": surface }]}>
+  <div class="container">
+    <SectionHeading eyebrow={eyebrow} title={title} lead={lead} />
+    <ul class="benefits-grid">
+      {
+        items.map((item, index) => (
+          <li
+            class="benefit-card"
+            data-reveal="up"
+            style={`--reveal-delay:${index * 80}ms`}
+          >
+            <span class="benefit-card__index" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+            <a class="benefit-card__link" href={item.href}>
+              {item.ctaLabel}
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .benefit-card {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 1.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform 0.25s var(--ease-out),
+      box-shadow 0.25s var(--ease-out),
+      border-color 0.25s var(--ease-out);
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-gold-300);
+    box-shadow: var(--shadow-md);
+  }
+
+  .benefit-card__index {
+    margin-bottom: 1rem;
+    color: var(--color-gold-600);
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .benefit-card h3 {
+    margin-bottom: 0.5rem;
+    font-size: var(--text-xl);
+  }
+
+  .benefit-card p {
+    margin: 0 0 1.25rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .benefit-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: auto;
+    color: var(--color-navy-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .benefit-card__link:hover,
+  .benefit-card__link:focus-visible {
+    color: var(--color-gold-600);
+  }
+</style>
