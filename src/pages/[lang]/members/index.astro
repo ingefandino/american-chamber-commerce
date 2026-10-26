@@ -1,0 +1,127 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import MemberCard from "@components/directory/MemberCard.astro";
+import { getPublicMembers } from "@data/members";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+const members = getPublicMembers(lang);
+
+const copy = {
+  en: {
+    title: "Member directory",
+    eyebrow: "Directory",
+    heading: "Member companies",
+    lead: "Browse Chamber members who have authorized a public profile. The directory only shows active members with reviewed information.",
+    emptyTitle: "No member profiles are published yet",
+    emptyText:
+      "The Chamber only publishes a member profile after the company authorizes it and the information passes editorial review. No placeholder companies are shown.",
+    join: "Become a member",
+    contact: "Ask about the directory",
+  },
+  es: {
+    title: "Directorio de socios",
+    eyebrow: "Directorio",
+    heading: "Empresas socias",
+    lead: "Consulta los socios de la Cámara que autorizaron un perfil público. El directorio solo muestra socios activos con información revisada.",
+    emptyTitle: "Aún no hay perfiles de socios publicados",
+    emptyText:
+      "La Cámara solo publica el perfil de un socio después de que la empresa lo autoriza y la información pasa la revisión editorial. No se muestran empresas de relleno.",
+    join: "Hazte socio",
+    contact: "Consultar por el directorio",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/members/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      {
+        members.length > 0 ? (
+          <ul class="members-grid">
+            {members.map((member) => (
+              <li>
+                <MemberCard member={member} lang={lang} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="empty-state" data-reveal="up">
+            <h2>{text.emptyTitle}</h2>
+            <p>{text.emptyText}</p>
+            <div class="empty-state__actions">
+              <a class="btn btn--primary" href={localizedHref("plans", lang)}>
+                {text.join}
+              </a>
+              <a class="btn btn--ghost" href={SITE.contact.emailHref}>
+                {text.contact}
+              </a>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.25rem;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .members-grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  .members-grid :global(.member-card) {
+    width: 100%;
+  }
+
+  .empty-state {
+    margin-top: 2.5rem;
+    padding: 2.5rem;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .empty-state h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .empty-state p {
+    max-width: 62ch;
+    color: var(--color-muted);
+  }
+
+  .empty-state__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+</style>

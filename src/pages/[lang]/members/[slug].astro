@@ -1,0 +1,159 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getMemberBySlug, getPublicMembers } from "@data/members";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return ["en", "es"].flatMap((lang) =>
+    getPublicMembers(lang as Lang).map((member) => ({
+      params: { lang, slug: member.slug },
+    })),
+  );
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+const slug = String(params.slug ?? "");
+const member = getMemberBySlug(slug, lang);
+
+if (!member) {
+  return Astro.redirect(`/${lang}/members/`, 302);
+}
+
+const text = {
+  en: {
+    back: "Member directory",
+    sector: "Sector",
+    location: "Location",
+    services: "Services",
+    markets: "Markets",
+    website: "Website",
+    reviewed: "Last reviewed",
+  },
+  es: {
+    back: "Directorio de socios",
+    sector: "Sector",
+    location: "Ubicación",
+    services: "Servicios",
+    markets: "Mercados",
+    website: "Sitio web",
+    reviewed: "Última revisión",
+  },
+}[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={member.name}
+  description={member.description[lang]}
+  pathname={`/${lang}/members/${member.slug}/`}
+>
+  <section class="section">
+    <div class="container member-detail">
+      <div>
+        <a class="member-back" href={localizedHref("members", lang)}>
+          <span aria-hidden="true">←</span> {text.back}
+        </a>
+        <p class="eyebrow">{member.sector[lang]}</p>
+        <h1>{member.name}</h1>
+        <p class="lead">{member.description[lang]}</p>
+
+        {
+          member.services?.[lang]?.length ? (
+            <div class="prose">
+              <h2>{text.services}</h2>
+              <ul>
+                {member.services[lang].map((service) => (
+                  <li>{service}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null
+        }
+      </div>
+
+      <aside class="member-aside card">
+        <h2>{text.location}</h2>
+        <p>
+          {member.location.city}
+          {member.location.region ? `, ${member.location.region}` : ""}
+          {member.location.country ? ` — ${member.location.country}` : ""}
+        </p>
+
+        {
+          member.markets?.length ? (
+            <>
+              <h2>{text.markets}</h2>
+              <p>{member.markets.join(" · ")}</p>
+            </>
+          ) : null
+        }
+
+        {
+          member.website ? (
+            <>
+              <h2>{text.website}</h2>
+              <p>
+                <a href={member.website} rel="noopener noreferrer">
+                  {member.website.replace(/^https?:\/\//, "")}
+                </a>
+              </p>
+            </>
+          ) : null
+        }
+
+        <h2>{text.reviewed}</h2>
+        <p><time datetime={member.lastReviewedAt}>{member.lastReviewedAt}</time></p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .member-detail {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .member-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-navy-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .member-aside {
+    padding: 1.75rem;
+  }
+
+  .member-aside h2 {
+    margin-top: 1.25rem;
+    color: var(--color-gold-600);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .member-aside h2:first-child {
+    margin-top: 0;
+  }
+
+  .member-aside p {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (min-width: 900px) {
+    .member-detail {
+      grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.5fr);
+    }
+  }
+</style>
