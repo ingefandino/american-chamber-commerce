@@ -85,3 +85,11 @@ El sitio WordPress muestra un teléfono y un `mailto` distintos. **Debe confirma
 - Un precio antiguo no se presenta como vigente.
 - Un servicio retirado no se publica.
 - El directorio vacío es preferible a perfiles inventados.
+
+## 8. Franja de empresas de confianza
+
+- La franja se alimenta de `src/data/trustedMembers.ts` y solo muestra entradas con `approved`, `authorized`, `source` y `reviewedAt`.
+- Para publicar una empresa, agrega una entrada verificada y vuelve a construir el sitio; no es necesario modificar el componente.
+- No se publican los nombres candidatos del backlog (`Harbor & Co.`, `Meridian Group`, etc.) hasta contar con autorización y evidencia de membresía.
+- La animación se pausa con el control visible, se desactiva con `prefers-reduced-motion` y muestra los nombres de forma estática sin JavaScript.
+- El validador de contenido bloquea el build si detecta un nombre candidato no verificado en el HTML publicado.

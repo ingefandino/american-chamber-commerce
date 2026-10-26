@@ -81,7 +81,7 @@ export const HOME_CONTENT: Record<Lang, HomeContent> = {
         cta: { key: "resources", label: "Browse resources" },
       },
     ],
-    trustLabel: "Serving member companies across industries",
+    trustLabel: "Trusted by member companies across industries",
     trustItems: [
       "Trade & logistics",
       "Financial services",
@@ -147,7 +147,7 @@ export const HOME_CONTENT: Record<Lang, HomeContent> = {
         cta: { key: "resources", label: "Ver recursos" },
       },
     ],
-    trustLabel: "Al servicio de empresas de distintos sectores",
+    trustLabel: "Empresas miembro de confianza en distintos sectores",
     trustItems: [
       "Comercio y logística",
       "Servicios financieros",

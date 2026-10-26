@@ -1,0 +1,302 @@
+---
+import type { Lang } from "@lib/lang";
+
+interface Props {
+  members: string[];
+  lang: Lang;
+}
+
+const { members, lang } = Astro.props;
+const names = members.map((name) => name.trim()).filter(Boolean);
+const visible = names.length > 0;
+
+const ui = {
+  en: {
+    region: "Member companies",
+    pause: "Pause member marquee",
+    play: "Play member marquee",
+    pauseShort: "Pause",
+    playShort: "Play",
+  },
+  es: {
+    region: "Empresas miembro",
+    pause: "Pausar la franja de empresas miembro",
+    play: "Reproducir la franja de empresas miembro",
+    pauseShort: "Pausar",
+    playShort: "Reproducir",
+  },
+}[lang];
+
+const duration = Math.max(24, names.length * 5);
+---
+
+{
+  visible && (
+    <section
+      class="member-marquee"
+      aria-label={ui.region}
+      data-member-marquee
+    >
+      <div class="container member-marquee__inner">
+        <div class="member-marquee__viewport">
+          <div
+            class="member-marquee__track"
+            data-marquee-track
+            style={`--marquee-duration:${duration}s`}
+          >
+            {[0, 1].map((copy) => (
+              <ul
+                class="member-marquee__group"
+                aria-hidden={copy === 1 ? "true" : undefined}
+              >
+                {names.map((name) => (
+                  <li>{name}</li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+        <button
+          class="member-marquee__toggle"
+          type="button"
+          data-marquee-toggle
+          aria-pressed="false"
+          aria-label={ui.pause}
+          data-label-pause={ui.pause}
+          data-label-play={ui.play}
+          data-label-pause-short={ui.pauseShort}
+          data-label-play-short={ui.playShort}
+        >
+          <span class="member-marquee__icon" aria-hidden="true">
+            <span class="member-marquee__pause-icon">
+              <span></span>
+              <span></span>
+            </span>
+            <span class="member-marquee__play-icon"></span>
+          </span>
+          <span class="member-marquee__toggle-text" data-marquee-toggle-text>
+            {ui.pauseShort}
+          </span>
+        </button>
+      </div>
+      <noscript>
+        <style is:inline>
+          .member-marquee__track {
+            width: auto;
+            animation: none;
+            transform: none;
+          }
+          .member-marquee__group {
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-right: 0;
+            gap: 0.65rem 1.35rem;
+          }
+          .member-marquee__group[aria-hidden="true"] {
+            display: none;
+          }
+          .member-marquee__toggle {
+            display: none;
+          }
+        </style>
+      </noscript>
+    </section>
+  )
+}
+
+<script>
+  import { initMarquee } from "@scripts/marquee";
+
+  initMarquee();
+</script>
+
+<style>
+  .member-marquee {
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-white);
+  }
+
+  .member-marquee__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    padding-block: 1.1rem 1.25rem;
+  }
+
+  .member-marquee__viewport {
+    min-width: 0;
+    overflow: hidden;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 7%,
+      #000 93%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 7%,
+      #000 93%,
+      transparent
+    );
+  }
+
+  .member-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: member-marquee-scroll var(--marquee-duration, 40s) linear
+      infinite;
+    will-change: transform;
+  }
+
+  .member-marquee[data-paused="true"] .member-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .member-marquee__group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 2.75rem;
+    margin: 0;
+    padding: 0 2.75rem 0 0;
+    list-style: none;
+  }
+
+  .member-marquee__group li {
+    margin: 0;
+    color: var(--color-navy-700);
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  .member-marquee__group li::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin-right: 0.85rem;
+    border-radius: 50%;
+    background: var(--color-gold-500);
+    vertical-align: middle;
+  }
+
+  .member-marquee__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 36px;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: var(--color-white);
+    color: var(--color-navy-700);
+    font: inherit;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .member-marquee__toggle:hover,
+  .member-marquee__toggle:focus-visible {
+    border-color: var(--color-navy-500);
+    background: var(--color-surface-alt);
+  }
+
+  .member-marquee__toggle:focus-visible {
+    outline: 3px solid var(--color-gold-500);
+    outline-offset: 3px;
+  }
+
+  .member-marquee__icon {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 12px;
+    height: 12px;
+  }
+
+  .member-marquee__pause-icon {
+    display: inline-flex;
+    gap: 3px;
+  }
+
+  .member-marquee__pause-icon span {
+    width: 2px;
+    height: 10px;
+    background: currentColor;
+  }
+
+  .member-marquee__play-icon {
+    display: none;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 8px solid currentColor;
+  }
+
+  .member-marquee__toggle[aria-pressed="true"] .member-marquee__pause-icon {
+    display: none;
+  }
+
+  .member-marquee__toggle[aria-pressed="true"] .member-marquee__play-icon {
+    display: block;
+  }
+
+  @keyframes member-marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .member-marquee__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.7rem;
+      padding-block: 0.9rem 1.1rem;
+    }
+
+    .member-marquee__toggle {
+      justify-self: end;
+    }
+
+    .member-marquee__group {
+      gap: 1.9rem;
+      padding-right: 1.9rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .member-marquee__track {
+      width: auto;
+      animation: none;
+      transform: none;
+    }
+
+    .member-marquee__group {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding-right: 0;
+      gap: 0.65rem 1.35rem;
+    }
+
+    .member-marquee__group[aria-hidden="true"] {
+      display: none;
+    }
+
+    .member-marquee__toggle {
+      display: none;
+    }
+  }
+</style>

@@ -453,13 +453,38 @@ Como visitante, quiero conservar mi posición de lectura cuando cambio entre ing
 - Se cubren con pruebas la navegación desde la parte superior, mitad de página y footer, en inglés y español.
 - La historia queda lista para `Done` después de ejecutar tests, build y smoke test de navegación multidioma.
 
+### ACC-028 — Añadir marquee de empresas miembro de confianza
+
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-010, ACC-017
+
+Como visitante, quiero identificar empresas miembro de distintos sectores para reforzar la confianza en la cámara.
+
+**Alcance exclusivo:** agregar debajo de la sección **“TRUSTED BY MEMBER COMPANIES ACROSS INDUSTRIES”** una franja horizontal animada tipo marquee, donde los nombres avanzan de derecha a izquierda y se repiten de forma continua. No incluir logos ni modificar el directorio de miembros.
+
+**Listado inicial para validar:** `Harbor & Co.`, `Meridian Group`, `Union Steelworks`, `Ashford Partners`, `Beacon Logistics`, `Northgate Foods`, `Sterling Capital` y `Willow Creek Bank`.
+
+**Aceptación:**
+
+- La animación reproduce el comportamiento observado en el sitio desplegado: entrada por la derecha, desplazamiento continuo hacia la izquierda y repetición sin salto visible.
+- El listado final se define desde datos estructurados y se puede actualizar sin modificar el componente.
+- Solo se publican empresas miembro reales, autorizadas y verificadas; los nombres iniciales se consideran pendientes de aprobación y no deben presentarse como miembros reales sin evidencia.
+- Se prioriza diversidad sectorial relevante para Estados Unidos, sin inventar compañías, logos, certificaciones ni relaciones comerciales.
+- La franja no produce scroll horizontal en la página ni afecta la lectura del contenido principal.
+- La animación respeta `prefers-reduced-motion: reduce`, dejando los nombres visibles en una presentación estática o pausada.
+- La información permanece disponible para lectores de pantalla sin depender de la animación.
+- La sección funciona correctamente en inglés y español, con el texto localizado.
+- Se agregan pruebas de contenido, duplicación controlada, pausa/reduced motion y responsive.
+- La historia queda lista para `Done` después de ejecutar tests, build y smoke test visual.
+
+**Nota de implementación:** la franja se renderiza solo cuando `TRUSTED_MEMBERS` contiene empresas con `approved`, `authorized`, `source` y `reviewedAt`. La lista candidata de esta historia no se publica hasta recibir esa evidencia.
+
 ## Orden recomendado
 
 1. ACC-001 a ACC-005: base, pruebas e idiomas.
 2. ACC-006 a ACC-010: navegación, animaciones, slider y home.
 3. ACC-011 a ACC-013: membresías y primer formulario real.
 4. ACC-014 a ACC-020: capacidades editoriales y de comunidad, una por una.
-5. ACC-021 a ACC-027: endurecimiento, SEO, accesos rápidos, identidad, experiencia multidioma y publicación.
+5. ACC-021 a ACC-028: endurecimiento, SEO, accesos rápidos, identidad, confianza, experiencia multidioma y publicación.
 
 ## Regla de rollback
 
