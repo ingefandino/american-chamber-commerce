@@ -36,6 +36,7 @@ export default defineConfig({
         "@data": `${root}src/data`,
         "@layouts": `${root}src/layouts`,
         "@lib": `${root}src/lib`,
+        "@scripts": `${root}src/scripts`,
         "@styles": `${root}src/styles`,
       },
     },

@@ -29,6 +29,9 @@ const themeColor = "#0b2545";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content={themeColor} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -55,5 +58,10 @@ const themeColor = "#0b2545";
       <slot />
     </main>
     <slot name="footer" />
+    <script>
+      import { initReveal } from "@scripts/reveal";
+
+      initReveal();
+    </script>
   </body>
 </html>
