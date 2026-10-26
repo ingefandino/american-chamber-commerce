@@ -1,16 +1,19 @@
 ---
+import BaseLayout from "@layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  lang="en"
+  title="American Chamber of Commerce"
+  description="American Chamber of Commerce connects members with the resources, relationships, and representation they need to compete and grow."
+>
+  <section class="section">
+    <div class="container">
+      <h1>American Chamber of Commerce</h1>
+      <p class="lead">
+        Site foundation is being prepared. Institutional content will be
+        published in English and Spanish.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
