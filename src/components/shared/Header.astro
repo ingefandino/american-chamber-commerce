@@ -118,6 +118,8 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
 </header>
 
 <script>
+  import { nextHeaderState } from "@lib/header";
+
   const menus = document.querySelectorAll<HTMLDetailsElement>(
     "[data-mobile-menu]",
   );
@@ -135,4 +137,46 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
       });
     });
   });
+
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+
+  if (header) {
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+    let last = window.scrollY;
+    let hidden = false;
+    let ticking = false;
+
+    const update = () => {
+      const state = nextHeaderState({
+        current: window.scrollY,
+        last,
+        hidden,
+        menuOpen: Boolean(
+          document.querySelector("[data-mobile-menu][open]"),
+        ),
+        reducedMotion: reducedMotion.matches,
+      });
+
+      header.classList.toggle("is-scrolled", state.scrolled);
+      header.classList.toggle("is-hidden", state.hidden);
+      hidden = state.hidden;
+      last = window.scrollY;
+      ticking = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(update);
+      },
+      { passive: true },
+    );
+
+    menus.forEach((menu) => menu.addEventListener("toggle", update));
+    update();
+  }
 </script>
