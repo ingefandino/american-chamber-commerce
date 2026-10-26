@@ -1,0 +1,105 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PlanCard from "@components/membership/PlanCard.astro";
+import { MEMBERSHIP_PLANS } from "@data/memberships";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Membership levels",
+    eyebrow: "Plans",
+    heading: "Choose the membership that fits your goals",
+    lead: "All levels are annual and priced in US dollars. Compare the benefits included in each level before you apply.",
+    benefits: "Compare benefits in detail",
+    apply: "Apply for membership",
+    note: "Membership dues are separate from sponsorships, event tickets, and paid services. Prices follow the approved local membership schedule.",
+  },
+  es: {
+    title: "Niveles de membresía",
+    eyebrow: "Planes",
+    heading: "Elige la membresía que se ajusta a tus objetivos",
+    lead: "Todos los niveles son anuales y están expresados en dólares estadounidenses. Compara los beneficios incluidos en cada nivel antes de solicitar tu ingreso.",
+    benefits: "Comparar beneficios en detalle",
+    apply: "Solicitar membresía",
+    note: "Las cuotas de membresía son independientes de patrocinios, entradas a eventos y servicios pagados. Los precios siguen la tabla local aprobada.",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/membership/plans/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      <ul class="plans-grid">
+        {
+          MEMBERSHIP_PLANS.map((plan) => (
+            <li>
+              <PlanCard plan={plan} lang={lang} />
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="plans-actions">
+        <a class="btn btn--primary" href={localizedHref("apply", lang)}>
+          {text.apply}
+        </a>
+        <a class="btn btn--ghost" href={localizedHref("benefits", lang)}>
+          {text.benefits}
+        </a>
+      </div>
+      <p class="plans-note">{text.note}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+    gap: 1.5rem;
+    margin: 2.5rem 0 2rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .plans-grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  .plans-grid :global(.plan-card) {
+    width: 100%;
+  }
+
+  .plans-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .plans-note {
+    max-width: 72ch;
+    margin: 1.5rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+</style>

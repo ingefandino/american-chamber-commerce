@@ -1,0 +1,128 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Apply for membership",
+    eyebrow: "Application",
+    heading: "Start your membership application",
+    lead: "Tell us about your company and the level you are interested in. Our team will follow up with next steps.",
+    prepareTitle: "What to have ready",
+    prepare: [
+      "Company legal or commercial name",
+      "Contact name, email, and phone",
+      "Preferred membership level",
+      "A short description of your business",
+    ],
+    email: "Email the membership team",
+    plans: "Review membership levels",
+    note: "The online application form is being prepared. Until it is available, you can contact the membership team directly.",
+  },
+  es: {
+    title: "Solicitar membresía",
+    eyebrow: "Solicitud",
+    heading: "Comienza tu solicitud de membresía",
+    lead: "Cuéntanos sobre tu empresa y el nivel que te interesa. Nuestro equipo te contactará con los siguientes pasos.",
+    prepareTitle: "Ten a mano",
+    prepare: [
+      "Nombre legal o comercial de la empresa",
+      "Nombre, correo y teléfono de contacto",
+      "Nivel de membresía preferido",
+      "Una breve descripción de tu negocio",
+    ],
+    email: "Escribir al equipo de membresía",
+    plans: "Revisar niveles de membresía",
+    note: "El formulario en línea está en preparación. Mientras tanto, puedes contactar directamente al equipo de membresía.",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/membership/apply/`}
+>
+  <section class="section">
+    <div class="container apply-layout">
+      <div>
+        <p class="eyebrow">{text.eyebrow}</p>
+        <h1>{text.heading}</h1>
+        <p class="lead">{text.lead}</p>
+
+        <h2>{text.prepareTitle}</h2>
+        <ul class="apply-list">
+          {
+            text.prepare.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+
+        <div class="apply-actions">
+          <a class="btn btn--primary" href={SITE.contact.emailHref}>
+            {text.email}
+          </a>
+          <a class="btn btn--ghost" href={localizedHref("plans", lang)}>
+            {text.plans}
+          </a>
+        </div>
+      </div>
+      <aside class="apply-note card">
+        <p>{text.note}</p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .apply-layout {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .apply-list {
+    margin: 1rem 0 1.75rem;
+    color: var(--color-body);
+  }
+
+  .apply-list li {
+    margin-bottom: 0.5rem;
+  }
+
+  .apply-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .apply-note {
+    padding: 1.5rem;
+    border-left: 4px solid var(--color-gold-500);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .apply-note p {
+    margin: 0;
+  }
+
+  @media (min-width: 900px) {
+    .apply-layout {
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+    }
+  }
+</style>

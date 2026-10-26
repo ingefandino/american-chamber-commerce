@@ -1,0 +1,75 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import BenefitsTable from "@components/membership/BenefitsTable.astro";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Membership benefits",
+    eyebrow: "Benefits",
+    heading: "Compare what each level includes",
+    lead: "The table below reflects the approved local membership schedule. Benefits apply to the member company unless a specific limit is shown.",
+    plans: "View membership levels",
+    apply: "Apply for membership",
+  },
+  es: {
+    title: "Beneficios de membresía",
+    eyebrow: "Beneficios",
+    heading: "Compara lo que incluye cada nivel",
+    lead: "La tabla refleja la tabla local aprobada de membresías. Los beneficios aplican a la empresa socia salvo que se indique un límite específico.",
+    plans: "Ver niveles de membresía",
+    apply: "Solicitar membresía",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/membership/benefits/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      <div class="benefits-table-wrap">
+        <BenefitsTable lang={lang} />
+      </div>
+
+      <div class="benefits-actions">
+        <a class="btn btn--primary" href={localizedHref("apply", lang)}>
+          {text.apply}
+        </a>
+        <a class="btn btn--ghost" href={localizedHref("plans", lang)}>
+          {text.plans}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .benefits-table-wrap {
+    margin-top: 2.5rem;
+  }
+
+  .benefits-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+</style>

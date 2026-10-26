@@ -1,0 +1,173 @@
+---
+import {
+  formatBenefitValue,
+  MEMBERSHIP_PLANS,
+} from "@data/memberships";
+import type { Lang } from "@lib/lang";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const labels = {
+  en: {
+    caption: "Membership benefits by level",
+    benefit: "Benefit",
+    included: "Included",
+    notIncluded: "Not included",
+    hint: "Scroll horizontally to compare all membership levels.",
+  },
+  es: {
+    caption: "Beneficios de membresía por nivel",
+    benefit: "Beneficio",
+    included: "Incluido",
+    notIncluded: "No incluido",
+    hint: "Desplázate horizontalmente para comparar todos los niveles.",
+  },
+} as const;
+
+const text = labels[lang];
+const benefitRows = MEMBERSHIP_PLANS[0].benefits;
+---
+
+<div class="table-scroll" role="region" aria-label={text.caption} tabindex="0">
+  <table>
+    <caption class="sr-only">{text.caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{text.benefit}</th>
+        {
+          MEMBERSHIP_PLANS.map((plan) => (
+            <th scope="col">{plan.name}</th>
+          ))
+        }
+      </tr>
+    </thead>
+    <tbody>
+      {
+        benefitRows.map((benefit) => (
+          <tr>
+            <th scope="row">
+              <span class="benefit-name">{benefit.label[lang]}</span>
+              <span class="benefit-description">
+                {benefit.description[lang]}
+              </span>
+            </th>
+            {MEMBERSHIP_PLANS.map((plan) => {
+              const value =
+                plan.benefits.find((item) => item.key === benefit.key)?.value ??
+                false;
+              const included =
+                typeof value === "number" ? value > 0 : value === true;
+              return (
+                <td class:list={["benefit-value", { "is-included": included }]}>
+                  {typeof value === "number" ? (
+                    <span>{formatBenefitValue(value, lang)}</span>
+                  ) : (
+                    <>
+                      <span aria-hidden="true">{value ? "✓" : "—"}</span>
+                      <span class="sr-only">
+                        {value ? text.included : text.notIncluded}
+                      </span>
+                    </>
+                  )}
+                </td>
+              );
+            })}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+<p class="table-hint">{text.hint}</p>
+
+<style>
+  .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-scroll:focus-visible {
+    outline: 2px solid var(--color-navy-600);
+    outline-offset: 2px;
+  }
+
+  table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    padding: 1rem 1.1rem;
+    background: var(--color-navy-800);
+    color: var(--color-white);
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  thead th:first-child {
+    text-align: left;
+  }
+
+  tbody th,
+  tbody td {
+    padding: 0.9rem 1.1rem;
+    border-top: 1px solid var(--color-line);
+    vertical-align: top;
+  }
+
+  tbody th {
+    max-width: 300px;
+    text-align: left;
+  }
+
+  tbody tr:nth-child(even) {
+    background: var(--color-surface);
+  }
+
+  .benefit-name {
+    display: block;
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .benefit-description {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .benefit-value {
+    color: var(--color-muted);
+    text-align: center;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .benefit-value.is-included {
+    color: var(--color-navy-700);
+    font-size: 1.1rem;
+  }
+
+  .table-hint {
+    margin: 0.75rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+</style>
