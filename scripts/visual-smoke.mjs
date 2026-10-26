@@ -229,7 +229,7 @@ try {
   );
   await page.emulateMedia({ reducedMotion: "no-preference" });
 
-  const firstDot = await page.locator("[data-slider-dot]").first();
+  const firstDot = page.locator("[data-slider-dot]").first();
   check(
     (await firstDot.getAttribute("aria-selected")) === "true",
     "slider: first dot is not selected",
