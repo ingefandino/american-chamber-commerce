@@ -10,9 +10,10 @@ import { localizedHref } from "@lib/routes";
 interface Props {
   lang: Lang;
   pathname: string;
+  availableLangs?: Lang[];
 }
 
-const { lang, pathname } = Astro.props;
+const { lang, pathname, availableLangs = ["en", "es"] } = Astro.props;
 
 const text = {
   en: {
@@ -123,7 +124,7 @@ const year = new Date().getFullYear();
           </a>
         </li>
       </ul>
-      <LanguageSwitcher lang={lang} pathname={pathname} />
+      <LanguageSwitcher lang={lang} pathname={pathname} availableLangs={availableLangs} />
     </div>
   </div>
 </footer>

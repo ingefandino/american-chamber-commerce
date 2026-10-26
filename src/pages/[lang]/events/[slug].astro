@@ -83,6 +83,7 @@ const mailto = `${SITE.contact.emailHref}?subject=${encodeURIComponent(
   title={event.title[lang]}
   description={event.summary[lang]}
   pathname={`/${lang}/events/${event.slug}/`}
+  availableLangs={event.translations}
 >
   <section class="section">
     <div class="container event-detail">

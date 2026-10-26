@@ -11,7 +11,7 @@
   --color-navy-700: #123b63;
   --color-navy-600: #1a4d7d;
   --color-navy-500: #26679d;
-  --color-gold-600: #a8842f;
+  --color-gold-600: #8a6a1f;
   --color-gold-500: #c8a24a;
   --color-gold-300: #e8d6a3;
   --color-red-600: #a4262c;
@@ -95,8 +95,13 @@ body {
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: 1.65;
+  overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 img,

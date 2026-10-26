@@ -5,13 +5,18 @@ import { equivalentHref } from "@lib/routes";
 interface Props {
   lang: Lang;
   pathname: string;
+  availableLangs?: Lang[];
 }
 
-const { lang, pathname } = Astro.props;
+const { lang, pathname, availableLangs = ["en", "es"] } = Astro.props;
 
 const otherLang: Lang = lang === "en" ? "es" : "en";
-const targetHref = equivalentHref(pathname, otherLang);
-const currentHref = equivalentHref(pathname, lang) ?? `/${lang}/`;
+const targetHref = availableLangs.includes(otherLang)
+  ? equivalentHref(pathname, otherLang)
+  : null;
+const currentHref = availableLangs.includes(lang)
+  ? (equivalentHref(pathname, lang) ?? `/${lang}/`)
+  : `/${lang}/`;
 
 const labels = {
   en: {

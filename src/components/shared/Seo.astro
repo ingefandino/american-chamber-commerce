@@ -17,6 +17,7 @@ interface Props {
   description: string;
   noIndex?: boolean;
   type?: "website" | "article";
+  availableLangs?: Lang[];
 }
 
 const {
@@ -26,11 +27,12 @@ const {
   description,
   noIndex = false,
   type = "website",
+  availableLangs = ["en", "es"],
 } = Astro.props;
 
 const site = Astro.site ?? SITE_URL;
 const canonical = absoluteUrl(pathname, site);
-const alternates = buildAlternates(pathname, site);
+const alternates = buildAlternates(pathname, site, availableLangs);
 const image = absoluteUrl(ogImage.src, site);
 const robots = shouldNoIndex(noIndex)
   ? "noindex, nofollow"

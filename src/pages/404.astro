@@ -60,36 +60,44 @@ const copy = {
     </div>
 
     <main id="main" tabindex="-1">
-      {
-        (["en", "es"] as const).map((lang) => (
-          <section
-            class="section"
-            data-lang-block={lang}
-            hidden={lang === "es"}
-          >
-            <div class="container container--narrow not-found">
-              <p class="eyebrow">{copy[lang].eyebrow}</p>
-              <p class="not-found__code" aria-hidden="true">404</p>
-              <h1>{copy[lang].heading}</h1>
-              <p class="lead">{copy[lang].text}</p>
-              <div class="not-found__actions">
-                <a class="btn btn--primary" href={localizedHref("home", lang)}>
-                  {copy[lang].home}
-                </a>
-                <a
-                  class="btn btn--ghost"
-                  href={localizedHref("membership", lang)}
-                >
-                  {copy[lang].membership}
-                </a>
-                <a class="btn btn--ghost" href={localizedHref("contact", lang)}>
-                  {copy[lang].contact}
-                </a>
-              </div>
-            </div>
-          </section>
-        ))
-      }
+      <section class="section">
+        <div class="container container--narrow not-found">
+          <p class="eyebrow">Error 404</p>
+          <p class="not-found__code" aria-hidden="true">404</p>
+          <h1>
+            <span data-lang-block="en">{copy.en.heading}</span>
+            <span data-lang-block="es" hidden>{copy.es.heading}</span>
+          </h1>
+          <p class="lead">
+            <span data-lang-block="en">{copy.en.text}</span>
+            <span data-lang-block="es" hidden>{copy.es.text}</span>
+          </p>
+          <div class="not-found__actions">
+            <span data-lang-block="en" class="not-found__group">
+              <a class="btn btn--primary" href={localizedHref("home", "en")}>
+                {copy.en.home}
+              </a>
+              <a class="btn btn--ghost" href={localizedHref("membership", "en")}>
+                {copy.en.membership}
+              </a>
+              <a class="btn btn--ghost" href={localizedHref("contact", "en")}>
+                {copy.en.contact}
+              </a>
+            </span>
+            <span data-lang-block="es" class="not-found__group" hidden>
+              <a class="btn btn--primary" href={localizedHref("home", "es")}>
+                {copy.es.home}
+              </a>
+              <a class="btn btn--ghost" href={localizedHref("membership", "es")}>
+                {copy.es.membership}
+              </a>
+              <a class="btn btn--ghost" href={localizedHref("contact", "es")}>
+                {copy.es.contact}
+              </a>
+            </span>
+          </div>
+        </div>
+      </section>
     </main>
 
     <div data-lang-block="en">
@@ -129,10 +137,13 @@ const copy = {
       }
 
       .not-found__actions {
+        margin-top: 1.75rem;
+      }
+
+      .not-found__group {
         display: flex;
         flex-wrap: wrap;
         gap: 0.75rem;
-        margin-top: 1.75rem;
       }
     </style>
   </body>

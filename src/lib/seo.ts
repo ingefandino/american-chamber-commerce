@@ -28,17 +28,21 @@ export function formatTitle(title: string, siteName: string = SITE_NAME): string
 export function buildAlternates(
   pathname: string,
   site: string | URL = SITE_URL,
+  availableLangs: readonly Lang[] = LANGS,
 ): AlternateLink[] {
   const alternates: AlternateLink[] = [];
 
   for (const lang of LANGS) {
+    if (!availableLangs.includes(lang)) continue;
     const href = equivalentHref(pathname, lang);
     if (href) {
       alternates.push({ hreflang: lang, href: absoluteUrl(href, site) });
     }
   }
 
-  const defaultHref = equivalentHref(pathname, DEFAULT_LANG);
+  const defaultHref = availableLangs.includes(DEFAULT_LANG)
+    ? equivalentHref(pathname, DEFAULT_LANG)
+    : null;
   if (defaultHref) {
     alternates.push({
       hreflang: "x-default",

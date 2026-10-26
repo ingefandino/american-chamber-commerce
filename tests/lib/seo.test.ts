@@ -33,4 +33,17 @@ describe("seo", () => {
   it("does not emit hreflang for unknown routes", () => {
     expect(buildAlternates("/en/does-not-exist/")).toEqual([]);
   });
+
+  it("limits hreflang to languages that actually have content", () => {
+    expect(buildAlternates("/en/events/global-tech-summit-2024/", SITE_URL, ["en"])).toEqual([
+      {
+        hreflang: "en",
+        href: `${SITE_URL}/en/events/global-tech-summit-2024/`,
+      },
+      {
+        hreflang: "x-default",
+        href: `${SITE_URL}/en/events/global-tech-summit-2024/`,
+      },
+    ]);
+  });
 });

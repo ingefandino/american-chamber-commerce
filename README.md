@@ -1,43 +1,68 @@
-# Astro Starter Kit: Minimal
+# American Chamber of Commerce — Astro
 
-```sh
-pnpm create astro@latest -- --template minimal
+Sitio institucional estático y bilingüe (inglés/español) para la American Chamber of Commerce. V1 usa Astro, contenido versionado en Git y Web3Forms. No incluye backend, pagos ni área de miembros.
+
+## Requisitos
+
+- Node >= 22.23.4
+- pnpm 12.15.0
+
+## Comandos
+
+```bash
+pnpm install
+pnpm dev                 # servidor local
+pnpm test                # Vitest (unitarias y componentes)
+pnpm test:coverage       # cobertura
+pnpm build               # build estático en dist/
+pnpm validate            # rutas, enlaces, hreflang, sitemap y datos privados
+pnpm smoke               # smoke test de páginas críticas
+pnpm budget              # presupuestos de JS, HTML e imágenes
+pnpm ci                  # test + build + validate + smoke + budget
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Estructura
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+  assets/                # imágenes y datos heredados
+  components/            # ui, shared, sections, membership, events, directory, advocacy, forms
+  data/                  # contenido tipado y bilingüe
+  layouts/BaseLayout.astro
+  lib/                   # idioma, rutas, SEO, formularios, filtros, fechas
+  pages/[lang]/          # rutas EN/ES
+  scripts/               # adaptadores de navegador
+  styles/                # tokens y estilos globales
+scripts/                 # validación, smoke test y presupuestos
+docs/                    # plan, backlog, operación, despliegue y contenido
+public/                  # favicon, robots.txt y .htaccess
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Configuración
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Copia `.env.example` a `.env`:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```bash
+PUBLIC_WEB3FORMS_KEY=       # requerido para envíos reales
+PUBLIC_NOINDEX=false        # true en staging
+```
 
-## 🧞 Commands
+Sin `PUBLIC_WEB3FORMS_KEY`, los formularios muestran un error controlado y un canal alternativo por correo; nunca simulan éxito.
 
-All commands are run from the root of the project, from a terminal:
+## Rutas principales
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+- `/` redirige a `/en/` o `/es/` según la cookie `selectedLanguage`.
+- `/en/`, `/es/`
+- `/{lang}/about/`, `/{lang}/membership/`, `/{lang}/services/`, `/{lang}/events/`
+- `/{lang}/members/`, `/{lang}/advocacy/`, `/{lang}/news/`, `/{lang}/resources/`
+- `/{lang}/partners/`, `/{lang}/sponsorship/`, `/{lang}/contact/`
+- `/{lang}/privacy/`, `/{lang}/terms/`, `/{lang}/accessibility/`
+- `/404.html`
 
-## 👀 Want to learn more?
+## Estado del contenido
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+El contenido heredado está clasificado en `docs/CONTENT.md`. Precios de membresía: Silver 150, Gold 220, Platinum 500 y Diamond 700 USD/año, desde la tabla local aprobada. No se publican miembros, partners, liderazgo, comité ni noticias sin autorización verificada.
+
+## Despliegue
+
+Consulta `docs/DESPLIEGUE.md` para build reproducible, cPanel, headers, smoke test y rollback. La operación editorial está en `docs/OPERACION.md`.

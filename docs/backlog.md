@@ -1,5 +1,7 @@
 # Backlog V1 — American Chamber of Commerce
 
+> Implementado en la rama `dev` el 26 de octubre de 2026. Cada historia tiene su commit `feat: ACC-XXX — …`.
+
 ## Objetivo
 
 Construir el sitio Astro mediante **vertical slices pequeños**. Cada historia debe entregar una capacidad visible, testeable y reversible, sin mezclar varias capacidades de negocio.
@@ -38,7 +40,7 @@ Construir el sitio Astro mediante **vertical slices pequeños**. Cada historia d
 
 ### ACC-001 — Preparar el arnés TDD
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ninguna
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ninguna
 
 Como equipo, quiero ejecutar pruebas de forma reproducible antes de construir funcionalidades.
 
@@ -52,7 +54,7 @@ Como equipo, quiero ejecutar pruebas de forma reproducible antes de construir fu
 
 ### ACC-002 — Crear layout base accesible
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-001
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-001
 
 Como visitante, quiero una estructura base consistente para navegar el sitio.
 
@@ -66,7 +68,7 @@ Como visitante, quiero una estructura base consistente para navegar el sitio.
 
 ### ACC-003 — Resolver idiomas y rutas equivalentes
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-002
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-002
 
 Como visitante bilingüe, quiero que cada página tenga una ruta clara en inglés y español.
 
@@ -80,7 +82,7 @@ Como visitante bilingüe, quiero que cada página tenga una ruta clara en inglé
 
 ### ACC-004 — Añadir selector de idioma
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-003
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-003
 
 Como visitante, quiero cambiar de idioma de forma rápida desde desktop y mobile.
 
@@ -95,7 +97,7 @@ Como visitante, quiero cambiar de idioma de forma rápida desde desktop y mobile
 
 ### ACC-005 — Configurar SEO multidioma mínimo
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-003, ACC-004
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-003, ACC-004
 
 Como buscador, quiero identificar correctamente cada versión idiomática.
 
@@ -109,7 +111,7 @@ Como buscador, quiero identificar correctamente cada versión idiomática.
 
 ### ACC-006 — Implementar header y menú móvil
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-004
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-004
 
 Como visitante, quiero navegar las secciones principales desde cualquier dispositivo.
 
@@ -124,7 +126,7 @@ Como visitante, quiero navegar las secciones principales desde cualquier disposi
 
 ### ACC-007 — Añadir comportamiento de scroll del header
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-006
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-006
 
 Como visitante, quiero que el header facilite la lectura al hacer scroll.
 
@@ -138,7 +140,7 @@ Como visitante, quiero que el header facilite la lectura al hacer scroll.
 
 ### ACC-008 — Crear sistema global de reveal on-scroll
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-002
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-002
 
 Como visitante, quiero transiciones suaves al descubrir contenido.
 
@@ -152,7 +154,7 @@ Como visitante, quiero transiciones suaves al descubrir contenido.
 
 ### ACC-009 — Mostrar slider responsive
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-002, ACC-008
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-002, ACC-008
 
 Como visitante, quiero ver el contenido destacado con la imagen adecuada para mi dispositivo.
 
@@ -168,7 +170,7 @@ Como visitante, quiero ver el contenido destacado con la imagen adecuada para mi
 
 ### ACC-010 — Publicar home institucional mínima
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-005, ACC-006, ACC-009
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-005, ACC-006, ACC-009
 
 Como visitante, quiero entender qué es la cámara y cuál es su propuesta de valor.
 
@@ -182,7 +184,7 @@ Como visitante, quiero entender qué es la cámara y cuál es su propuesta de va
 
 ### ACC-011 — Publicar niveles de membresía
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-010
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-010
 
 Como empresa interesada, quiero comparar los niveles de membresía aprobados.
 
@@ -196,7 +198,7 @@ Como empresa interesada, quiero comparar los niveles de membresía aprobados.
 
 ### ACC-012 — Validar formulario de interés de membresía
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-011
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-011
 
 Como empresa interesada, quiero saber qué datos necesito antes de contactar.
 
@@ -211,7 +213,7 @@ Como empresa interesada, quiero saber qué datos necesito antes de contactar.
 
 ### ACC-013 — Enviar formulario de membresía por Web3Forms
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-012
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-012
 
 Como equipo operativo, quiero recibir solicitudes válidas de membresía.
 
@@ -226,7 +228,7 @@ Como equipo operativo, quiero recibir solicitudes válidas de membresía.
 
 ### ACC-014 — Publicar catálogo de servicios
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-010
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-010
 
 Como empresa, quiero conocer los servicios que ofrece la cámara.
 
@@ -240,7 +242,7 @@ Como empresa, quiero conocer los servicios que ofrece la cámara.
 
 ### ACC-015 — Publicar eventos próximos
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-010
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-010
 
 Como miembro, quiero consultar eventos próximos con información verificable.
 
@@ -254,7 +256,7 @@ Como miembro, quiero consultar eventos próximos con información verificable.
 
 ### ACC-016 — Añadir registro de evento
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-015
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-015
 
 Como visitante, quiero solicitar información o registrarme en un evento.
 
@@ -268,7 +270,7 @@ Como visitante, quiero solicitar información o registrarme en un evento.
 
 ### ACC-017 — Publicar directorio básico de miembros
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-010
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-010
 
 Como visitante, quiero consultar empresas miembros autorizadas.
 
@@ -282,7 +284,7 @@ Como visitante, quiero consultar empresas miembros autorizadas.
 
 ### ACC-018 — Añadir búsqueda simple del directorio
 
-**Prioridad:** P2 · **Estado:** pendiente · **Dependencias:** ACC-017
+**Prioridad:** P2 · **Estado:** completado · **Dependencias:** ACC-017
 
 Como visitante, quiero encontrar un miembro por nombre o categoría.
 
@@ -296,7 +298,7 @@ Como visitante, quiero encontrar un miembro por nombre o categoría.
 
 ### ACC-019 — Publicar advocacy y recursos
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-010
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-010
 
 Como stakeholder, quiero conocer las prioridades públicas y recursos de la cámara.
 
@@ -310,7 +312,7 @@ Como stakeholder, quiero conocer las prioridades públicas y recursos de la cám
 
 ### ACC-020 — Publicar contacto y páginas legales
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-002, ACC-005
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-002, ACC-005
 
 Como visitante, quiero contactar a la cámara y consultar sus condiciones.
 
@@ -324,7 +326,7 @@ Como visitante, quiero contactar a la cámara y consultar sus condiciones.
 
 ### ACC-021 — Endurecer accesibilidad, rendimiento y deploy
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-005, ACC-009, ACC-020
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-005, ACC-009, ACC-020
 
 Como responsable técnico, quiero publicar una versión estable y recuperable.
 

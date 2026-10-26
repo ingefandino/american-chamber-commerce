@@ -29,4 +29,16 @@ describe("LanguageSwitcher", () => {
     expect(html).toContain('href="/en/membership/plans/"');
     expect(html).toContain('aria-label="Ver esta página en inglés"');
   });
+
+  it("hides the switch when the target language is not available", async () => {
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(LanguageSwitcher, {
+      props: {
+        lang: "en",
+        pathname: "/en/events/global-tech-summit-2024/",
+        availableLangs: ["en"],
+      },
+    });
+    expect(html).not.toContain("data-language-switch");
+  });
 });

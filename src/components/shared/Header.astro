@@ -11,9 +11,10 @@ import { localizedHref, matchRoute, type RouteKey } from "@lib/routes";
 interface Props {
   lang: Lang;
   pathname: string;
+  availableLangs?: Lang[];
 }
 
-const { lang, pathname } = Astro.props;
+const { lang, pathname, availableLangs = ["en", "es"] } = Astro.props;
 const text = HEADER_UI[lang];
 const current = matchRoute(pathname)?.key;
 
@@ -72,7 +73,7 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
     </nav>
 
     <div class="site-header__actions">
-      <LanguageSwitcher lang={lang} pathname={pathname} />
+      <LanguageSwitcher lang={lang} pathname={pathname} availableLangs={availableLangs} />
       <a class="btn btn--primary site-header__cta" href={ctaHref}>
         {PRIMARY_CTA.labels[lang]}
       </a>
@@ -107,7 +108,7 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
           </ul>
         </nav>
         <div class="site-header__mobile-actions">
-          <LanguageSwitcher lang={lang} pathname={pathname} />
+          <LanguageSwitcher lang={lang} pathname={pathname} availableLangs={availableLangs} />
           <a class="btn btn--primary" href={ctaHref}>
             {PRIMARY_CTA.labels[lang]}
           </a>

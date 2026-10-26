@@ -13,7 +13,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "check": "astro check"
+    "check": "astro check",
+    "validate": "node scripts/validate-content.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "budget": "node scripts/check-budgets.mjs",
+    "ci": "pnpm test && pnpm build && pnpm validate && pnpm smoke && pnpm budget"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -24,5 +28,6 @@
     "@vitest/coverage-v8": "^5.0.5",
     "happy-dom": "^21.0.4",
     "vitest": "^5.0.5"
-  }
+  },
+  "packageManager": "pnpm@12.15.0"
 }
