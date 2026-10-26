@@ -38,6 +38,9 @@ function fileForHref(href, fromFile) {
     pathname = new URL(clean, `${site}${fromRoute}`).pathname;
   }
   const relativePath = decodeURIComponent(pathname).replace(/^\/+/, "");
+  if (relativePath === "404" || relativePath === "404/") {
+    return existsSync(join(dist, "404.html")) ? join(dist, "404.html") : null;
+  }
   const candidates = [];
   if (pathname.endsWith("/")) {
     candidates.push(join(dist, relativePath, "index.html"));
@@ -47,6 +50,33 @@ function fileForHref(href, fromFile) {
     candidates.push(join(dist, relativePath), join(dist, relativePath, "index.html"));
   }
   return candidates.find((candidate) => existsSync(candidate)) ?? null;
+}
+
+function checkLocalUrl(value, fromFile, label) {
+  const clean = value.replaceAll("&amp;", "&").trim();
+  if (
+    !clean ||
+    clean.startsWith("#") ||
+    /^(data:|blob:|mailto:|tel:|javascript:)/i.test(clean)
+  ) {
+    return;
+  }
+
+  if (/^(https?:)?\/\//i.test(clean)) {
+    if (clean === site || clean.startsWith(`${site}/`)) {
+      const pathname = clean.slice(site.length) || "/";
+      assert(
+        fileForHref(pathname, fromFile),
+        `${label}: broken internal URL ${value}`,
+      );
+    }
+    return;
+  }
+
+  assert(
+    fileForHref(clean, fromFile),
+    `${label}: broken internal URL ${value}`,
+  );
 }
 
 function assert(condition, message) {
@@ -119,9 +149,27 @@ const files = await walk(dist);
 const pages = htmlFiles(files);
 const builtRoutes = new Set(pages.map(routeOf));
 
-for (const asset of ["favicon.svg", "favicon.ico", "apple-touch-icon.png"]) {
+for (const asset of [
+  "favicon-16x16.png",
+  "favicon-32x32.png",
+  "favicon.ico",
+  "apple-touch-icon.png",
+]) {
   assert(existsSync(join(dist, asset)), `Missing favicon asset: ${asset}`);
 }
+
+const faviconPng = await readFile(join(dist, "favicon-32x32.png"));
+assert(
+  faviconPng.subarray(1, 4).toString("ascii") === "PNG",
+  "favicon-32x32.png is not a PNG",
+);
+const faviconIco = await readFile(join(dist, "favicon.ico"));
+assert(
+  faviconIco.readUInt16LE(0) === 0 &&
+    faviconIco.readUInt16LE(2) === 1 &&
+    faviconIco.readUInt16LE(4) >= 1,
+  "favicon.ico is not a valid icon resource",
+);
 
 for (const route of expectedRoutes) {
   assert(builtRoutes.has(route), `Missing expected route: ${route}`);
@@ -175,7 +223,7 @@ for (const file of pages) {
     `${route}: missing apple touch icon`,
   );
   assert(
-    /rel="icon"[^>]+href="\/favicon\.svg"/.test(html),
+    /rel="icon"[^>]+href="\/favicon-32x32\.png"/.test(html),
     `${route}: missing favicon`,
   );
   assert(
@@ -281,6 +329,32 @@ for (const file of pages) {
     const target = fileForHref(href.replace(site, ""), file);
     assert(target, `${route}: hreflang points to missing page ${href}`);
   }
+
+  const localReferences = [
+    ...html.matchAll(/\s(?:src|poster|action)="([^"]+)"/g),
+    ...html.matchAll(/<link\b[^>]*\bhref="([^"]+)"/g),
+    ...html.matchAll(
+      /<meta[^>]+(?:property|name)="(?:og:image|twitter:image)"[^>]+content="([^"]+)"/g,
+    ),
+  ];
+  for (const match of localReferences) {
+    checkLocalUrl(match[1], file, route);
+  }
+
+  for (const match of html.matchAll(/\ssrcset="([^"]+)"/g)) {
+    for (const candidate of match[1].split(",")) {
+      const url = candidate.trim().split(/\s+/)[0];
+      if (url) checkLocalUrl(url, file, route);
+    }
+  }
+}
+
+for (const file of files.filter((candidate) => candidate.endsWith(".css"))) {
+  const css = await readFile(file, "utf8");
+  const label = relative(dist, file);
+  for (const match of css.matchAll(/url\(\s*(['"]?)([^'")]+)\1\s*\)/g)) {
+    checkLocalUrl(match[2], file, label);
+  }
 }
 
 for (const file of publicPages) {
@@ -291,6 +365,22 @@ for (const file of publicPages) {
     ),
     `${routeOf(file)}: possible private data leaked into HTML`,
   );
+}
+
+const manifestFile = join(dist, "site.webmanifest");
+if (existsSync(manifestFile)) {
+  const manifest = JSON.parse(await readFile(manifestFile, "utf8"));
+  for (const icon of manifest.icons ?? []) {
+    checkLocalUrl(icon.src, manifestFile, "site.webmanifest");
+  }
+}
+
+const robotsFile = join(dist, "robots.txt");
+if (existsSync(robotsFile)) {
+  const robots = await readFile(robotsFile, "utf8");
+  for (const match of robots.matchAll(/^Sitemap:\s*(\S+)/gim)) {
+    checkLocalUrl(match[1], robotsFile, "robots.txt");
+  }
 }
 
 const sitemapPath = join(dist, "sitemap-0.xml");

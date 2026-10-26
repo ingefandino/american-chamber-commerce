@@ -21,7 +21,6 @@ const copy = {
     email: "Email",
     phone: "Phone",
     address: "Address",
-    social: "Social",
     privacy: "For privacy requests, email us with the subject “Privacy request”.",
     formTitle: "Send a message",
     formText: "Fields marked with an asterisk are required.",
@@ -35,7 +34,6 @@ const copy = {
     email: "Correo",
     phone: "Teléfono",
     address: "Dirección",
-    social: "Redes",
     privacy: "Para solicitudes de privacidad, escríbenos con el asunto “Solicitud de privacidad”.",
     formTitle: "Enviar un mensaje",
     formText: "Los campos con asterisco son obligatorios.",
@@ -43,12 +41,6 @@ const copy = {
 } as const;
 
 const text = copy[lang];
-const social = [
-  { label: "LinkedIn", href: SITE.social.linkedin },
-  { label: "Facebook", href: SITE.social.facebook },
-  { label: "Instagram", href: SITE.social.instagram },
-  { label: "YouTube", href: SITE.social.youtube },
-];
 ---
 
 <BaseLayout
@@ -86,20 +78,6 @@ const social = [
               >
                 {SITE.whatsapp.display}
               </a>
-            </dd>
-            <dt>{text.social}</dt>
-            <dd>
-              <ul class="contact-social">
-                {
-                  social.map((item) => (
-                    <li>
-                      <a href={item.href} rel="noopener noreferrer">
-                        {item.label}
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
             </dd>
           </dl>
           <p class="contact-details__note">{text.privacy}</p>
@@ -153,15 +131,6 @@ const social = [
     margin: 0.2rem 0 0;
     color: var(--color-body);
     font-size: var(--text-sm);
-  }
-
-  .contact-social {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.9rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
   }
 
   .contact-details__note {

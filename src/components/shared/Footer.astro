@@ -25,7 +25,6 @@ const text = {
     terms: "Terms",
     accessibility: "Accessibility",
     rights: "All rights reserved.",
-    social: "Follow the Chamber",
   },
   es: {
     navLabel: "Navegación del pie de página",
@@ -36,7 +35,6 @@ const text = {
     terms: "Términos",
     accessibility: "Accesibilidad",
     rights: "Todos los derechos reservados.",
-    social: "Sigue a la Cámara",
   },
 }[lang];
 
@@ -67,20 +65,6 @@ const copyrightYears =
           />
         </a>
         <p class="site-footer__tagline">{text.tagline}</p>
-        <ul class="site-footer__social" aria-label={text.social}>
-          <li>
-            <a href={SITE.social.linkedin} rel="noopener noreferrer">LinkedIn</a>
-          </li>
-          <li>
-            <a href={SITE.social.facebook} rel="noopener noreferrer">Facebook</a>
-          </li>
-          <li>
-            <a href={SITE.social.instagram} rel="noopener noreferrer">Instagram</a>
-          </li>
-          <li>
-            <a href={SITE.social.youtube} rel="noopener noreferrer">YouTube</a>
-          </li>
-        </ul>
       </div>
 
       <nav class="site-footer__nav" aria-label={text.navLabel}>
@@ -163,7 +147,6 @@ const copyrightYears =
     font-size: var(--text-sm);
   }
 
-  .site-footer__social,
   .site-footer__nav ul,
   .site-footer__contact ul,
   .site-footer__legal {
@@ -172,13 +155,6 @@ const copyrightYears =
     list-style: none;
   }
 
-  .site-footer__social {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 1rem;
-  }
-
-  .site-footer__social a,
   .site-footer__nav a,
   .site-footer__contact a {
     color: rgb(255 255 255 / 0.78);
@@ -186,8 +162,6 @@ const copyrightYears =
     text-decoration: none;
   }
 
-  .site-footer__social a:hover,
-  .site-footer__social a:focus-visible,
   .site-footer__nav a:hover,
   .site-footer__nav a:focus-visible,
   .site-footer__contact a:hover,

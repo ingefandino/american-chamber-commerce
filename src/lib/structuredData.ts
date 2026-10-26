@@ -53,7 +53,6 @@ export function organizationSchema(
       contactType: "customer service",
       availableLanguage: ["English", "Spanish"],
     },
-    sameAs: Object.values(SITE.social),
   };
 }
 

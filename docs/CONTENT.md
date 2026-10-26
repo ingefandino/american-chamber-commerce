@@ -27,6 +27,7 @@ Este documento evita publicar datos heredados como si fueran definitivos. La fue
 | Liderazgo, comité, equipo | Proyecto local | `do-not-publish` | Nombres y cargos sin autorización verificada. |
 | Advocacy | Sitio público, observado 2026-10-26 | `needs-review` | Temas, no posiciones legislativas aprobadas. |
 | Noticias | Sin fuente verificada | `empty` | No se inventan artículos. |
+| Empresas de la franja de confianza | Sin fuente autorizada | `empty` | No se publican nombres hasta verificar membresía, autorización y fuente. |
 | Recursos | Servicios publicados | `needs-review` | Enlaces navegacionales, sin promesas. |
 | Privacidad y términos | Borrador técnico | `needs-review` | Requieren revisión legal. |
 | Accesibilidad | Compromiso técnico | `approved` como declaración operativa | Revisar tras auditoría externa. |
@@ -40,6 +41,7 @@ Fuente: proyecto local (`src/data/site.ts`).
 - Dirección: `753 East Tremont, Bronx, New York 10457, USA`
 - Dirección secundaria: `111 E Monument Ave Ste 327, Bronx, New York, USA`
 - WhatsApp: `+1 (347) 301-2169` (`https://wa.me/13473012169`), según ACC-024.
+- Redes sociales: no hay cuentas verificadas del cliente; no se publican enlaces sociales ni `sameAs` hasta su confirmación.
 
 El sitio WordPress muestra un teléfono y un `mailto` distintos. **Debe confirmarse el dato oficial antes de producción.** Mientras no se confirme, este contenido queda `needs-review`. El número de WhatsApp se toma del requisito ACC-024 y también requiere confirmación del owner.
 
@@ -50,6 +52,7 @@ El sitio WordPress muestra un teléfono y un `mailto` distintos. **Debe confirma
 - Imagen de Nueva York: `about/new-york.webp`.
 - Imagen social: `public/og-image.jpg` (1200x630, generada desde New York + logo blanco).
 - Iconos de manifest: `public/icons/icon-192.png`, `icon-512.png` y `public/apple-touch-icon.png`.
+- Favicon institucional: `public/favicon.ico`, `favicon-16x16.png` y `favicon-32x32.png`, generados desde el emblema del logo.
 - No se publicaron logos de miembros, partners, comité o equipo.
 - Registrar licencia, autor, fecha y permiso de cada asset antes de producción.
 - No publicar fotos de personas sin consentimiento vigente.

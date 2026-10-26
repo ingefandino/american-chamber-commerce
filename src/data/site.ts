@@ -60,12 +60,6 @@ export const SITE = {
       es: "Hola, deseo información sobre American Chamber of Commerce.",
     },
   },
-  social: {
-    facebook: "https://facebook.com/americanchamberofcommerce",
-    linkedin: "https://linkedin.com/company/americanchamberofcommerce",
-    instagram: "https://instagram.com/americanchamber",
-    youtube: "https://youtube.com/@americanchamber",
-  },
   /** Datos heredados del proyecto local: requieren revisión del cliente. */
   reviewStatus: "needs-review" as const,
 } satisfies {
@@ -84,7 +78,6 @@ export const SITE = {
     href: string;
     message: Record<Lang, string>;
   };
-  social: Record<string, string>;
   reviewStatus: "needs-review";
 };
 

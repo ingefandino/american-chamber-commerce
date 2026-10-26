@@ -1,5 +1,7 @@
 # build output
 dist/
+# generated social intermediate
+src/assets/og/
 # generated types
 .astro/
 
