@@ -1,7 +1,6 @@
 ---
 import "@styles/global.css";
-
-type Lang = "en" | "es";
+import { htmlLang, type Lang } from "@lib/lang";
 
 interface Props {
   lang?: Lang;
@@ -22,7 +21,7 @@ const themeColor = "#0b2545";
 ---
 
 <!doctype html>
-<html lang={lang} dir="ltr">
+<html lang={htmlLang(lang)} dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

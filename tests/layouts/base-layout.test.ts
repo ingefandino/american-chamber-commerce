@@ -12,8 +12,8 @@ async function render(lang: "en" | "es", body: string) {
 
 describe("BaseLayout", () => {
   it("declares the document language", async () => {
-    expect(await render("en", "<h1>Hello</h1>")).toContain('<html lang="en"');
-    expect(await render("es", "<h1>Hola</h1>")).toContain('<html lang="es"');
+    expect(await render("en", "<h1>Hello</h1>")).toContain('<html lang="en-US"');
+    expect(await render("es", "<h1>Hola</h1>")).toContain('<html lang="es-US"');
   });
 
   it("provides a skip link that targets the main landmark", async () => {

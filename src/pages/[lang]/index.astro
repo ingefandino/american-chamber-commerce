@@ -1,0 +1,42 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { isLang, type Lang } from "@lib/lang";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "American Chamber of Commerce",
+    heading: "American Chamber of Commerce",
+    lead: "A member-driven chamber connecting businesses with the network, knowledge, and advocacy they need to grow.",
+    switchLabel: "Ver en español",
+    switchHref: "/es/",
+  },
+  es: {
+    title: "American Chamber of Commerce",
+    heading: "American Chamber of Commerce",
+    lead: "Una cámara impulsada por sus miembros que conecta empresas con la red, el conocimiento y la defensa que necesitan para crecer.",
+    switchLabel: "View in English",
+    switchHref: "/en/",
+  },
+} as const;
+
+const content = copy[lang];
+---
+
+<BaseLayout lang={lang} title={content.title} description={content.lead}>
+  <section class="section">
+    <div class="container">
+      <h1>{content.heading}</h1>
+      <p class="lead">{content.lead}</p>
+      <p>
+        <a href={content.switchHref}>{content.switchLabel}</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

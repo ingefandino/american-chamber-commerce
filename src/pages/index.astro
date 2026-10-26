@@ -1,19 +1,21 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
+import { DEFAULT_LANG } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+const target = localizedHref("home", DEFAULT_LANG);
 ---
 
-<BaseLayout
-  lang="en"
-  title="American Chamber of Commerce"
-  description="American Chamber of Commerce connects members with the resources, relationships, and representation they need to compete and grow."
->
-  <section class="section">
-    <div class="container">
-      <h1>American Chamber of Commerce</h1>
-      <p class="lead">
-        Site foundation is being prepared. Institutional content will be
-        published in English and Spanish.
-      </p>
-    </div>
-  </section>
-</BaseLayout>
+<!doctype html>
+<html lang={DEFAULT_LANG} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>American Chamber of Commerce</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={target} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+  </head>
+  <body>
+    <p><a href={target}>Continue to the American Chamber of Commerce</a></p>
+  </body>
+</html>
