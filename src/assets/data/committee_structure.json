@@ -1,0 +1,152 @@
+{
+  "executive_committee": [
+    {
+      "name": "Marco Antonio Achon",
+      "role": "President",
+      "position": "Head of Santander Corporate & Investment Banking US",
+      "company": "Banco Santander"
+    },
+    {
+      "name": "Sofía Martínez",
+      "role": "Executive Vice President",
+      "position": "Chief Financial Officer",
+      "company": "JPMorgan Chase"
+    },
+    {
+      "name": "Andrés López",
+      "role": "Executive Vice President",
+      "position": "Head of Global Technology",
+      "company": "Microsoft"
+    },
+    {
+      "name": "Valeria Torres",
+      "role": "Executive Vice President",
+      "position": "Head of Global Strategy",
+      "company": "Amazon"
+    },
+    {
+      "name": "Gabriel Fernández",
+      "role": "Executive Vice President",
+      "position": "Head of Corporate Risk",
+      "company": "Goldman Sachs"
+    },
+    {
+      "name": "Claudia Ramírez",
+      "role": "Executive Vice President",
+      "position": "Head of International Markets",
+      "company": "Google"
+    }
+  ],
+  "directors": [
+    {
+      "name": "Laura Fernández",
+      "role": "Director",
+      "position": "Head of Global Wealth Management",
+      "company": "JPMorgan Chase"
+    },
+    {
+      "name": "Javier Martínez",
+      "role": "Director",
+      "position": "Head of Retail Banking",
+      "company": "Citibank"
+    },
+    {
+      "name": "Ana Torres",
+      "role": "Director",
+      "position": "Chief Risk Officer",
+      "company": "HSBC"
+    },
+    {
+      "name": "Carlos Ramírez",
+      "role": "Director",
+      "position": "Head of Digital Strategy",
+      "company": "Google"
+    },
+    {
+      "name": "Marta Gómez",
+      "role": "Director",
+      "position": "Chief Human Resources Officer",
+      "company": "Amazon"
+    },
+    {
+      "name": "Pablo Sánchez",
+      "role": "Director",
+      "position": "Head of Global Treasury",
+      "company": "Goldman Sachs"
+    },
+    {
+      "name": "Isabel Rodríguez",
+      "role": "Director",
+      "position": "Head of Global Markets",
+      "company": "Morgan Stanley"
+    },
+    {
+      "name": "Alberto López",
+      "role": "Director",
+      "position": "General Counsel",
+      "company": "Microsoft"
+    },
+    {
+      "name": "Cristina Morales",
+      "role": "Director",
+      "position": "Head of Corporate Governance",
+      "company": "Apple"
+    },
+    {
+      "name": "Raúl Ortega",
+      "role": "Director",
+      "position": "Head of Commercial Banking",
+      "company": "Wells Fargo"
+    },
+    {
+      "name": "Beatriz Herrera",
+      "role": "Director",
+      "position": "Head of Investor Relations",
+      "company": "Tesla"
+    },
+    {
+      "name": "Fernando Castro",
+      "role": "Director",
+      "position": "Head of Internal Audit",
+      "company": "Bank of America"
+    },
+    {
+      "name": "Lucía Navarro",
+      "role": "Director",
+      "position": "Head of International Expansion",
+      "company": "Meta"
+    },
+    {
+      "name": "Diego Ruiz",
+      "role": "Director",
+      "position": "Chief Operations Officer",
+      "company": "IBM"
+    },
+    {
+      "name": "Elena Domínguez",
+      "role": "Director",
+      "position": "Head of Corporate Communications",
+      "company": "Coca-Cola"
+    }
+  ],
+  "honorary_directors": [
+    {
+      "name": "Sergio Vidal",
+      "role": "Honorary Director",
+      "position": "Former Head of Corporate Banking",
+      "company": "Santander"
+    },
+    {
+      "name": "Rosa Aguilar",
+      "role": "Honorary Director",
+      "position": "Former Head of International Strategy",
+      "company": "Deutsche Bank"
+    },
+    {
+      "name": "Miguel Herrera",
+      "role": "Honorary Director",
+      "position": "Former Chief Risk & Compliance Officer",
+      "company": "Barclays"
+    }
+  ]
+}

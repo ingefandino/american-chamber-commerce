@@ -1,0 +1,104 @@
+{
+  "upcoming_events": [
+    {
+      "date": "2025-10-21",
+      "type": "Gala",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "2025 Annual Gala"
+    },
+    {
+      "date": "2025-09-24",
+      "type": "Forum",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Latin America, the United States, and Spain in the Global Economy Forum"
+    },
+    {
+      "date": "2025-09-10",
+      "type": "Awards",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "First Gastronomic Excellence Awards"
+    },
+    {
+      "date": "2025-11-05",
+      "type": "Conference",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Technology and Innovation Leadership Summit"
+    }
+  ],
+  "past_events": [
+    {
+      "date": "2024-12-15",
+      "type": "Gala",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "2024 Annual Gala"
+    },
+    {
+      "date": "2024-11-02",
+      "type": "Forum",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Global Finance and Trade Forum"
+    },
+    {
+      "date": "2024-09-18",
+      "type": "Awards",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "International Cultural Excellence Awards"
+    },
+    {
+      "date": "2024-08-25",
+      "type": "Conference",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Sustainable Development and Climate Action Conference"
+    },
+    {
+      "date": "2024-06-30",
+      "type": "Forum",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Innovation in Global Markets Forum"
+    },
+    {
+      "date": "2024-05-10",
+      "type": "Gala",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Spring Business Leaders Gala"
+    },
+    {
+      "date": "2024-03-20",
+      "type": "Conference",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Artificial Intelligence and the Future of Work"
+    },
+    {
+      "date": "2024-02-14",
+      "type": "Forum",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Women in Leadership Forum"
+    },
+    {
+      "date": "2023-11-29",
+      "type": "Awards",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Global Entrepreneurship Awards"
+    },
+    {
+      "date": "2023-09-05",
+      "type": "Conference",
+      "mode": "In-person",
+      "location": "New York City",
+      "title": "Healthcare Innovation and Biotechnology Summit"
+    }
+  ]
+}

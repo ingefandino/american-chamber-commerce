@@ -1,0 +1,1707 @@
+[
+    {
+      "id": 1,
+      "country": "Algeria",
+      "code": "DZ",
+      "capital": "Algiers",
+      "iso_3": "DZA",
+      "calling_code": "+213"
+    },
+    {
+      "id": 2,
+      "country": "Angola",
+      "code": "AO",
+      "capital": "Luanda",
+      "iso_3": "AGO",
+      "calling_code": "+244"
+    },
+    {
+      "id": 3,
+      "country": "Benin",
+      "code": "BJ",
+      "capital": "Porto-Novo",
+      "iso_3": "BEN",
+      "calling_code": "+229"
+    },
+    {
+      "id": 4,
+      "country": "Botswana",
+      "code": "BW",
+      "capital": "Gaborone",
+      "iso_3": "BWA",
+      "calling_code": "+267"
+    },
+    {
+      "id": 5,
+      "country": "Burkina Faso",
+      "code": "BF",
+      "capital": "Ouagadougou",
+      "iso_3": "BFA",
+      "calling_code": "+226"
+    },
+    {
+      "id": 6,
+      "country": "Burundi",
+      "code": "BI",
+      "capital": "Gitega",
+      "iso_3": "BDI",
+      "calling_code": "+257"
+    },
+    {
+      "id": 7,
+      "country": "Cameroon",
+      "code": "CM",
+      "capital": "Yaoundé",
+      "iso_3": "CMR",
+      "calling_code": "+237"
+    },
+    {
+      "id": 8,
+      "country": "Cape Verde",
+      "code": "CV",
+      "capital": "Praia",
+      "iso_3": "CPV",
+      "calling_code": "+238"
+    },
+    {
+      "id": 9,
+      "country": "Central African Republic",
+      "code": "CF",
+      "capital": "Bangui",
+      "iso_3": "CAF",
+      "calling_code": "+236"
+    },
+    {
+      "id": 10,
+      "country": "Chad",
+      "code": "TD",
+      "capital": "N'Djamena",
+      "iso_3": "TCD",
+      "calling_code": "+235"
+    },
+      {
+        "id": 11,
+        "country": "Congo, Dem.",
+        "code": "CD",
+        "capital": "Kinshasa",
+        "iso_3": "COD",
+        "calling_code": "+243"
+      },
+      {
+        "id": 12,
+        "country": "Congo, Rep.",
+        "code": "CG",
+        "capital": "Brazzaville",
+        "iso_3": "COG",
+        "calling_code": "+242"
+      },
+      {
+        "id": 13,
+        "country": "Djibouti",
+        "code": "DJ",
+        "capital": "Djibouti",
+        "iso_3": "DJI",
+        "calling_code": "+253"
+      },
+      {
+        "id": 14,
+        "country": "Egypt",
+        "code": "EG",
+        "capital": "Cairo",
+        "iso_3": "EGY",
+        "calling_code": "+20"
+      },
+      {
+        "id": 15,
+        "country": "Equatorial Guinea",
+        "code": "GQ",
+        "capital": "Malabo",
+        "iso_3": "GNQ",
+        "calling_code": "+240"
+      },
+      {
+        "id": 16,
+        "country": "Eritrea",
+        "code": "ER",
+        "capital": "Asmara",
+        "iso_3": "ERI",
+        "calling_code": "+291"
+      },
+      {
+        "id": 17,
+        "country": "Ethiopia",
+        "code": "ET",
+        "capital": "Addis Ababa",
+        "iso_3": "ETH",
+        "calling_code": "+251"
+      },
+      {
+        "id": 18,
+        "country": "Gabon",
+        "code": "GA",
+        "capital": "Libreville",
+        "iso_3": "GAB",
+        "calling_code": "+241"
+      },
+      {
+        "id": 19,
+        "country": "Gambia",
+        "code": "GM",
+        "capital": "Banjul",
+        "iso_3": "GMB",
+        "calling_code": "+220"
+      },
+      {
+        "id": 20,
+        "country": "Ghana",
+        "code": "GH",
+        "capital": "Accra",
+        "iso_3": "GHA",
+        "calling_code": "+233"
+      },
+      {
+        "id": 21,
+        "country": "Guinea",
+        "code": "GN",
+        "capital": "Conakry",
+        "iso_3": "GIN",
+        "calling_code": "+224"
+      },
+      {
+        "id": 22,
+        "country": "Guinea-Bissau",
+        "code": "GW",
+        "capital": "Bissau",
+        "iso_3": "GNB",
+        "calling_code": "+245"
+      },
+      {
+        "id": 23,
+        "country": "Kenya",
+        "code": "KE",
+        "capital": "Nairobi",
+        "iso_3": "KEN",
+        "calling_code": "+254"
+      },
+      {
+        "id": 24,
+        "country": "Lesotho",
+        "code": "LS",
+        "capital": "Maseru",
+        "iso_3": "LSO",
+        "calling_code": "+266"
+      },
+      {
+        "id": 25,
+        "country": "Liberia",
+        "code": "LR",
+        "capital": "Monrovia",
+        "iso_3": "LBR",
+        "calling_code": "+231"
+      },
+      {
+        "id": 26,
+        "country": "Libya",
+        "code": "LY",
+        "capital": "Tripoli",
+        "iso_3": "LBY",
+        "calling_code": "+218"
+      },
+      {
+        "id": 27,
+        "country": "Madagascar",
+        "code": "MG",
+        "capital": "Antananarivo",
+        "iso_3": "MDG",
+        "calling_code": "+261"
+      },
+      {
+        "id": 28,
+        "country": "Malawi",
+        "code": "MW",
+        "capital": "Lilongwe",
+        "iso_3": "MWI",
+        "calling_code": "+265"
+      },
+      {
+        "id": 29,
+        "country": "Mali",
+        "code": "ML",
+        "capital": "Bamako",
+        "iso_3": "MLI",
+        "calling_code": "+223"
+      },
+      {
+        "id": 30,
+        "country": "Mauritania",
+        "code": "MR",
+        "capital": "Nouakchott",
+        "iso_3": "MRT",
+        "calling_code": "+222"
+      },
+        {
+          "id": 31,
+          "country": "Mauritius",
+          "code": "MU",
+          "capital": "Port Louis",
+          "iso_3": "MUS",
+          "calling_code": "+230"
+        },
+        {
+          "id": 32,
+          "country": "Morocco",
+          "code": "MA",
+          "capital": "Rabat",
+          "iso_3": "MAR",
+          "calling_code": "+212"
+        },
+        {
+          "id": 33,
+          "country": "Mozambique",
+          "code": "MZ",
+          "capital": "Maputo",
+          "iso_3": "MOZ",
+          "calling_code": "+258"
+        },
+        {
+          "id": 34,
+          "country": "Namibia",
+          "code": "NA",
+          "capital": "Windhoek",
+          "iso_3": "NAM",
+          "calling_code": "+264"
+        },
+        {
+          "id": 35,
+          "country": "Niger",
+          "code": "NE",
+          "capital": "Niamey",
+          "iso_3": "NER",
+          "calling_code": "+227"
+        },
+        {
+          "id": 36,
+          "country": "Nigeria",
+          "code": "NG",
+          "capital": "Abuja",
+          "iso_3": "NGA",
+          "calling_code": "+234"
+        },
+        {
+          "id": 37,
+          "country": "Rwanda",
+          "code": "RW",
+          "capital": "Kigali",
+          "iso_3": "RWA",
+          "calling_code": "+250"
+        },
+        {
+          "id": 38,
+          "country": "Sao Tome/Principe",
+          "code": "ST",
+          "capital": "São Tomé",
+          "iso_3": "STP",
+          "calling_code": "+239"
+        },
+        {
+          "id": 39,
+          "country": "Senegal",
+          "code": "SN",
+          "capital": "Dakar",
+          "iso_3": "SEN",
+          "calling_code": "+221"
+        },
+        {
+          "id": 40,
+          "country": "Seychelles",
+          "code": "SC",
+          "capital": "Victoria",
+          "iso_3": "SYC",
+          "calling_code": "+248"
+        },
+        {
+          "id": 41,
+          "country": "Sierra Leone",
+          "code": "SL",
+          "capital": "Freetown",
+          "iso_3": "SLE",
+          "calling_code": "+232"
+        },
+        {
+          "id": 42,
+          "country": "Somalia",
+          "code": "SO",
+          "capital": "Mogadishu",
+          "iso_3": "SOM",
+          "calling_code": "+252"
+        },
+        {
+          "id": 43,
+          "country": "South Africa",
+          "code": "ZA",
+          "capital": "Pretoria",
+          "iso_3": "ZAF",
+          "calling_code": "+27"
+        },
+        {
+          "id": 44,
+          "country": "Sudan",
+          "code": "SD",
+          "capital": "Khartoum",
+          "iso_3": "SDN",
+          "calling_code": "+249"
+        },
+        {
+          "id": 45,
+          "country": "Swaziland",
+          "code": "SZ",
+          "capital": "Mbabane",
+          "iso_3": "SWZ",
+          "calling_code": "+268"
+        },
+        {
+          "id": 46,
+          "country": "Tanzania",
+          "code": "TZ",
+          "capital": "Dodoma",
+          "iso_3": "TZA",
+          "calling_code": "+255"
+        },
+        {
+          "id": 47,
+          "country": "Togo",
+          "code": "TG",
+          "capital": "Lomé",
+          "iso_3": "TGO",
+          "calling_code": "+228"
+        },
+        {
+          "id": 48,
+          "country": "Tunisia",
+          "code": "TN",
+          "capital": "Tunis",
+          "iso_3": "TUN",
+          "calling_code": "+216"
+        },
+        {
+          "id": 49,
+          "country": "Uganda",
+          "code": "UG",
+          "capital": "Kampala",
+          "iso_3": "UGA",
+          "calling_code": "+256"
+        },
+        {
+          "id": 50,
+          "country": "Zambia",
+          "code": "ZM",
+          "capital": "Lusaka",
+          "iso_3": "ZMB",
+          "calling_code": "+260"
+        },
+          {
+            "id": 51,
+            "country": "Zimbabwe",
+            "code": "ZW",
+            "capital": "Harare",
+            "iso_3": "ZWE",
+            "calling_code": "+263"
+          },
+          {
+            "id": 52,
+            "country": "Bangladesh",
+            "code": "BD",
+            "capital": "Dhaka",
+            "iso_3": "BGD",
+            "calling_code": "+880"
+          },
+          {
+            "id": 53,
+            "country": "Bhutan",
+            "code": "BT",
+            "capital": "Thimphu",
+            "iso_3": "BTN",
+            "calling_code": "+975"
+          },
+          {
+            "id": 54,
+            "country": "Brunei",
+            "code": "BN",
+            "capital": "Bandar Seri Begawan",
+            "iso_3": "BRN",
+            "calling_code": "+673"
+          },
+          {
+            "id": 55,
+            "country": "Burma (Myanmar)",
+            "code": "MM",
+            "capital": "Naypyidaw",
+            "iso_3": "MMR",
+            "calling_code": "+95"
+          },
+          {
+            "id": 56,
+            "country": "Cambodia",
+            "code": "KH",
+            "capital": "Phnom Penh",
+            "iso_3": "KHM",
+            "calling_code": "+855"
+          },
+          {
+            "id": 57,
+            "country": "China",
+            "code": "CN",
+            "capital": "Beijing",
+            "iso_3": "CHN",
+            "calling_code": "+86"
+          },
+          {
+            "id": 58,
+            "country": "East Timor",
+            "code": "TL",
+            "capital": "Dili",
+            "iso_3": "TLS",
+            "calling_code": "+670"
+          },
+          {
+            "id": 59,
+            "country": "India",
+            "code": "IN",
+            "capital": "New Delhi",
+            "iso_3": "IND",
+            "calling_code": "+91"
+          },
+          {
+            "id": 60,
+            "country": "Indonesia",
+            "code": "ID",
+            "capital": "Jakarta",
+            "iso_3": "IDN",
+            "calling_code": "+62"
+          },
+          {
+            "id": 61,
+            "country": "Japan",
+            "code": "JP",
+            "capital": "Tokyo",
+            "iso_3": "JPN",
+            "calling_code": "+81"
+          },
+          {
+            "id": 62,
+            "country": "Kazakhstan",
+            "code": "KZ",
+            "capital": "Astana",
+            "iso_3": "KAZ",
+            "calling_code": "+7"
+          },
+          {
+            "id": 63,
+            "country": "Korea (north)",
+            "code": "KP",
+            "capital": "Pyongyang",
+            "iso_3": "PRK",
+            "calling_code": "+850"
+          },
+          {
+            "id": 64,
+            "country": "Korea (south)",
+            "code": "KR",
+            "capital": "Seoul",
+            "iso_3": "KOR",
+            "calling_code": "+82"
+          },
+          {
+            "id": 65,
+            "country": "Laos",
+            "code": "LA",
+            "capital": "Vientiane",
+            "iso_3": "LAO",
+            "calling_code": "+856"
+          },
+          {
+            "id": 66,
+            "country": "Malaysia",
+            "code": "MY",
+            "capital": "Kuala Lumpur",
+            "iso_3": "MYS",
+            "calling_code": "+60"
+          },
+          {
+            "id": 67,
+            "country": "Maldives",
+            "code": "MV",
+            "capital": "Malé",
+            "iso_3": "MDV",
+            "calling_code": "+960"
+          },
+          {
+            "id": 68,
+            "country": "Mongolia",
+            "code": "MN",
+            "capital": "Ulaanbaatar",
+            "iso_3": "MNG",
+            "calling_code": "+976"
+          },
+          {
+            "id": 69,
+            "country": "Nepal",
+            "code": "NP",
+            "capital": "Kathmandu",
+            "iso_3": "NPL",
+            "calling_code": "+977"
+          },
+          {
+            "id": 70,
+            "country": "Philippines",
+            "code": "PH",
+            "capital": "Manila",
+            "iso_3": "PHL",
+            "calling_code": "+63"
+          },
+            {
+              "id": 71,
+              "country": "Russian Federation",
+              "code": "RU",
+              "capital": "Moscow",
+              "iso_3": "RUS",
+              "calling_code": "+7"
+            },
+            {
+              "id": 72,
+              "country": "Singapore",
+              "code": "SG",
+              "capital": "Singapore",
+              "iso_3": "SGP",
+              "calling_code": "+65"
+            },
+            {
+              "id": 73,
+              "country": "Sri Lanka",
+              "code": "LK",
+              "capital": "Sri Jayawardenepura Kotte",
+              "iso_3": "LKA",
+              "calling_code": "+94"
+            },
+            {
+              "id": 74,
+              "country": "Taiwan",
+              "code": "TW",
+              "capital": "Taipei",
+              "iso_3": "TWN",
+              "calling_code": "+886"
+            },
+            {
+              "id": 75,
+              "country": "Thailand",
+              "code": "TH",
+              "capital": "Bangkok",
+              "iso_3": "THA",
+              "calling_code": "+66"
+            },
+            {
+              "id": 76,
+              "country": "Vietnam",
+              "code": "VN",
+              "capital": "Hanoi",
+              "iso_3": "VNM",
+              "calling_code": "+84"
+            },
+            {
+              "id": 77,
+              "country": "Australia",
+              "code": "AU",
+              "capital": "Canberra",
+              "iso_3": "AUS",
+              "calling_code": "+61"
+            },
+            {
+              "id": 78,
+              "country": "Fiji",
+              "code": "FJ",
+              "capital": "Suva",
+              "iso_3": "FJI",
+              "calling_code": "+679"
+            },
+            {
+              "id": 79,
+              "country": "Kiribati",
+              "code": "KI",
+              "capital": "Tarawa",
+              "iso_3": "KIR",
+              "calling_code": "+686"
+            },
+            {
+              "id": 80,
+              "country": "Micronesia",
+              "code": "FM",
+              "capital": "Palikir",
+              "iso_3": "FSM",
+              "calling_code": "+691"
+            },
+            {
+              "id": 81,
+              "country": "Nauru",
+              "code": "NR",
+              "capital": "Yaren",
+              "iso_3": "NRU",
+              "calling_code": "+674"
+            },
+            {
+              "id": 82,
+              "country": "New Zealand",
+              "code": "NZ",
+              "capital": "Wellington",
+              "iso_3": "NZL",
+              "calling_code": "+64"
+            },
+            {
+              "id": 83,
+              "country": "Palau",
+              "code": "PW",
+              "capital": "Ngerulmud",
+              "iso_3": "PLW",
+              "calling_code": "+680"
+            },
+            {
+              "id": 84,
+              "country": "Papua New Guinea",
+              "code": "PG",
+              "capital": "Port Moresby",
+              "iso_3": "PNG",
+              "calling_code": "+675"
+            },
+            {
+              "id": 85,
+              "country": "Samoa",
+              "code": "WS",
+              "capital": "Apia",
+              "iso_3": "WSM",
+              "calling_code": "+685"
+            },
+            {
+              "id": 86,
+              "country": "Tonga",
+              "code": "TO",
+              "capital": "Nuku'alofa",
+              "iso_3": "TON",
+              "calling_code": "+676"
+            },
+            {
+              "id": 87,
+              "country": "Tuvalu",
+              "code": "TV",
+              "capital": "Funafuti",
+              "iso_3": "TUV",
+              "calling_code": "+688"
+            },
+            {
+              "id": 88,
+              "country": "Vanuatu",
+              "code": "VU",
+              "capital": "Port Vila",
+              "iso_3": "VUT",
+              "calling_code": "+678"
+            },
+            {
+              "id": 89,
+              "country": "Anguilla",
+              "code": "AI",
+              "capital": "The Valley",
+              "iso_3": "AIA",
+              "calling_code": "+1-264"
+            },
+            {
+              "id": 90,
+              "country": "Antigua/Barbuda",
+              "code": "AG",
+              "capital": "Saint John's",
+              "iso_3": "ATG",
+              "calling_code": "+1-268"
+            },
+              {
+                "id": 91,
+                "country": "Aruba",
+                "code": "AW",
+                "capital": "Oranjestad",
+                "iso_3": "ABW",
+                "calling_code": "+297"
+              },
+              {
+                "id": 92,
+                "country": "Bahamas",
+                "code": "BS",
+                "capital": "Nassau",
+                "iso_3": "BHS",
+                "calling_code": "+1-242"
+              },
+              {
+                "id": 93,
+                "country": "Barbados",
+                "code": "BB",
+                "capital": "Bridgetown",
+                "iso_3": "BRB",
+                "calling_code": "+1-246"
+              },
+              {
+                "id": 94,
+                "country": "Cuba",
+                "code": "CU",
+                "capital": "Havana",
+                "iso_3": "CUB",
+                "calling_code": "+53"
+              },
+              {
+                "id": 95,
+                "country": "Dominica",
+                "code": "DM",
+                "capital": "Roseau",
+                "iso_3": "DMA",
+                "calling_code": "+1-767"
+              },
+              {
+                "id": 96,
+                "country": "Dominican Republic",
+                "code": "DO",
+                "capital": "Santo Domingo",
+                "iso_3": "DOM",
+                "calling_code": "+1-809"
+              },
+              {
+                "id": 97,
+                "country": "Grenada",
+                "code": "GD",
+                "capital": "St. George's",
+                "iso_3": "GRD",
+                "calling_code": "+1-473"
+              },
+              {
+                "id": 98,
+                "country": "Guadeloupe",
+                "code": "GP",
+                "capital": "Basse-Terre",
+                "iso_3": "GLP",
+                "calling_code": "+590"
+              },
+              {
+                "id": 99,
+                "country": "Haiti",
+                "code": "HT",
+                "capital": "Port-au-Prince",
+                "iso_3": "HTI",
+                "calling_code": "+509"
+              },
+              {
+                "id": 100,
+                "country": "Jamaica",
+                "code": "JM",
+                "capital": "Kingston",
+                "iso_3": "JAM",
+                "calling_code": "+1-876"
+              },
+              {
+                "id": 101,
+                "country": "Martinique",
+                "code": "MQ",
+                "capital": "Fort-de-France",
+                "iso_3": "MTQ",
+                "calling_code": "+596"
+              },
+              {
+                "id": 102,
+                "country": "Montserrat",
+                "code": "MS",
+                "capital": "Plymouth",
+                "iso_3": "MSR",
+                "calling_code": "+1-664"
+              },
+              {
+                "id": 103,
+                "country": "Netherlands Antilles",
+                "code": "AN",
+                "capital": "Willemstad",
+                "iso_3": "ANT",
+                "calling_code": "+599"
+              },
+              {
+                "id": 104,
+                "country": "Puerto Rico",
+                "code": "PR",
+                "capital": "San Juan",
+                "iso_3": "PRI",
+                "calling_code": "+1-787"
+              },
+              {
+                "id": 105,
+                "country": "St. Barts",
+                "code": "BL",
+                "capital": "Gustavia",
+                "iso_3": "BLM",
+                "calling_code": "+590"
+              },
+              {
+                "id": 106,
+                "country": "St. Kitts/Nevis",
+                "code": "KN",
+                "capital": "Basseterre",
+                "iso_3": "KNA",
+                "calling_code": "+1-869"
+              },
+              {
+                "id": 107,
+                "country": "St. Lucia",
+                "code": "LC",
+                "capital": "Castries",
+                "iso_3": "LCA",
+                "calling_code": "+1-758"
+              },
+              {
+                "id": 108,
+                "country": "St. Martin/Sint Maarten",
+                "code": "SX",
+                "capital": "Philipsburg",
+                "iso_3": "SXM",
+                "calling_code": "+1-721"
+              },
+              {
+                "id": 109,
+                "country": "St Vincent/Grenadines",
+                "code": "VC",
+                "capital": "Kingstown",
+                "iso_3": "VCT",
+                "calling_code": "+1-784"
+              },
+              {
+                "id": 110,
+                "country": "San Andres",
+                "code": "CO",
+                "capital": "San Andres",
+                "iso_3": "COL",
+                "calling_code": "+57"
+              },
+              {
+                "id": 111,
+                "country": "Trinidad/Tobago",
+                "code": "TT",
+                "capital": "Port of Spain",
+                "iso_3": "TTO",
+                "calling_code": "+1-868"
+              },
+              {
+                "id": 112,
+                "country": "Turks/Caicos",
+                "code": "TC",
+                "capital": "Cockburn Town",
+                "iso_3": "TCA",
+                "calling_code": "+1-649"
+              },
+              {
+                "id": 113,
+                "country": "Belize",
+                "code": "BZ",
+                "capital": "Belmopan",
+                "iso_3": "BLZ",
+                "calling_code": "+501"
+              },
+              {
+                "id": 114,
+                "country": "Costa Rica",
+                "code": "CR",
+                "capital": "San José",
+                "iso_3": "CRI",
+                "calling_code": "+506"
+              },
+              {
+                "id": 115,
+                "country": "El Salvador",
+                "code": "SV",
+                "capital": "San Salvador",
+                "iso_3": "SLV",
+                "calling_code": "+503"
+              },
+              {
+                "id": 116,
+                "country": "Guatemala",
+                "code": "GT",
+                "capital": "Guatemala City",
+                "iso_3": "GTM",
+                "calling_code": "+502"
+              },
+              {
+                "id": 117,
+                "country": "Honduras",
+                "code": "HN",
+                "capital": "Tegucigalpa",
+                "iso_3": "HND",
+                "calling_code": "+504"
+              },
+              {
+                "id": 118,
+                "country": "Nicaragua",
+                "code": "NI",
+                "capital": "Managua",
+                "iso_3": "NIC",
+                "calling_code": "+505"
+              },
+              {
+                "id": 119,
+                "country": "Panama",
+                "code": "PA",
+                "capital": "Panama City",
+                "iso_3": "PAN",
+                "calling_code": "+507"
+              },
+              {
+                "id": 120,
+                "country": "Albania",
+                "code": "AL",
+                "capital": "Tirana",
+                "iso_3": "ALB",
+                "calling_code": "+355"
+              },
+              {
+                "id": 121,
+                "country": "Andorra",
+                "code": "AD",
+                "capital": "Andorra la Vella",
+                "iso_3": "AND",
+                "calling_code": "+376"
+              },
+              {
+                "id": 122,
+                "country": "Austria",
+                "code": "AT",
+                "capital": "Vienna",
+                "iso_3": "AUT",
+                "calling_code": "+43"
+              },
+              
+              {
+                "id": 123,
+                "country": "Belarus",
+                "code": "BY",
+                "capital": "Minsk",
+                "iso_3": "BLR",
+                "calling_code": "+375"
+              },
+              {
+                "id": 124,
+                "country": "Belgium",
+                "code": "BE",
+                "capital": "Brussels",
+                "iso_3": "BEL",
+                "calling_code": "+32"
+              },
+              {
+                "id": 125,
+                "country": "Bosnia/Herzegovina",
+                "code": "BA",
+                "capital": "Sarajevo",
+                "iso_3": "BIH",
+                "calling_code": "+387"
+              },
+              {
+                "id": 126,
+                "country": "Bulgaria",
+                "code": "BG",
+                "capital": "Sofia",
+                "iso_3": "BGR",
+                "calling_code": "+359"
+              },
+              {
+                "id": 127,
+                "country": "Croatia",
+                "code": "HR",
+                "capital": "Zagreb",
+                "iso_3": "HRV",
+                "calling_code": "+385"
+              },
+              {
+                "id": 128,
+                "country": "Czech Republic",
+                "code": "CZ",
+                "capital": "Prague",
+                "iso_3": "CZE",
+                "calling_code": "+420"
+              },
+              {
+                "id": 129,
+                "country": "Denmark",
+                "code": "DK",
+                "capital": "Copenhagen",
+                "iso_3": "DNK",
+                "calling_code": "+45"
+              },
+              {
+                "id": 130,
+                "country": "Estonia",
+                "code": "EE",
+                "capital": "Tallinn",
+                "iso_3": "EST",
+                "calling_code": "+372"
+              },
+              {
+                "id": 131,
+                "country": "Finland",
+                "code": "FI",
+                "capital": "Helsinki",
+                "iso_3": "FIN",
+                "calling_code": "+358"
+              },
+              {
+                "id": 132,
+                "country": "France",
+                "code": "FR",
+                "capital": "Paris",
+                "iso_3": "FRA",
+                "calling_code": "+33"
+              },
+              {
+                "id": 133,
+                "country": "Georgia",
+                "code": "GE",
+                "capital": "Tbilisi",
+                "iso_3": "GEO",
+                "calling_code": "+995"
+              },
+              {
+                "id": 134,
+                "country": "Germany",
+                "code": "DE",
+                "capital": "Berlin",
+                "iso_3": "DEU",
+                "calling_code": "+49"
+              },
+              {
+                "id": 135,
+                "country": "Greece",
+                "code": "GR",
+                "capital": "Athens",
+                "iso_3": "GRC",
+                "calling_code": "+30"
+              },
+              {
+                "id": 136,
+                "country": "Hungary",
+                "code": "HU",
+                "capital": "Budapest",
+                "iso_3": "HUN",
+                "calling_code": "+36"
+              },
+              {
+                "id": 137,
+                "country": "Iceland",
+                "code": "IS",
+                "capital": "Reykjavik",
+                "iso_3": "ISL",
+                "calling_code": "+354"
+              },
+              {
+                "id": 138,
+                "country": "Ireland",
+                "code": "IE",
+                "capital": "Dublin",
+                "iso_3": "IRL",
+                "calling_code": "+353"
+              },
+              {
+                "id": 139,
+                "country": "Italy",
+                "code": "IT",
+                "capital": "Rome",
+                "iso_3": "ITA",
+                "calling_code": "+39"
+              },
+              {
+                "id": 140,
+                "country": "Latvia",
+                "code": "LV",
+                "capital": "Riga",
+                "iso_3": "LVA",
+                "calling_code": "+371"
+              },
+              {
+                "id": 141,
+                "country": "Liechtenstein",
+                "code": "LI",
+                "capital": "Vaduz",
+                "iso_3": "LIE",
+                "calling_code": "+423"
+              },
+              {
+                "id": 142,
+                "country": "Lithuania",
+                "code": "LT",
+                "capital": "Vilnius",
+                "iso_3": "LTU",
+                "calling_code": "+370"
+              },
+              {
+                "id": 143,
+                "country": "Luxembourg",
+                "code": "LU",
+                "capital": "Luxembourg City",
+                "iso_3": "LUX",
+                "calling_code": "+352"
+              },
+              {
+                "id": 144,
+                "country": "Macedonia",
+                "code": "MK",
+                "capital": "Skopje",
+                "iso_3": "MKD",
+                "calling_code": "+389"
+              },
+              {
+                "id": 145,
+                "country": "Malta",
+                "code": "MT",
+                "capital": "Valletta",
+                "iso_3": "MLT",
+                "calling_code": "+356"
+              },
+              {
+                "id": 146,
+                "country": "Moldova",
+                "code": "MD",
+                "capital": "Chisinau",
+                "iso_3": "MDA",
+                "calling_code": "+373"
+              },
+              {
+                "id": 147,
+                "country": "Monaco",
+                "code": "MC",
+                "capital": "Monaco",
+                "iso_3": "MCO",
+                "calling_code": "+377"
+              },
+              {
+                "id": 148,
+                "country": "Netherlands",
+                "code": "NL",
+                "capital": "Amsterdam",
+                "iso_3": "NLD",
+                "calling_code": "+31"
+              },
+              {
+                "id": 149,
+                "country": "Norway",
+                "code": "NO",
+                "capital": "Oslo",
+                "iso_3": "NOR",
+                "calling_code": "+47"
+              },
+              {
+                "id": 150,
+                "country": "Poland",
+                "code": "PL",
+                "capital": "Warsaw",
+                "iso_3": "POL",
+                "calling_code": "+48"
+              },
+              {
+                "id": 151,
+                "country": "Portugal",
+                "code": "PT",
+                "capital": "Lisbon",
+                "iso_3": "PRT",
+                "calling_code": "+351"
+              },
+              {
+                "id": 152,
+                "country": "Romania",
+                "code": "RO",
+                "capital": "Bucharest",
+                "iso_3": "ROU",
+                "calling_code": "+40"
+              },
+              {
+                "id": 153,
+                "country": "San Marino",
+                "code": "SM",
+                "capital": "San Marino",
+                "iso_3": "SMR",
+                "calling_code": "+378"
+              },
+              {
+                "id": 154,
+                "country": "Serbia/Montenegro (Yugoslavia)",
+                "code": "CS",
+                "capital": "Belgrade",
+                "iso_3": "SCG",
+                "calling_code": "+381"
+              },
+              {
+                "id": 155,
+                "country": "Slovakia",
+                "code": "SK",
+                "capital": "Bratislava",
+                "iso_3": "SVK",
+                "calling_code": "+421"
+              },
+              {
+                "id": 156,
+                "country": "Slovenia",
+                "code": "SI",
+                "capital": "Ljubljana",
+                "iso_3": "SVN",
+                "calling_code": "+386"
+              },
+              {
+                "id": 157,
+                "country": "Spain",
+                "code": "ES",
+                "capital": "Madrid",
+                "iso_3": "ESP",
+                "calling_code": "+34"
+              },
+              {
+                "id": 158,
+                "country": "Sweden",
+                "code": "SE",
+                "capital": "Stockholm",
+                "iso_3": "SWE",
+                "calling_code": "+46"
+              },
+              {
+                "id": 159,
+                "country": "Switzerland",
+                "code": "CH",
+                "capital": "Bern",
+                "iso_3": "CHE",
+                "calling_code": "+41"
+              },
+              {
+                "id": 160,
+                "country": "Ukraine",
+                "code": "UA",
+                "capital": "Kyiv",
+                "iso_3": "UKR",
+                "calling_code": "+380"
+              },
+              {
+                "id": 161,
+                "country": "United Kingdom",
+                "code": "GB",
+                "capital": "London",
+                "iso_3": "GBR",
+                "calling_code": "+44"
+              },
+              {
+                "id": 162,
+                "country": "Vatican City",
+                "code": "VA",
+                "capital": "Vatican City",
+                "iso_3": "VAT",
+                "calling_code": "+379"
+              },
+              {
+                "id": 163,
+                "country": "Arctic Ocean",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+672"
+              },
+              {
+                "id": 164,
+                "country": "Atlantic Ocean (North)",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 165,
+                "country": "Atlantic Ocean (South)",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 166,
+                "country": "Assorted",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 167,
+                "country": "Caribbean Sea",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 168,
+                "country": "Greek Isles",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 169,
+                "country": "Indian Ocean",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 170,
+                "country": "Mediterranean Sea",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 171,
+                "country": "Oceania",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 172,
+                "country": "Pacific Ocean (North)",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 173,
+                "country": "Pacific Ocean (South)",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 174,
+                "country": "Afghanistan",
+                "code": "AF",
+                "capital": "Kabul",
+                "iso_3": "AFG",
+                "calling_code": "+93"
+              },
+              {
+                "id": 175,
+                "country": "Armenia",
+                "code": "AM",
+                "capital": "Yerevan",
+                "iso_3": "ARM",
+                "calling_code": "+374"
+              },
+              {
+                "id": 176,
+                "country": "Azerbaijan",
+                "code": "AZ",
+                "capital": "Baku",
+                "iso_3": "AZE",
+                "calling_code": "+994"
+              },
+              {
+                "id": 177,
+                "country": "Bahrain",
+                "code": "BH",
+                "capital": "Manama",
+                "iso_3": "BHR",
+                "calling_code": "+973"
+              },
+              {
+                "id": 178,
+                "country": "Cyprus",
+                "code": "CY",
+                "capital": "Nicosia",
+                "iso_3": "CYP",
+                "calling_code": "+357"
+              },
+              {
+                "id": 179,
+                "country": "Iran",
+                "code": "IR",
+                "capital": "Tehran",
+                "iso_3": "IRN",
+                "calling_code": "+98"
+              },
+              {
+                "id": 180,
+                "country": "Iraq",
+                "code": "IQ",
+                "capital": "Baghdad",
+                "iso_3": "IRQ",
+                "calling_code": "+964"
+              },
+              {
+                "id": 181,
+                "country": "Israel",
+                "code": "IL",
+                "capital": "Jerusalem",
+                "iso_3": "ISR",
+                "calling_code": "+972"
+              },
+              {
+                "id": 182,
+                "country": "Jordan",
+                "code": "JO",
+                "capital": "Amman",
+                "iso_3": "JOR",
+                "calling_code": "+962"
+              },
+              {
+                "id": 183,
+                "country": "Kuwait",
+                "code": "KW",
+                "capital": "Kuwait City",
+                "iso_3": "KWT",
+                "calling_code": "+965"
+              },
+              {
+                "id": 184,
+                "country": "Kyrgyzstan",
+                "code": "KG",
+                "capital": "Bishkek",
+                "iso_3": "KGZ",
+                "calling_code": "+996"
+              },
+              {
+                "id": 185,
+                "country": "Lebanon",
+                "code": "LB",
+                "capital": "Beirut",
+                "iso_3": "LBN",
+                "calling_code": "+961"
+              },
+              {
+                "id": 186,
+                "country": "Oman",
+                "code": "OM",
+                "capital": "Muscat",
+                "iso_3": "OMN",
+                "calling_code": "+968"
+              },
+              {
+                "id": 187,
+                "country": "Pakistan",
+                "code": "PK",
+                "capital": "Islamabad",
+                "iso_3": "PAK",
+                "calling_code": "+92"
+              },
+              {
+                "id": 188,
+                "country": "Qatar",
+                "code": "QA",
+                "capital": "Doha",
+                "iso_3": "QAT",
+                "calling_code": "+974"
+              },
+              {
+                "id": 189,
+                "country": "Saudi Arabia",
+                "code": "SA",
+                "capital": "Riyadh",
+                "iso_3": "SAU",
+                "calling_code": "+966"
+              },
+              {
+                "id": 190,
+                "country": "Syria",
+                "code": "SY",
+                "capital": "Damascus",
+                "iso_3": "SYR",
+                "calling_code": "+963"
+              },
+              {
+                "id": 191,
+                "country": "Tajikistan",
+                "code": "TJ",
+                "capital": "Dushanbe",
+                "iso_3": "TJK",
+                "calling_code": "+992"
+              },
+              {
+                "id": 192,
+                "country": "Turkey",
+                "code": "TR",
+                "capital": "Ankara",
+                "iso_3": "TUR",
+                "calling_code": "+90"
+              },
+              {
+                "id": 193,
+                "country": "Turkmenistan",
+                "code": "TM",
+                "capital": "Ashgabat",
+                "iso_3": "TKM",
+                "calling_code": "+993"
+              },
+              {
+                "id": 194,
+                "country": "United Arab Emirates",
+                "code": "AE",
+                "capital": "Abu Dhabi",
+                "iso_3": "ARE",
+                "calling_code": "+971"
+              },
+              {
+                "id": 195,
+                "country": "Uzbekistan",
+                "code": "UZ",
+                "capital": "Tashkent",
+                "iso_3": "UZB",
+                "calling_code": "+998"
+              },
+              {
+                "id": 196,
+                "country": "Yemen",
+                "code": "YE",
+                "capital": "Sanaa",
+                "iso_3": "YEM",
+                "calling_code": "+967"
+              },
+              {
+                "id": 197,
+                "country": "Bermuda",
+                "code": "BM",
+                "capital": "Hamilton",
+                "iso_3": "BMU",
+                "calling_code": "+1-441"
+              },
+              {
+                "id": 198,
+                "country": "Canada",
+                "code": "CA",
+                "capital": "Ottawa",
+                "iso_3": "CAN",
+                "calling_code": "+1"
+              },
+              {
+                "id": 199,
+                "country": "Caribbean",
+                "code": "",
+                "capital": "NN",
+                "iso_3": "",
+                "calling_code": "+00"
+              },
+              {
+                "id": 200,
+                "country": "Mexico",
+                "code": "MX",
+                "capital": "Mexico City",
+                "iso_3": "MEX",
+                "calling_code": "+52"
+              },
+              {
+                "id": 201,
+                "country": "United States",
+                "code": "US",
+                "capital": "Washington, D.C.",
+                "iso_3": "USA",
+                "calling_code": "+1"
+              },
+              {
+                "id": 202,
+                "country": "Argentina",
+                "code": "AR",
+                "capital": "Buenos Aires",
+                "iso_3": "ARG",
+                "calling_code": "+54"
+              },
+              {
+                "id": 203,
+                "country": "Bolivia",
+                "code": "BO",
+                "capital": "Sucre",
+                "iso_3": "BOL",
+                "calling_code": "+591"
+              },
+              {
+                "id": 204,
+                "country": "Brazil",
+                "code": "BR",
+                "capital": "Brasília",
+                "iso_3": "BRA",
+                "calling_code": "+55"
+              },
+              {
+                "id": 205,
+                "country": "Chile",
+                "code": "CL",
+                "capital": "Santiago",
+                "iso_3": "CHL",
+                "calling_code": "+56"
+              },
+              {
+                "id": 206,
+                "country": "Colombia",
+                "code": "CO",
+                "capital": "Bogotá",
+                "iso_3": "COL",
+                "calling_code": "+57"
+              },
+              {
+                "id": 207,
+                "country": "Ecuador",
+                "code": "EC",
+                "capital": "Quito",
+                "iso_3": "ECU",
+                "calling_code": "+593"
+              },
+              {
+                "id": 208,
+                "country": "Guyana",
+                "code": "GY",
+                "capital": "Georgetown",
+                "iso_3": "GUY",
+                "calling_code": "+592"
+              },
+              {
+                "id": 209,
+                "country": "Paraguay",
+                "code": "PY",
+                "capital": "Asunción",
+                "iso_3": "PRY",
+                "calling_code": "+595"
+              },
+              {
+                "id": 210,
+                "country": "Peru",
+                "code": "PE",
+                "capital": "Lima",
+                "iso_3": "PER",
+                "calling_code": "+51"
+              },
+              {
+                "id": 211,
+                "country": "Suriname",
+                "code": "SR",
+                "capital": "Paramaribo",
+                "iso_3": "SUR",
+                "calling_code": "+597"
+              },
+              {
+                "id": 212,
+                "country": "Uruguay",
+                "code": "UY",
+                "capital": "Montevideo",
+                "iso_3": "URY",
+                "calling_code": "+598"
+              },
+              {
+                "id": 213,
+                "country": "Venezuela",
+                "code": "VE",
+                "capital": "Caracas",
+                "iso_3": "VEN",
+                "calling_code": "+58"
+              }
+  ]

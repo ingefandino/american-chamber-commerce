@@ -1,0 +1,442 @@
+[
+  {
+    "id": 1,
+    "title": "2025 Annual Gala",
+    "slug": "annual-gala",
+    "date": "2025-10-21",
+    "month": "Oct",
+    "day": "21",
+    "time": {
+      "start": "07:00 p.m.",
+      "end": "11:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "New York City",
+      "venue": null,
+      "address": null
+    },
+    "language": "en",
+    "modality": "hybrid",
+    "event_type": "Gala",
+    "tickets": [],
+    "description": "Annual Gala event organized by Spain-US Chamber of Commerce. More details to be announced.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Register Now",
+      "url": "/events/annual-gala"
+    },
+    "image": "/media/events/annual-gala-banner.jpg"
+  },
+  {
+    "id": 2,
+    "title": "2024 Global Tech Summit",
+    "slug": "global-tech-summit",
+    "date": "2024-05-15",
+    "month": "May",
+    "day": "15",
+    "time": {
+      "start": "09:00 a.m.",
+      "end": "05:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "San Francisco",
+      "venue": "Moscone Center",
+      "address": "747 Howard St, San Francisco, CA"
+    },
+    "language": "en",
+    "modality": "in_person",
+    "event_type": "Conference",
+    "tickets": [],
+    "description": "An international summit focusing on the latest advancements in technology and innovation.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "View Details",
+      "url": "/events/global-tech-summit"
+    },
+    "image": "/media/events/global-tech-summit.jpg"
+  },
+  {
+    "id": 3,
+    "title": "2023 Culinary Innovation Awards",
+    "slug": "culinary-innovation-awards",
+    "date": "2023-11-10",
+    "month": "Nov",
+    "day": "10",
+    "time": {
+      "start": "06:30 p.m.",
+      "end": "10:30 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "Paris",
+      "venue": "Le Grand Palais",
+      "address": "3 Avenue du Général Eisenhower, 75008 Paris, France"
+    },
+    "language": "fr",
+    "modality": "in_person",
+    "event_type": "Awards",
+    "tickets": [],
+    "description": "Celebrating innovation in the culinary industry with chefs from around the globe.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Discover More",
+      "url": "/events/culinary-innovation-awards"
+    },
+    "image": "/media/events/culinary-innovation-awards.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Latin American Business Forum",
+    "slug": "latin-american-business-forum",
+    "date": "2025-03-22",
+    "month": "Mar",
+    "day": "22",
+    "time": {
+      "start": "08:00 a.m.",
+      "end": "02:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "Miami",
+      "venue": "Miami Convention Center",
+      "address": "400 SE 2nd Ave, Miami, FL"
+    },
+    "language": "es",
+    "modality": "hybrid",
+    "event_type": "Forum",
+    "tickets": [],
+    "description": "Business leaders from Latin America and the United States discuss trade and economic opportunities.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Register Now",
+      "url": "/events/latin-american-business-forum"
+    },
+    "image": "/media/events/latin-american-business-forum.jpg"
+  },
+  {
+    "id": 5,
+    "title": "2024 Future of Education Conference",
+    "slug": "future-of-education",
+    "date": "2024-02-10",
+    "month": "Feb",
+    "day": "10",
+    "time": {
+      "start": "10:00 a.m.",
+      "end": "04:00 p.m.",
+      "timezone": "CET"
+    },
+    "location": {
+      "city": "Berlin",
+      "venue": "CityCube Berlin",
+      "address": "Messedamm 26, 14055 Berlin, Germany"
+    },
+    "language": "de",
+    "modality": "online",
+    "event_type": "Conference",
+    "tickets": [],
+    "description": "Exploring the role of technology and innovation in transforming education systems worldwide.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Join Online",
+      "url": "/events/future-of-education"
+    },
+    "image": "/media/events/future-of-education.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Sustainability & Climate Forum",
+    "slug": "sustainability-climate-forum",
+    "date": "2023-09-05",
+    "month": "Sep",
+    "day": "05",
+    "time": {
+      "start": "09:30 a.m.",
+      "end": "05:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "Toronto",
+      "venue": "Metro Toronto Convention Centre",
+      "address": "255 Front St W, Toronto, ON, Canada"
+    },
+    "language": "en",
+    "modality": "in_person",
+    "event_type": "Forum",
+    "tickets": [],
+    "description": "A global platform for discussions on climate change, sustainability, and green technologies.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Explore More",
+      "url": "/events/sustainability-climate-forum"
+    },
+    "image": "/media/events/sustainability-climate-forum.jpg"
+  },
+  {
+    "id": 7,
+    "title": "2025 Healthcare Innovation Expo",
+    "slug": "healthcare-innovation-expo",
+    "date": "2025-12-08",
+    "month": "Dec",
+    "day": "08",
+    "time": {
+      "start": "08:00 a.m.",
+      "end": "06:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "Chicago",
+      "venue": "McCormick Place",
+      "address": "2301 S King Dr, Chicago, IL"
+    },
+    "language": "en",
+    "modality": "in_person",
+    "event_type": "Expo",
+    "tickets": [],
+    "description": "Showcasing cutting-edge healthcare solutions and innovations for hospitals and professionals.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Learn More",
+      "url": "/events/healthcare-innovation-expo"
+    },
+    "image": "/media/events/healthcare-innovation-expo.jpg"
+  },
+  {
+    "id": 8,
+    "title": "2022 International Film Festival",
+    "slug": "international-film-festival",
+    "date": "2022-07-19",
+    "month": "Jul",
+    "day": "19",
+    "time": {
+      "start": "06:00 p.m.",
+      "end": "11:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "Los Angeles",
+      "venue": "Dolby Theatre",
+      "address": "6801 Hollywood Blvd, Los Angeles, CA"
+    },
+    "language": "en",
+    "modality": "in_person",
+    "event_type": "Festival",
+    "tickets": [],
+    "description": "An annual festival celebrating cinema from around the world with red-carpet premieres.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "See Highlights",
+      "url": "/events/international-film-festival"
+    },
+    "image": "/media/events/international-film-festival.jpg"
+  },
+  {
+    "id": 9,
+    "title": "2023 Artificial Intelligence Summit",
+    "slug": "ai-summit",
+    "date": "2023-04-03",
+    "month": "Apr",
+    "day": "03",
+    "time": {
+      "start": "09:00 a.m.",
+      "end": "06:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "London",
+      "venue": "ExCeL London",
+      "address": "Royal Victoria Dock, 1 Western Gateway, London E16 1XL, UK"
+    },
+    "language": "en",
+    "modality": "hybrid",
+    "event_type": "Summit",
+    "tickets": [],
+    "description": "Industry experts discuss the impact of AI in business, healthcare, and daily life.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Watch Sessions",
+      "url": "/events/ai-summit"
+    },
+    "image": "/media/events/ai-summit.jpg"
+  },
+  {
+    "id": 10,
+    "title": "2024 Blockchain World Congress",
+    "slug": "blockchain-world-congress",
+    "date": "2024-11-12",
+    "month": "Nov",
+    "day": "12",
+    "time": {
+      "start": "08:00 a.m.",
+      "end": "05:00 p.m.",
+      "timezone": "CET"
+    },
+    "location": {
+      "city": "Madrid",
+      "venue": "IFEMA Madrid",
+      "address": "Av. del Partenón, 5, 28042 Madrid, Spain"
+    },
+    "language": "es",
+    "modality": "in_person",
+    "event_type": "Congress",
+    "tickets": [],
+    "description": "A global congress bringing blockchain leaders together to explore opportunities and challenges.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Attend Now",
+      "url": "/events/blockchain-world-congress"
+    },
+    "image": "/media/events/blockchain-world-congress.jpg"
+  },
+  {
+    "id": 11,
+    "title": "2022 Digital Marketing Bootcamp",
+    "slug": "digital-marketing-bootcamp",
+    "date": "2022-03-18",
+    "month": "Mar",
+    "day": "18",
+    "time": {
+      "start": "10:00 a.m.",
+      "end": "04:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "Boston",
+      "venue": "Hynes Convention Center",
+      "address": "900 Boylston St, Boston, MA"
+    },
+    "language": "en",
+    "modality": "online",
+    "event_type": "Workshop",
+    "tickets": [],
+    "description": "An intensive bootcamp for marketing professionals to sharpen their digital skills.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Start Learning",
+      "url": "/events/digital-marketing-bootcamp"
+    },
+    "image": "/media/events/digital-marketing-bootcamp.jpg"
+  },
+  {
+    "id": 12,
+    "title": "Latin America, the United States, and Spain in the Global Economy Forum",
+    "slug": "global-economy-forum",
+    "date": "2025-11-24",
+    "month": "Nov",
+    "day": "24",
+    "time": {
+      "start": "08:00 a.m.",
+      "end": "01:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "New York City",
+      "venue": "Instituto Cervantes",
+      "address": "211 East 49th Street, New York City"
+    },
+    "language": "es",
+    "modality": "in_person",
+    "event_type": "Forum",
+    "tickets": [
+      {
+        "type": "Socios",
+        "price": 100,
+        "currency": "USD"
+      },
+      {
+        "type": "No Socios",
+        "price": 200,
+        "currency": "USD"
+      }
+    ],
+    "description": "The forum will gather influential business leaders from Latin America, the United States, and Spain. Attendees will include top executives from the private sector, government officials, fund managers, financial analysts, journalists, and academics. The event offers a unique opportunity to explore key insights into the current economic landscape and future outlook of these three regions.\n\nKeynote address to be delivered by Carlos Cuerpo, Minister of Economy, Trade, and Business of Spain.\n\nFurther conference details will be coming soon.",
+    "speakers": [
+      {
+        "name": "Carlos Cuerpo",
+        "title": "Minister of Economy, Trade, and Business of Spain",
+        "organization": "Government of Spain",
+        "role": "Keynote Speaker",
+        "photo": "/media/speakers/carlos-cuerpo.jpg"
+      },
+      {
+        "name": "Jaime Muguiro",
+        "title": "CEO",
+        "organization": "CEMEX",
+        "photo": "/media/speakers/jaime-muguiro.jpg"
+      },
+      {
+        "name": "Daniel Muñiz",
+        "title": "Board Member",
+        "organization": "Brookfield Infrastructure Corporation",
+        "photo": "/media/speakers/daniel-muniz.jpg"
+      },
+      {
+        "name": "Javier Rodríguez Soler",
+        "title": "Head of Sustainability and CIB",
+        "organization": "BBVA",
+        "photo": "/media/speakers/javier-rodriguez-soler.jpg"
+      }
+    ],
+    "sponsors": [
+      {
+        "name": "Auxadi",
+        "logo": "/media/sponsors/auxadi.png"
+      },
+      {
+        "name": "BBVA",
+        "logo": "/media/sponsors/bbva.png"
+      },
+      {
+        "name": "DLA Piper",
+        "logo": "/media/sponsors/dla-piper.png"
+      }
+    ],
+    "cta": {
+      "label": "Regístrate",
+      "url": "/events/global-economy-forum"
+    },
+    "image": "/media/events/global-economy-forum-banner.jpg"
+  },
+  {
+    "id": 13,
+    "title": "First Gastronomic Excellence Awards",
+    "slug": "gastronomic-excellence-awards",
+    "date": "2025-09-10",
+    "month": "Sep",
+    "day": "10",
+    "time": {
+      "start": "06:00 p.m.",
+      "end": "10:00 p.m.",
+      "timezone": "ET"
+    },
+    "location": {
+      "city": "New York City",
+      "venue": null,
+      "address": null
+    },
+    "language": "en",
+    "modality": "in_person",
+    "event_type": "Gala",
+    "tickets": [],
+    "description": "First Gastronomic Excellence Awards recognizing innovation and leadership in the culinary industry.",
+    "speakers": [],
+    "sponsors": [],
+    "cta": {
+      "label": "Register Now",
+      "url": "/events/gastronomic-excellence-awards"
+    },
+    "image": "/media/events/gastronomic-awards-banner.jpg"
+  }
+]

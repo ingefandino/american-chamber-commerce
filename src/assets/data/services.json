@@ -1,0 +1,36 @@
+{
+  "services": [
+    {
+      "name": "Market Research",
+      "description": "We offer market research tailored to the needs of companies."
+    },
+    {
+      "name": "Market Information",
+      "description": "We provide technical support and updated information on the Spanish and American markets."
+    },
+    {
+      "name": "Business Center",
+      "description": "Chamber partners have access to meeting rooms and workspaces in our US offices."
+    },
+    {
+      "name": "Promotion and Marketing",
+      "description": "We provide our partners with marketing videos tailored to their needs to enhance the potential growth of their products and services."
+    },
+    {
+      "name": "Trade Missions",
+      "description": "We help companies in their expansion strategies, connecting them with the best commercial partners."
+    },
+    {
+      "name": "Trade Fair and Congress Advisory",
+      "description": "We guide companies in attending fairs, congresses and events. We facilitate connections with new clients and the planning of business meetings."
+    },
+    {
+      "name": "FDA Agent",
+      "description": "The Chamber offers registration and agent services before the US FDA on behalf of Spanish companies."
+    },
+    {
+      "name": "Publications",
+      "description": "We offer publications of interest to the business community of Spain and the United States."
+    }
+  ]
+}

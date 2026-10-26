@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Reunión de la comunidad",
+    "expanded": false,
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Reunión de la comunidad"
+      },
+      {
+        "type": "path",
+        "pathUrl": "/events",
+        "linkText": "Regístrate"
+      }
+    ]
+  }
+]

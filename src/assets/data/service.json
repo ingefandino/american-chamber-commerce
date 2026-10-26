@@ -1,0 +1,28 @@
+{
+  "services": [
+    {
+      "title": "Brand Strengthening and Business Relations",
+      "description": "We organize meetings and gatherings that strengthen your company's positioning."
+    },
+    {
+      "title": "Business Meeting Point",
+      "description": "With more than 70 events per year, the Spain-U.S. Chamber of Commerce regularly brings together the Spanish and American business community."
+    },
+    {
+      "title": "Executive Roundtables",
+      "description": "We organize exclusive meetings with top executives in all types of areas."
+    },
+    {
+      "title": "Trade and Investment",
+      "description": "We advise a large number of multinational companies in their expansion plans."
+    },
+    {
+      "title": "Business Intelligence",
+      "description": "We offer programs focused on artificial intelligence, sustainability, talent, DE&I (diversity, equity and inclusion) and more."
+    },
+    {
+      "title": "Employment and Visas",
+      "description": "You will be able to access our job portal and have priority in J-1 visa processing."
+    }
+  ]
+}

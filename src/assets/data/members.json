@@ -1,0 +1,99 @@
+{
+  "partners": [
+    {
+      "type_member": "bronze",
+      "name": "Iberian Foods Export",
+      "website": "iberianfoodsexport.com"
+    },
+    {
+      "type_member": "bronze",
+      "name": "Mediterranean Olive Oils",
+      "website": "medoliveoils.com"
+    },
+    {
+      "type_member": "bronze",
+      "name": "Spanish Wine Traders",
+      "website": "spanishwinetraders.com"
+    },
+    {
+      "type_member": "bronze",
+      "name": "Barcelona Tech Solutions",
+      "website": "barcelonatechsolutions.es"
+    },
+    {
+      "type_member": "bronze",
+      "name": "Madrid Consulting Group",
+      "website": "madridconsultinggroup.es"
+    },
+    {
+      "type_member": "bronze",
+      "name": "Andalusian Agricultural Products",
+      "website": "andalusianagro.com"
+    },
+    {
+      "type_member": "bronze",
+      "name": "Valencia Citrus Export",
+      "website": "valenciacitrusexport.com"
+    },
+    {
+      "type_member": "gold",
+      "name": "1st Commercial Credit, LLC",
+      "website": "1stcommercialcredit.com"
+    },
+    {
+      "type_member": "gold",
+      "name": "Global Shipping Partners",
+      "website": "globalshippingpartners.com"
+    },
+    {
+      "type_member": "gold",
+      "name": "Iberia-US Trade Alliance",
+      "website": "iberiaustrade.com"
+    },
+    {
+      "type_member": "gold",
+      "name": "Spanish Automotive Exports",
+      "website": "spanishautoexports.com"
+    },
+    {
+      "type_member": "gold",
+      "name": "Euro-American Banking Group",
+      "website": "euroamericanbanking.com"
+    },
+    {
+      "type_member": "gold",
+      "name": "Mediterranean Logistics Corp",
+      "website": "medlogisticscorp.com"
+    },
+    {
+      "type_member": "platinum",
+      "name": "Santander Global Markets",
+      "website": "santanderglobalmarkets.com"
+    },
+    {
+      "type_member": "platinum",
+      "name": "Telefónica International",
+      "website": "telefonicainternational.com"
+    },
+    {
+      "type_member": "platinum",
+      "name": "Iberdrola Energy Solutions",
+      "website": "iberdrolaenergysolutions.com"
+    },
+    {
+      "type_member": "platinum",
+      "name": "BBVA Transatlantic Banking",
+      "website": "bbvatransatlantic.com"
+    },
+    {
+      "type_member": "platinum",
+      "name": "Inditex Fashion Group",
+      "website": "inditexfashiongroup.com"
+    },
+    {
+      "type_member": "platinum",
+      "name": "Mapfre Insurance Global",
+      "website": "mapfreinsuranceglobal.com"
+    }
+  ]
+}
