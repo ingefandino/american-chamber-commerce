@@ -417,7 +417,7 @@ Como visitante, quiero volver rápidamente al inicio de la página después de h
 
 ### ACC-026 — Agregar favicon institucional
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-002, ACC-005
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-002, ACC-005
 
 Como visitante, quiero identificar la web de American Chamber en la pestaña y favoritos del navegador.
 
@@ -434,13 +434,32 @@ Como visitante, quiero identificar la web de American Chamber en la pestaña y f
 - Se agrega una prueba o smoke test que verifique la referencia del favicon.
 - La historia queda lista para `Done` después de ejecutar tests y build.
 
+### ACC-027 — Preservar la posición de scroll al cambiar de idioma
+
+**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-004, ACC-006
+
+Como visitante, quiero conservar mi posición de lectura cuando cambio entre inglés y español.
+
+**Alcance exclusivo:** preservar y restaurar la posición de scroll al usar `LanguageSwitcher`, incluyendo navegación normal y transiciones de Astro. No modificar el contenido ni la estructura de las páginas.
+
+**Aceptación:**
+
+- Si el usuario cambia de idioma desde el footer, permanece aproximadamente en la misma zona equivalente de la página.
+- Si cambia desde cualquier otra posición, la nueva página restaura la posición correspondiente sin enviarlo automáticamente al inicio.
+- Si la página equivalente no existe o tiene una estructura incompatible, se aplica un fallback seguro y se documenta el comportamiento.
+- El cambio de idioma sigue funcionando con JavaScript desactivado, aunque la restauración avanzada de scroll dependa de JavaScript.
+- La restauración no genera saltos visibles, loops de navegación ni pérdida del foco del control activado.
+- Se respeta `prefers-reduced-motion`; no se fuerza desplazamiento animado cuando está activo.
+- Se cubren con pruebas la navegación desde la parte superior, mitad de página y footer, en inglés y español.
+- La historia queda lista para `Done` después de ejecutar tests, build y smoke test de navegación multidioma.
+
 ## Orden recomendado
 
 1. ACC-001 a ACC-005: base, pruebas e idiomas.
 2. ACC-006 a ACC-010: navegación, animaciones, slider y home.
 3. ACC-011 a ACC-013: membresías y primer formulario real.
 4. ACC-014 a ACC-020: capacidades editoriales y de comunidad, una por una.
-5. ACC-021 a ACC-026: endurecimiento, SEO, accesos rápidos, identidad y publicación.
+5. ACC-021 a ACC-027: endurecimiento, SEO, accesos rápidos, identidad, experiencia multidioma y publicación.
 
 ## Regla de rollback
 

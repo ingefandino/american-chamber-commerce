@@ -120,6 +120,10 @@ const files = await walk(dist);
 const pages = htmlFiles(files);
 const builtRoutes = new Set(pages.map(routeOf));
 
+for (const asset of ["favicon.svg", "favicon.ico", "apple-touch-icon.png"]) {
+  assert(existsSync(join(dist, asset)), `Missing favicon asset: ${asset}`);
+}
+
 for (const route of expectedRoutes) {
   assert(builtRoutes.has(route), `Missing expected route: ${route}`);
 }
@@ -170,6 +174,14 @@ for (const file of pages) {
   assert(
     /rel="apple-touch-icon"/.test(html),
     `${route}: missing apple touch icon`,
+  );
+  assert(
+    /rel="icon"[^>]+href="\/favicon\.svg"/.test(html),
+    `${route}: missing favicon`,
+  );
+  assert(
+    /rel="alternate icon"[^>]+href="\/favicon\.ico"/.test(html),
+    `${route}: missing favicon fallback`,
   );
 
   for (const property of [
