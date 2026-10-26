@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import EventRegistrationForm from "@components/forms/EventRegistrationForm.astro";
 import {
   formatEventDate,
   formatEventEndTime,
@@ -39,6 +40,14 @@ const text = {
     timezone: "Time zone",
     status: "Status",
     cta: "Ask about this event",
+    formTitle: "Ask about this event",
+    formText:
+      "This event has passed. Use this form to ask the Chamber about the program or future editions.",
+    formTitleUpcoming: "Register or request information",
+    formTextUpcoming:
+      "Use this form to register your interest or ask a question about this event. We will confirm availability by email.",
+    closed:
+      "Registration is not available because this event is cancelled or sold out.",
     review:
       "This is an archived event listing under editorial review. Confirm details with the Chamber before relying on them.",
   },
@@ -51,6 +60,14 @@ const text = {
     timezone: "Zona horaria",
     status: "Estado",
     cta: "Consultar por este evento",
+    formTitle: "Consultar por este evento",
+    formText:
+      "Este evento ya pasó. Usa este formulario para consultar a la Cámara sobre el programa o futuras ediciones.",
+    formTitleUpcoming: "Registrarme o solicitar información",
+    formTextUpcoming:
+      "Usa este formulario para registrar tu interés o hacer una pregunta sobre este evento. Confirmaremos la disponibilidad por correo.",
+    closed:
+      "El registro no está disponible porque este evento fue cancelado o está agotado.",
     review:
       "Este es un registro archivado en revisión editorial. Confirma los detalles con la Cámara antes de utilizarlos.",
   },
@@ -86,6 +103,27 @@ const mailto = `${SITE.contact.emailHref}?subject=${encodeURIComponent(
         )}
 
         <a class="btn btn--primary" href={mailto}>{event.ctaLabel[lang]}</a>
+
+        <section class="event-registration" aria-labelledby="event-form-title">
+          <h2 id="event-form-title">
+            {event.status === "past" ? text.formTitle : text.formTitleUpcoming}
+          </h2>
+          <p>
+            {event.status === "past" ? text.formText : text.formTextUpcoming}
+          </p>
+          {event.status === "cancelled" ||
+          event.status === "sold-out" ||
+          event.status === "retired" ? (
+            <p class="callout">{text.closed}</p>
+          ) : (
+            <EventRegistrationForm
+              lang={lang}
+              eventSlug={event.slug}
+              eventTitle={event.title[lang]}
+              mode={event.status === "past" ? "information" : "registration"}
+            />
+          )}
+        </section>
       </div>
 
       <aside class="event-aside card">
@@ -141,6 +179,21 @@ const mailto = `${SITE.contact.emailHref}?subject=${encodeURIComponent(
   .event-review {
     margin: 0 0 1.5rem;
     font-size: var(--text-sm);
+  }
+
+  .event-registration {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .event-registration h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .event-registration > p {
+    max-width: 62ch;
+    color: var(--color-muted);
   }
 
   .event-aside {

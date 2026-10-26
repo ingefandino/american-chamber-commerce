@@ -13,8 +13,8 @@ export interface MembershipFormValues {
 
 export type MembershipField = keyof MembershipFormValues;
 
-export interface FormError {
-  field: MembershipField;
+export interface FormError<TField extends string = string> {
+  field: TField;
   message: string;
 }
 
@@ -59,6 +59,51 @@ const MESSAGES: Record<Lang, Messages> = {
 const trimmed = (value: unknown): string =>
   typeof value === "string" ? value.trim() : "";
 
+export function nameError(
+  value: string,
+  lang: Lang = "en",
+): string | null {
+  const messages = MESSAGES[lang];
+  const clean = trimmed(value);
+  if (!clean) return messages.required;
+  if (clean.length < 2) return messages.nameLength;
+  return null;
+}
+
+export function emailError(
+  value: string,
+  lang: Lang = "en",
+): string | null {
+  const messages = MESSAGES[lang];
+  const clean = trimmed(value);
+  if (!clean) return messages.required;
+  if (!EMAIL_PATTERN.test(clean)) return messages.email;
+  return null;
+}
+
+export function phoneError(
+  value: string,
+  lang: Lang = "en",
+): string | null {
+  const clean = trimmed(value);
+  if (!clean) return null;
+  return PHONE_PATTERN.test(clean) ? null : MESSAGES[lang].phone;
+}
+
+export function messageError(
+  value: string,
+  lang: Lang = "en",
+): string | null {
+  return trimmed(value).length > 800 ? MESSAGES[lang].messageLength : null;
+}
+
+export function consentError(
+  value: boolean,
+  lang: Lang = "en",
+): string | null {
+  return value ? null : MESSAGES[lang].consent;
+}
+
 /**
  * Validación pura del formulario de interés de membresía. No accede al DOM
  * ni a la red: el envío solo puede ejecutarse cuando devuelve cero errores.
@@ -66,63 +111,38 @@ const trimmed = (value: unknown): string =>
 export function validateMembershipForm(
   values: MembershipFormValues,
   lang: Lang = "en",
-): FormError[] {
-  const errors: FormError[] = [];
+): FormError<MembershipField>[] {
+  const errors: FormError<MembershipField>[] = [];
   const messages = MESSAGES[lang];
 
-  if (trimmed(values.firstName).length < 2) {
-    errors.push({
-      field: "firstName",
-      message:
-        trimmed(values.firstName).length === 0
-          ? messages.required
-          : messages.nameLength,
-    });
+  const firstName = nameError(values.firstName, lang);
+  if (firstName) errors.push({ field: "firstName", message: firstName });
+
+  const lastName = nameError(values.lastName, lang);
+  if (lastName) errors.push({ field: "lastName", message: lastName });
+
+  const email = emailError(values.email, lang);
+  if (email) errors.push({ field: "email", message: email });
+
+  const company = trimmed(values.company);
+  if (!company) {
+    errors.push({ field: "company", message: messages.required });
+  } else if (company.length < 2) {
+    errors.push({ field: "company", message: messages.companyLength });
   }
 
-  if (trimmed(values.lastName).length < 2) {
-    errors.push({
-      field: "lastName",
-      message:
-        trimmed(values.lastName).length === 0
-          ? messages.required
-          : messages.nameLength,
-    });
-  }
-
-  const email = trimmed(values.email);
-  if (!email) {
-    errors.push({ field: "email", message: messages.required });
-  } else if (!EMAIL_PATTERN.test(email)) {
-    errors.push({ field: "email", message: messages.email });
-  }
-
-  if (trimmed(values.company).length < 2) {
-    errors.push({
-      field: "company",
-      message:
-        trimmed(values.company).length === 0
-          ? messages.required
-          : messages.companyLength,
-    });
-  }
-
-  const phone = trimmed(values.phone);
-  if (phone && !PHONE_PATTERN.test(phone)) {
-    errors.push({ field: "phone", message: messages.phone });
-  }
+  const phone = phoneError(values.phone, lang);
+  if (phone) errors.push({ field: "phone", message: phone });
 
   if (!trimmed(values.membershipLevel)) {
     errors.push({ field: "membershipLevel", message: messages.level });
   }
 
-  if (trimmed(values.message).length > 800) {
-    errors.push({ field: "message", message: messages.messageLength });
-  }
+  const message = messageError(values.message, lang);
+  if (message) errors.push({ field: "message", message });
 
-  if (!values.consent) {
-    errors.push({ field: "consent", message: messages.consent });
-  }
+  const consent = consentError(values.consent, lang);
+  if (consent) errors.push({ field: "consent", message: consent });
 
   return errors;
 }
@@ -130,7 +150,7 @@ export function validateMembershipForm(
 /** Mueve el foco al primer campo inválido en el orden de los errores. */
 export function focusFirstError(
   form: HTMLFormElement,
-  errors: FormError[],
+  errors: ReadonlyArray<FormError>,
 ): void {
   for (const error of errors) {
     const field = form.querySelector<HTMLElement>(`[name="${error.field}"]`);

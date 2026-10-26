@@ -1,0 +1,544 @@
+---
+import type { Lang } from "@lib/lang";
+
+interface Props {
+  lang: Lang;
+  eventSlug: string;
+  eventTitle: string;
+  mode?: "registration" | "information";
+}
+
+const {
+  lang,
+  eventSlug,
+  eventTitle,
+  mode = "registration",
+} = Astro.props;
+
+const text = {
+  en: {
+    legend: "Event request",
+    firstName: "First name",
+    lastName: "Last name",
+    email: "Work email",
+    company: "Company (optional)",
+    phone: "Phone (optional)",
+    guests: "Number of guests (optional)",
+    guestsHint: "From 0 to 10.",
+    message: "Message (optional)",
+    messageHint: "Up to 800 characters.",
+    consent:
+      "I agree that the Chamber may contact me about this event request.",
+    submitRegistration: "Register for this event",
+    submitInformation: "Request information",
+    loading: "Sending your request…",
+    success:
+      "Thank you. We received your request and will confirm availability by email.",
+    failed:
+      "We could not send your request. Your details are still here, so you can try again or email us.",
+    timeout:
+      "The request took too long. Please try again or email the events team.",
+    notConfigured:
+      "The form is not available right now. Please email the events team.",
+    summary: "Please review the highlighted fields.",
+    fallback: "Alternative channel:",
+    fallbackLink: "email the events team",
+    note: "Submitting this form does not guarantee a place at the event.",
+  },
+  es: {
+    legend: "Solicitud de evento",
+    firstName: "Nombre",
+    lastName: "Apellido",
+    email: "Correo de trabajo",
+    company: "Empresa (opcional)",
+    phone: "Teléfono (opcional)",
+    guests: "Número de invitados (opcional)",
+    guestsHint: "De 0 a 10.",
+    message: "Mensaje (opcional)",
+    messageHint: "Hasta 800 caracteres.",
+    consent:
+      "Acepto que la Cámara me contacte sobre esta solicitud de evento.",
+    submitRegistration: "Registrarme en este evento",
+    submitInformation: "Solicitar información",
+    loading: "Enviando tu solicitud…",
+    success:
+      "Gracias. Recibimos tu solicitud y confirmaremos la disponibilidad por correo.",
+    failed:
+      "No pudimos enviar tu solicitud. Tus datos siguen aquí, así que puedes intentarlo de nuevo o escribirnos.",
+    timeout:
+      "La solicitud tardó demasiado. Inténtalo de nuevo o escribe al equipo de eventos.",
+    notConfigured:
+      "El formulario no está disponible en este momento. Escribe al equipo de eventos.",
+    summary: "Revisa los campos resaltados.",
+    fallback: "Canal alternativo:",
+    fallbackLink: "escribe al equipo de eventos",
+    note: "Enviar este formulario no garantiza un lugar en el evento.",
+  },
+} as const;
+
+const labels = text[lang];
+const submitLabel =
+  mode === "registration"
+    ? labels.submitRegistration
+    : labels.submitInformation;
+---
+
+<form
+  class="form event-form"
+  data-event-form
+  data-lang={lang}
+  data-loading-message={labels.loading}
+  data-success-message={labels.success}
+  data-error-summary={labels.summary}
+  data-failed-message={labels.failed}
+  data-timeout-message={labels.timeout}
+  data-not-configured-message={labels.notConfigured}
+  novalidate
+>
+  <input type="hidden" name="form_type" value="event_registration" />
+  <input type="hidden" name="eventSlug" value={eventSlug} />
+  <input type="hidden" name="eventTitle" value={eventTitle} />
+  <div class="form-honeypot" aria-hidden="true">
+    <label for="event-botcheck">Leave this field empty</label>
+    <input
+      id="event-botcheck"
+      name="botcheck"
+      type="text"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
+
+  <fieldset>
+    <legend class="sr-only">{labels.legend}</legend>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="event-firstName">
+          {labels.firstName}
+          <span class="form-required" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="event-firstName"
+          name="firstName"
+          type="text"
+          autocomplete="given-name"
+          required
+          aria-describedby="event-firstName-error"
+          aria-invalid="false"
+        />
+        <p
+          class="form-error"
+          id="event-firstName-error"
+          data-error-for="firstName"
+          aria-live="polite"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="event-lastName">
+          {labels.lastName}
+          <span class="form-required" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="event-lastName"
+          name="lastName"
+          type="text"
+          autocomplete="family-name"
+          required
+          aria-describedby="event-lastName-error"
+          aria-invalid="false"
+        />
+        <p
+          class="form-error"
+          id="event-lastName-error"
+          data-error-for="lastName"
+          aria-live="polite"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="event-email">
+          {labels.email}
+          <span class="form-required" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="event-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+          aria-describedby="event-email-error"
+          aria-invalid="false"
+        />
+        <p
+          class="form-error"
+          id="event-email-error"
+          data-error-for="email"
+          aria-live="polite"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="event-company">{labels.company}</label>
+        <input
+          id="event-company"
+          name="company"
+          type="text"
+          autocomplete="organization"
+          aria-describedby="event-company-error"
+          aria-invalid="false"
+        />
+        <p
+          class="form-error"
+          id="event-company-error"
+          data-error-for="company"
+          aria-live="polite"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="event-phone">{labels.phone}</label>
+        <input
+          id="event-phone"
+          name="phone"
+          type="tel"
+          autocomplete="tel"
+          aria-describedby="event-phone-error"
+          aria-invalid="false"
+        />
+        <p
+          class="form-error"
+          id="event-phone-error"
+          data-error-for="phone"
+          aria-live="polite"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="event-guests">{labels.guests}</label>
+        <input
+          id="event-guests"
+          name="guests"
+          type="number"
+          min="0"
+          max="10"
+          inputmode="numeric"
+          aria-describedby="event-guests-hint event-guests-error"
+          aria-invalid="false"
+        />
+        <p class="form-hint" id="event-guests-hint">{labels.guestsHint}</p>
+        <p
+          class="form-error"
+          id="event-guests-error"
+          data-error-for="guests"
+          aria-live="polite"
+        />
+      </div>
+
+      <div class="form-field form-field--full">
+        <label for="event-message">{labels.message}</label>
+        <textarea
+          id="event-message"
+          name="message"
+          rows="4"
+          maxlength="800"
+          aria-describedby="event-message-hint event-message-error"
+          aria-invalid="false"
+        />
+        <p class="form-hint" id="event-message-hint">{labels.messageHint}</p>
+        <p
+          class="form-error"
+          id="event-message-error"
+          data-error-for="message"
+          aria-live="polite"
+        />
+      </div>
+
+      <div class="form-field form-field--full form-consent">
+        <label for="event-consent">
+          <input
+            id="event-consent"
+            name="consent"
+            type="checkbox"
+            value="yes"
+            required
+            aria-describedby="event-consent-error"
+            aria-invalid="false"
+          />
+          <span>{labels.consent}</span>
+        </label>
+        <p
+          class="form-error"
+          id="event-consent-error"
+          data-error-for="consent"
+          aria-live="polite"
+        />
+      </div>
+    </div>
+  </fieldset>
+
+  <p class="form-status" data-form-status role="status" aria-live="polite" />
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit">{submitLabel}</button>
+  </div>
+
+  <p class="event-form__note">{labels.note}</p>
+  <p class="event-form__fallback">
+    {labels.fallback}
+    <a href="mailto:info@americanchamberofcommerce.us">
+      {labels.fallbackLink}
+    </a>
+  </p>
+</form>
+
+<script>
+  import {
+    buildEventRegistrationPayload,
+    readEventRegistrationForm,
+    validateEventRegistration,
+  } from "@lib/eventRegistration";
+  import { focusFirstError, type FormError } from "@lib/forms";
+  import { createSubmitLock, submitToWeb3Forms } from "@lib/web3forms";
+
+  const form = document.querySelector<HTMLFormElement>("[data-event-form]");
+
+  if (form) {
+    const lang = form.dataset.lang === "es" ? "es" : "en";
+    const status = form.querySelector<HTMLElement>("[data-form-status]");
+    const submitButton = form.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    );
+    const originalLabel = submitButton?.textContent ?? "";
+    const lock = createSubmitLock();
+
+    const clearError = (field: string) => {
+      const error = form.querySelector<HTMLElement>(
+        `[data-error-for="${field}"]`,
+      );
+      if (error) error.textContent = "";
+      form
+        .querySelector<HTMLElement>(`[name="${field}"]`)
+        ?.setAttribute("aria-invalid", "false");
+    };
+
+    const showErrors = (errors: FormError[]) => {
+      for (const error of errors) {
+        const target = form.querySelector<HTMLElement>(
+          `[data-error-for="${error.field}"]`,
+        );
+        const input = form.querySelector<HTMLElement>(
+          `[name="${error.field}"]`,
+        );
+        if (target) target.textContent = error.message;
+        input?.setAttribute("aria-invalid", "true");
+      }
+    };
+
+    form.addEventListener("input", (event) => {
+      const target = event.target as HTMLElement;
+      const name = target?.getAttribute("name");
+      if (name) clearError(name);
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const values = readEventRegistrationForm(form);
+      const errors = validateEventRegistration(values, lang);
+
+      form
+        .querySelectorAll<HTMLElement>("[data-error-for]")
+        .forEach((element) => {
+          element.textContent = "";
+        });
+      form
+        .querySelectorAll<HTMLElement>(
+          "input:not([type='hidden']):not([name='botcheck']), select, textarea",
+        )
+        .forEach((element) => element.setAttribute("aria-invalid", "false"));
+
+      if (errors.length > 0) {
+        showErrors(errors);
+        if (status) {
+          status.textContent = form.dataset.errorSummary ?? "";
+          status.dataset.state = "error";
+        }
+        focusFirstError(form, errors);
+        return;
+      }
+
+      const botcheck =
+        form.querySelector<HTMLInputElement>('[name="botcheck"]')?.value ?? "";
+
+      void lock.run(async () => {
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = form.dataset.loadingMessage ?? "";
+        }
+        form.setAttribute("aria-busy", "true");
+        if (status) {
+          status.textContent = form.dataset.loadingMessage ?? "";
+          status.dataset.state = "loading";
+        }
+
+        const result = await submitToWeb3Forms(
+          buildEventRegistrationPayload(values, lang, botcheck),
+        );
+
+        if (result.status === "success" || result.status === "ignored") {
+          if (status) {
+            status.textContent = form.dataset.successMessage ?? "";
+            status.dataset.state = "success";
+          }
+        } else {
+          const message =
+            result.reason === "timeout"
+              ? form.dataset.timeoutMessage
+              : result.reason === "not-configured"
+                ? form.dataset.notConfiguredMessage
+                : form.dataset.failedMessage;
+          if (status) {
+            status.textContent = message ?? "";
+            status.dataset.state = "error";
+          }
+        }
+
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
+        form.removeAttribute("aria-busy");
+      });
+    });
+  }
+</script>
+
+<style>
+  .event-form {
+    margin-top: 1.5rem;
+  }
+
+  .event-form fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .event-form .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 1.25rem;
+  }
+
+  .event-form .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .event-form .form-field--full {
+    grid-column: 1 / -1;
+  }
+
+  .event-form label {
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .event-form .form-required {
+    color: var(--color-red-600);
+  }
+
+  .event-form input,
+  .event-form textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: var(--text-base);
+  }
+
+  .event-form textarea {
+    resize: vertical;
+  }
+
+  .event-form input:focus-visible,
+  .event-form textarea:focus-visible {
+    border-color: var(--color-navy-600);
+    outline: 2px solid var(--color-navy-600);
+    outline-offset: 1px;
+  }
+
+  .event-form [aria-invalid="true"] {
+    border-color: var(--color-red-600);
+  }
+
+  .event-form .form-error {
+    min-height: 1.1rem;
+    margin: 0;
+    color: var(--color-red-600);
+    font-size: var(--text-xs);
+  }
+
+  .event-form .form-hint {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .event-form .form-consent label {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .event-form .form-consent input {
+    width: 1.15rem;
+    height: 1.15rem;
+    min-height: auto;
+    margin-top: 0.2rem;
+    accent-color: var(--color-navy-700);
+  }
+
+  .event-form .form-status {
+    min-height: 1.5rem;
+    margin: 1rem 0 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .event-form .form-status[data-state="error"] {
+    color: var(--color-red-600);
+  }
+
+  .event-form .form-status[data-state="success"] {
+    color: var(--color-navy-700);
+  }
+
+  .event-form .form-actions {
+    margin-top: 1.25rem;
+  }
+
+  .event-form__note,
+  .event-form__fallback {
+    margin: 1rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .form-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+</style>
