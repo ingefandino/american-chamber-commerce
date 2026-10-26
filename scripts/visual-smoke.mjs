@@ -86,6 +86,18 @@ const check = (condition, message) => {
   if (!condition) failures.push(message);
 };
 
+const overlaps = (a, b) =>
+  Boolean(
+    a &&
+      b &&
+      !(
+        a.x + a.width <= b.x ||
+        b.x + b.width <= a.x ||
+        a.y + a.height <= b.y ||
+        b.y + b.height <= a.y
+      ),
+  );
+
 const browser = await chromium.launch({
   executablePath,
   headless: true,
@@ -160,6 +172,11 @@ try {
     ),
     "WhatsApp: official number is not used",
   );
+  const sliderToggleBox = await page.locator("[data-slider-toggle]").boundingBox();
+  check(
+    !overlaps(whatsappBox, sliderToggleBox),
+    "WhatsApp: button covers the slider pause control",
+  );
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.waitForTimeout(50);
@@ -185,6 +202,10 @@ try {
   check(
     await backToTop.evaluate((element) => !element.hasAttribute("hidden")),
     "Back to top: did not appear after scrolling",
+  );
+  check(
+    !overlaps(await backToTop.boundingBox(), whatsappBox),
+    "Back to top: button overlaps the WhatsApp button",
   );
   await backToTop.click();
   await page.waitForTimeout(650);

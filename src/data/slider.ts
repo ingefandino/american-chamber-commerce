@@ -26,39 +26,39 @@ export interface Slide {
 }
 
 const images = [
-  slider01,
   slider02,
-  slider03,
+  slider06,
   slider04,
   slider05,
-  slider06,
   slider07,
+  slider03,
   slider08,
   slider09,
+  slider01,
 ] as const;
 
 const altByIndex: Record<Lang, readonly string[]> = {
   en: [
-    "American Chamber of Commerce logo on a neutral background",
     "Two business professionals shaking hands in a bright office",
-    "Business colleagues reviewing information on a phone",
+    "Three colleagues collaborating around a laptop",
     "Hands writing notes beside printed business charts",
     "Stacks of shipping containers at a commercial port",
-    "Three colleagues collaborating around a laptop",
     "Port cranes silhouetted against a sunset",
+    "Business colleagues reviewing information on a phone",
     "Person holding a payment card",
     "United States one hundred dollar bills",
+    "American Chamber of Commerce logo on a neutral background",
   ],
   es: [
-    "Logotipo de American Chamber of Commerce sobre fondo neutro",
     "Dos profesionales de negocios estrechando la mano en una oficina",
-    "Colegas de negocios revisando información en un teléfono",
+    "Tres colegas colaborando alrededor de una computadora portátil",
     "Manos escribiendo notas junto a gráficos de negocio impresos",
     "Pilas de contenedores marítimos en un puerto comercial",
-    "Tres colegas colaborando alrededor de una computadora portátil",
     "Grúas portuarias en silueta contra un atardecer",
+    "Colegas de negocios revisando información en un teléfono",
     "Persona sosteniendo una tarjeta de pago",
     "Billetes de cien dólares estadounidenses",
+    "Logotipo de American Chamber of Commerce sobre fondo neutro",
   ],
 };
 
@@ -74,16 +74,10 @@ const contentByLang: Record<
       cta: { key: "membership", label: "Explore membership" },
     },
     {
-      eyebrow: "Membership",
+      eyebrow: "Community",
       title: "Build your network",
       text: "Meet peers, partners, and decision-makers across industries.",
       cta: { key: "events", label: "See upcoming events" },
-    },
-    {
-      eyebrow: "Advocacy",
-      title: "Grow the economy",
-      text: "A voice for business in the halls of government.",
-      cta: { key: "advocacy", label: "Read our priorities" },
     },
     {
       eyebrow: "Resources",
@@ -98,16 +92,16 @@ const contentByLang: Record<
       cta: { key: "services", label: "Trade services" },
     },
     {
-      eyebrow: "Community",
-      title: "Work together",
-      text: "A network of businesses that share knowledge and open doors.",
-      cta: { key: "members", label: "Browse the directory" },
-    },
-    {
       eyebrow: "New York",
       title: "Connect with the world",
       text: "A gateway for trade, investment, and international partnership.",
       cta: { key: "about", label: "About the Chamber" },
+    },
+    {
+      eyebrow: "Advocacy",
+      title: "Grow the economy",
+      text: "A voice for business in the halls of government.",
+      cta: { key: "advocacy", label: "Read our priorities" },
     },
     {
       eyebrow: "Member benefits",
@@ -121,6 +115,12 @@ const contentByLang: Record<
       text: "Sponsorship and partnership opportunities that raise your profile.",
       cta: { key: "sponsorship", label: "Partner with us" },
     },
+    {
+      eyebrow: "American Chamber of Commerce",
+      title: "A chamber built for business",
+      text: "Member-driven. Business-focused. Connected to the world.",
+      cta: { key: "contact", label: "Talk to our team" },
+    },
   ],
   es: [
     {
@@ -130,16 +130,10 @@ const contentByLang: Record<
       cta: { key: "membership", label: "Conoce la membresía" },
     },
     {
-      eyebrow: "Membresía",
+      eyebrow: "Comunidad",
       title: "Amplía tu red",
       text: "Conoce colegas, socios y tomadores de decisiones de distintos sectores.",
       cta: { key: "events", label: "Ver próximos eventos" },
-    },
-    {
-      eyebrow: "Defensa",
-      title: "Impulsa la economía",
-      text: "Una voz para las empresas ante las autoridades.",
-      cta: { key: "advocacy", label: "Nuestras prioridades" },
     },
     {
       eyebrow: "Recursos",
@@ -154,16 +148,16 @@ const contentByLang: Record<
       cta: { key: "services", label: "Servicios de comercio" },
     },
     {
-      eyebrow: "Comunidad",
-      title: "Crecemos juntos",
-      text: "Una red de empresas que comparte conocimiento y abre puertas.",
-      cta: { key: "members", label: "Ver el directorio" },
-    },
-    {
       eyebrow: "Nueva York",
       title: "Conecta con el mundo",
       text: "Una puerta para el comercio, la inversión y las alianzas internacionales.",
       cta: { key: "about", label: "Sobre la Cámara" },
+    },
+    {
+      eyebrow: "Defensa",
+      title: "Impulsa la economía",
+      text: "Una voz para las empresas ante las autoridades.",
+      cta: { key: "advocacy", label: "Nuestras prioridades" },
     },
     {
       eyebrow: "Beneficios",
@@ -176,6 +170,12 @@ const contentByLang: Record<
       title: "Invierte en crecimiento",
       text: "Patrocinios y alianzas que aumentan la visibilidad de tu empresa.",
       cta: { key: "sponsorship", label: "Sé nuestro socio" },
+    },
+    {
+      eyebrow: "American Chamber of Commerce",
+      title: "Una cámara hecha para los negocios",
+      text: "Impulsada por socios. Enfocada en empresas. Conectada con el mundo.",
+      cta: { key: "contact", label: "Habla con nuestro equipo" },
     },
   ],
 };
