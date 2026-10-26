@@ -144,3 +144,33 @@ export function createSubmitLock(): SubmitLock {
     },
   };
 }
+
+export function buildContactPayload(
+  values: {
+    name: string;
+    email: string;
+    phone: string;
+    topic: string;
+    message: string;
+    consent: boolean;
+  },
+  lang: Lang,
+  botcheck = "",
+): Record<string, string> {
+  return {
+    name: values.name.trim(),
+    email: values.email.trim(),
+    phone: values.phone.trim(),
+    topic: values.topic,
+    message: values.message.trim(),
+    consent: values.consent ? "yes" : "no",
+    form_type: "contact",
+    language: lang,
+    subject:
+      lang === "es"
+        ? "Nuevo mensaje de contacto — American Chamber of Commerce"
+        : "New contact message — American Chamber of Commerce",
+    from_name: "American Chamber of Commerce website",
+    botcheck,
+  };
+}

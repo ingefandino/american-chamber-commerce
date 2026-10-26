@@ -1,0 +1,101 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Accessibility",
+    eyebrow: "Accessibility",
+    heading: "Accessibility statement",
+    updated: "Last updated: 26 October 2026",
+    intro:
+      "The Chamber aims to meet WCAG 2.2 level AA for this website. This statement describes the measures currently in place and how to report a barrier.",
+    sections: [
+      {
+        heading: "What we have implemented",
+        body: "Semantic landmarks and headings, a visible skip link, keyboard-operable menus and forms, focus indicators, labeled form fields with accessible error messages, reduced-motion support, and responsive layouts tested from 320 px.",
+      },
+      {
+        heading: "Known limitations",
+        body: "Some archived or draft content is under editorial review. Third-party services used for form delivery are outside our direct control. Where a barrier is identified, we will provide an alternative contact channel.",
+      },
+      {
+        heading: "Feedback",
+        body: "If you encounter a barrier, email us with the page address and a description of the problem. We will acknowledge the report and explain the next step.",
+      },
+    ],
+    contact: "Report an accessibility issue",
+  },
+  es: {
+    title: "Accesibilidad",
+    eyebrow: "Accesibilidad",
+    heading: "Declaración de accesibilidad",
+    updated: "Última actualización: 26 de octubre de 2026",
+    intro:
+      "La Cámara busca cumplir WCAG 2.2 nivel AA en este sitio web. Esta declaración describe las medidas actuales y cómo reportar una barrera.",
+    sections: [
+      {
+        heading: "Lo que hemos implementado",
+        body: "Landmarks y encabezados semánticos, enlace visible para saltar al contenido, menús y formularios operables con teclado, indicadores de foco, campos etiquetados con mensajes de error accesibles, soporte para movimiento reducido y diseños responsivos probados desde 320 px.",
+      },
+      {
+        heading: "Limitaciones conocidas",
+        body: "Parte del contenido archivado o borrador está en revisión editorial. Los servicios de terceros usados para entregar formularios están fuera de nuestro control directo. Cuando se identifica una barrera, ofrecemos un canal de contacto alternativo.",
+      },
+      {
+        heading: "Comentarios",
+        body: "Si encuentras una barrera, escríbenos con la dirección de la página y una descripción del problema. Confirmaremos la recepción y explicaremos el siguiente paso.",
+      },
+    ],
+    contact: "Reportar un problema de accesibilidad",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.intro}
+  pathname={`/${lang}/accessibility/`}
+>
+  <section class="section">
+    <div class="container container--narrow">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="legal-meta">{text.updated}</p>
+      <p class="lead">{text.intro}</p>
+
+      <div class="prose">
+        {
+          text.sections.map((section) => (
+            <>
+              <h2>{section.heading}</h2>
+              <p>{section.body}</p>
+            </>
+          ))
+        }
+        <h2>{text.contact}</h2>
+        <p>
+          <a href={SITE.contact.emailHref}>{SITE.contact.email}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-meta {
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+</style>

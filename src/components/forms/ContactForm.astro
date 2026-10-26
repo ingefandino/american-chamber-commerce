@@ -1,0 +1,348 @@
+---
+import "@styles/forms.css";
+import type { Lang } from "@lib/lang";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const text = {
+  en: {
+    legend: "Contact form",
+    name: "Name",
+    email: "Email",
+    phone: "Phone (optional)",
+    topic: "What is this about?",
+    topics: {
+      general: "General question",
+      membership: "Membership",
+      events: "Events",
+      sponsorship: "Sponsorship or partnership",
+      press: "Press or media",
+    },
+    message: "Message",
+    messageHint: "Up to 800 characters.",
+    consent:
+      "I agree that the Chamber may contact me about this message. My details will not be sold or shared for unrelated marketing.",
+    submit: "Send message",
+    loading: "Sending your message…",
+    success:
+      "Thank you. Your message was received and our team will reply as soon as possible.",
+    failed:
+      "We could not send your message. Your details are still here, so you can try again or email us.",
+    timeout:
+      "The message took too long. Please try again or email the Chamber.",
+    notConfigured:
+      "The form is not available right now. Please email the Chamber.",
+    summary: "Please review the highlighted fields.",
+    fallback: "Alternative channel:",
+    fallbackLink: "email the Chamber",
+  },
+  es: {
+    legend: "Formulario de contacto",
+    name: "Nombre",
+    email: "Correo",
+    phone: "Teléfono (opcional)",
+    topic: "¿Sobre qué es tu mensaje?",
+    topics: {
+      general: "Consulta general",
+      membership: "Membresía",
+      events: "Eventos",
+      sponsorship: "Patrocinio o alianza",
+      press: "Prensa o medios",
+    },
+    message: "Mensaje",
+    messageHint: "Hasta 800 caracteres.",
+    consent:
+      "Acepto que la Cámara me contacte sobre este mensaje. Mis datos no se venderán ni se compartirán para marketing no relacionado.",
+    submit: "Enviar mensaje",
+    loading: "Enviando tu mensaje…",
+    success:
+      "Gracias. Recibimos tu mensaje y nuestro equipo responderá lo antes posible.",
+    failed:
+      "No pudimos enviar tu mensaje. Tus datos siguen aquí, así que puedes intentarlo de nuevo o escribirnos.",
+    timeout:
+      "El mensaje tardó demasiado. Inténtalo de nuevo o escribe a la Cámara.",
+    notConfigured:
+      "El formulario no está disponible en este momento. Escribe a la Cámara.",
+    summary: "Revisa los campos resaltados.",
+    fallback: "Canal alternativo:",
+    fallbackLink: "escribe a la Cámara",
+  },
+} as const;
+
+const labels = text[lang];
+---
+
+<form
+  class="form"
+  data-contact-form
+  data-lang={lang}
+  data-loading-message={labels.loading}
+  data-success-message={labels.success}
+  data-error-summary={labels.summary}
+  data-failed-message={labels.failed}
+  data-timeout-message={labels.timeout}
+  data-not-configured-message={labels.notConfigured}
+  novalidate
+>
+  <input type="hidden" name="form_type" value="contact" />
+  <div class="form-honeypot" aria-hidden="true">
+    <label for="contact-botcheck">Leave this field empty</label>
+    <input
+      id="contact-botcheck"
+      name="botcheck"
+      type="text"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
+
+  <fieldset>
+    <legend class="sr-only">{labels.legend}</legend>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="contact-name">
+          {labels.name}
+          <span class="form-required" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="contact-name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+          aria-describedby="contact-name-error"
+          aria-invalid="false"
+        />
+        <p class="form-error" id="contact-name-error" data-error-for="name" aria-live="polite" />
+      </div>
+
+      <div class="form-field">
+        <label for="contact-email">
+          {labels.email}
+          <span class="form-required" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="contact-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+          aria-describedby="contact-email-error"
+          aria-invalid="false"
+        />
+        <p class="form-error" id="contact-email-error" data-error-for="email" aria-live="polite" />
+      </div>
+
+      <div class="form-field">
+        <label for="contact-phone">{labels.phone}</label>
+        <input
+          id="contact-phone"
+          name="phone"
+          type="tel"
+          autocomplete="tel"
+          aria-describedby="contact-phone-error"
+          aria-invalid="false"
+        />
+        <p class="form-error" id="contact-phone-error" data-error-for="phone" aria-live="polite" />
+      </div>
+
+      <div class="form-field">
+        <label for="contact-topic">{labels.topic}</label>
+        <select id="contact-topic" name="topic">
+          <option value="general">{labels.topics.general}</option>
+          <option value="membership">{labels.topics.membership}</option>
+          <option value="events">{labels.topics.events}</option>
+          <option value="sponsorship">{labels.topics.sponsorship}</option>
+          <option value="press">{labels.topics.press}</option>
+        </select>
+      </div>
+
+      <div class="form-field form-field--full">
+        <label for="contact-message">
+          {labels.message}
+          <span class="form-required" aria-hidden="true">*</span>
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          rows="5"
+          maxlength="800"
+          required
+          aria-describedby="contact-message-hint contact-message-error"
+          aria-invalid="false"
+        />
+        <p class="form-hint" id="contact-message-hint">{labels.messageHint}</p>
+        <p class="form-error" id="contact-message-error" data-error-for="message" aria-live="polite" />
+      </div>
+
+      <div class="form-field form-field--full form-consent">
+        <label for="contact-consent">
+          <input
+            id="contact-consent"
+            name="consent"
+            type="checkbox"
+            value="yes"
+            required
+            aria-describedby="contact-consent-error"
+            aria-invalid="false"
+          />
+          <span>{labels.consent}</span>
+        </label>
+        <p class="form-error" id="contact-consent-error" data-error-for="consent" aria-live="polite" />
+      </div>
+    </div>
+  </fieldset>
+
+  <p class="form-status" data-form-status role="status" aria-live="polite" />
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit">{labels.submit}</button>
+  </div>
+
+  <p class="contact-form__fallback">
+    {labels.fallback}
+    <a href="mailto:info@americanchamberofcommerce.us">{labels.fallbackLink}</a>
+  </p>
+</form>
+
+<script>
+  import {
+    focusFirstError,
+    readContactForm,
+    validateContactForm,
+    type FormError,
+  } from "@lib/forms";
+  import { buildContactPayload, createSubmitLock, submitToWeb3Forms } from "@lib/web3forms";
+
+  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+
+  if (form) {
+    const lang = form.dataset.lang === "es" ? "es" : "en";
+    const status = form.querySelector<HTMLElement>("[data-form-status]");
+    const submitButton = form.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    );
+    const originalLabel = submitButton?.textContent ?? "";
+    const lock = createSubmitLock();
+
+    const topicParam = new URLSearchParams(window.location.search).get("topic");
+    const topicSelect = form.querySelector<HTMLSelectElement>('[name="topic"]');
+    if (
+      topicParam &&
+      topicSelect &&
+      Array.from(topicSelect.options).some(
+        (option) => option.value === topicParam,
+      )
+    ) {
+      topicSelect.value = topicParam;
+    }
+
+    const clearError = (field: string) => {
+      const error = form.querySelector<HTMLElement>(
+        `[data-error-for="${field}"]`,
+      );
+      if (error) error.textContent = "";
+      form
+        .querySelector<HTMLElement>(`[name="${field}"]`)
+        ?.setAttribute("aria-invalid", "false");
+    };
+
+    form.addEventListener("input", (event) => {
+      const target = event.target as HTMLElement;
+      const name = target?.getAttribute("name");
+      if (name) clearError(name);
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const values = readContactForm(form);
+      const errors = validateContactForm(values, lang);
+
+      form
+        .querySelectorAll<HTMLElement>("[data-error-for]")
+        .forEach((element) => {
+          element.textContent = "";
+        });
+      form
+        .querySelectorAll<HTMLElement>(
+          "input:not([type='hidden']):not([name='botcheck']), select, textarea",
+        )
+        .forEach((element) => element.setAttribute("aria-invalid", "false"));
+
+      if (errors.length > 0) {
+        for (const error of errors as FormError[]) {
+          const target = form.querySelector<HTMLElement>(
+            `[data-error-for="${error.field}"]`,
+          );
+          const input = form.querySelector<HTMLElement>(
+            `[name="${error.field}"]`,
+          );
+          if (target) target.textContent = error.message;
+          input?.setAttribute("aria-invalid", "true");
+        }
+        if (status) {
+          status.textContent = form.dataset.errorSummary ?? "";
+          status.dataset.state = "error";
+        }
+        focusFirstError(form, errors);
+        return;
+      }
+
+      const botcheck =
+        form.querySelector<HTMLInputElement>('[name="botcheck"]')?.value ?? "";
+
+      void lock.run(async () => {
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = form.dataset.loadingMessage ?? "";
+        }
+        form.setAttribute("aria-busy", "true");
+        if (status) {
+          status.textContent = form.dataset.loadingMessage ?? "";
+          status.dataset.state = "loading";
+        }
+
+        const result = await submitToWeb3Forms(
+          buildContactPayload(values, lang, botcheck),
+        );
+
+        if (result.status === "success" || result.status === "ignored") {
+          if (status) {
+            status.textContent = form.dataset.successMessage ?? "";
+            status.dataset.state = "success";
+          }
+        } else {
+          const message =
+            result.reason === "timeout"
+              ? form.dataset.timeoutMessage
+              : result.reason === "not-configured"
+                ? form.dataset.notConfiguredMessage
+                : form.dataset.failedMessage;
+          if (status) {
+            status.textContent = message ?? "";
+            status.dataset.state = "error";
+          }
+        }
+
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
+        form.removeAttribute("aria-busy");
+      });
+    });
+  }
+</script>
+
+<style>
+  .contact-form__fallback {
+    margin: 1rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+</style>

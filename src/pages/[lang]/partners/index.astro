@@ -1,0 +1,94 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Partners",
+    eyebrow: "Partners",
+    heading: "Partners and sponsors",
+    lead: "Partners are listed separately from the member directory. A partner name, logo, or description appears only after the organization authorizes it.",
+    emptyTitle: "Partner listings are being confirmed",
+    emptyText:
+      "The local project does not contain partner names with verified publication rights. No partner names are invented or reused from unrelated chambers.",
+    sponsorship: "Sponsorship opportunities",
+    contact: "Ask about partnership",
+  },
+  es: {
+    title: "Socios estratégicos",
+    eyebrow: "Alianzas",
+    heading: "Socios y patrocinadores",
+    lead: "Los socios estratégicos se listan por separado del directorio de miembros. El nombre, logotipo o descripción de un socio aparece solo después de que la organización lo autoriza.",
+    emptyTitle: "Los listados de socios están siendo confirmados",
+    emptyText:
+      "El proyecto local no contiene nombres de socios con derechos de publicación verificados. No se inventan nombres ni se reutilizan socios de otras cámaras.",
+    sponsorship: "Oportunidades de patrocinio",
+    contact: "Consultar por alianzas",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/partners/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      <div class="empty-state" data-reveal="up">
+        <h2>{text.emptyTitle}</h2>
+        <p>{text.emptyText}</p>
+        <div class="empty-state__actions">
+          <a class="btn btn--primary" href={localizedHref("sponsorship", lang)}>
+            {text.sponsorship}
+          </a>
+          <a class="btn btn--ghost" href={SITE.contact.emailHref}>
+            {text.contact}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .empty-state {
+    margin-top: 2.5rem;
+    padding: 2.5rem;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .empty-state h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .empty-state p {
+    max-width: 62ch;
+    color: var(--color-muted);
+  }
+
+  .empty-state__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+</style>

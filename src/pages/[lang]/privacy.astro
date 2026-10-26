@@ -1,0 +1,134 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Privacy notice",
+    eyebrow: "Legal",
+    heading: "Privacy notice",
+    draft: "Draft for legal review",
+    updated: "Last updated: 26 October 2026",
+    notice:
+      "This notice is a working draft pending review by qualified counsel. It describes the data the current website actually collects and does not create rights beyond applicable law.",
+    sections: [
+      {
+        heading: "Data we collect",
+        body: "When you submit a form, we collect the fields shown on that form: name, email, phone, company, membership level, event, topic, and message. The selectedLanguage cookie stores your language preference. Hosting and security providers may process basic technical logs such as IP address and user agent.",
+      },
+      {
+        heading: "How we use it",
+        body: "We use form data to respond to your request, process membership or event inquiries, and keep an operational record of the request. We do not sell personal data or use it for unrelated marketing.",
+      },
+      {
+        heading: "Processors",
+        body: "Form submissions are transmitted through Web3Forms to the Chamber's authorized email destination. The current site does not include advertising trackers or third-party analytics.",
+      },
+      {
+        heading: "Retention",
+        body: "We retain request data only as long as needed to respond and to meet legal or operational obligations. Retention periods will be confirmed in the final notice.",
+      },
+      {
+        heading: "Your choices",
+        body: "You can request access, correction, or deletion of your data by emailing us with the subject “Privacy request”. We may need to verify your identity before acting.",
+      },
+      {
+        heading: "Cookies",
+        body: "The site sets a selectedLanguage cookie for one year with SameSite=Lax so your language preference is remembered. You can change it with the language selector or clear it in your browser.",
+      },
+    ],
+    contact: "Privacy contact",
+  },
+  es: {
+    title: "Aviso de privacidad",
+    eyebrow: "Legal",
+    heading: "Aviso de privacidad",
+    draft: "Borrador para revisión legal",
+    updated: "Última actualización: 26 de octubre de 2026",
+    notice:
+      "Este aviso es un borrador de trabajo pendiente de revisión por asesoría calificada. Describe los datos que el sitio actual realmente recopila y no crea derechos más allá de la ley aplicable.",
+    sections: [
+      {
+        heading: "Datos que recopilamos",
+        body: "Cuando envías un formulario, recopilamos los campos que aparecen en él: nombre, correo, teléfono, empresa, nivel de membresía, evento, tema y mensaje. La cookie selectedLanguage guarda tu preferencia de idioma. Los proveedores de hosting y seguridad pueden procesar registros técnicos básicos, como dirección IP y agente de usuario.",
+      },
+      {
+        heading: "Cómo los usamos",
+        body: "Usamos los datos del formulario para responder tu solicitud, procesar consultas de membresía o eventos y mantener un registro operativo. No vendemos datos personales ni los usamos para marketing no relacionado.",
+      },
+      {
+        heading: "Proveedores",
+        body: "Los envíos se transmiten mediante Web3Forms al correo autorizado de la Cámara. El sitio actual no incluye rastreadores publicitarios ni analítica de terceros.",
+      },
+      {
+        heading: "Conservación",
+        body: "Conservamos los datos de la solicitud solo el tiempo necesario para responder y cumplir obligaciones legales u operativas. Los plazos se confirmarán en el aviso final.",
+      },
+      {
+        heading: "Tus opciones",
+        body: "Puedes solicitar acceso, corrección o eliminación de tus datos escribiéndonos con el asunto “Solicitud de privacidad”. Podemos necesitar verificar tu identidad antes de actuar.",
+      },
+      {
+        heading: "Cookies",
+        body: "El sitio establece una cookie selectedLanguage por un año con SameSite=Lax para recordar tu preferencia de idioma. Puedes cambiarla con el selector de idioma o borrarla en tu navegador.",
+      },
+    ],
+    contact: "Contacto de privacidad",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.notice}
+  pathname={`/${lang}/privacy/`}
+>
+  <section class="section">
+    <div class="container container--narrow">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="legal-meta">
+        <span class="badge">{text.draft}</span>
+        <span>{text.updated}</span>
+      </p>
+      <p class="callout">{text.notice}</p>
+
+      <div class="prose">
+        {
+          text.sections.map((section) => (
+            <>
+              <h2>{section.heading}</h2>
+              <p>{section.body}</p>
+            </>
+          ))
+        }
+        <h2>{text.contact}</h2>
+        <p>
+          <a href={SITE.contact.emailHref}>{SITE.contact.email}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+</style>

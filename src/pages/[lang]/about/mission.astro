@@ -1,0 +1,139 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Mission, vision, and values",
+    eyebrow: "About",
+    heading: "Mission, vision, and values",
+    missionTitle: "Mission",
+    visionTitle: "Vision",
+    valuesTitle: "Values",
+    back: "About the Chamber",
+    contact: "Contact us",
+    review:
+      "This institutional statement comes from the organization's local source and is pending final client confirmation.",
+  },
+  es: {
+    title: "Misión, visión y valores",
+    eyebrow: "Nosotros",
+    heading: "Misión, visión y valores",
+    missionTitle: "Misión",
+    visionTitle: "Visión",
+    valuesTitle: "Valores",
+    back: "Sobre la Cámara",
+    contact: "Contáctanos",
+    review:
+      "Esta declaración institucional proviene de la fuente local de la organización y está pendiente de confirmación final del cliente.",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={SITE.mission[lang]}
+  pathname={`/${lang}/about/mission/`}
+>
+  <section class="section">
+    <div class="container container--narrow">
+      <a class="mission-back" href={localizedHref("about", lang)}>
+        <span aria-hidden="true">←</span> {text.back}
+      </a>
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="callout mission-review">{text.review}</p>
+
+      <div class="mission-block">
+        <h2>{text.missionTitle}</h2>
+        <p>{SITE.mission[lang]}</p>
+      </div>
+
+      <div class="mission-block">
+        <h2>{text.visionTitle}</h2>
+        <p>{SITE.vision[lang]}</p>
+      </div>
+
+      <div class="mission-block">
+        <h2>{text.valuesTitle}</h2>
+        <ul class="values-list">
+          {
+            SITE.values[lang].map((value) => (
+              <li>{value}</li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <a class="btn btn--primary" href={localizedHref("contact", lang)}>
+        {text.contact}
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .mission-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-navy-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .mission-review {
+    margin: 1.5rem 0;
+    font-size: var(--text-sm);
+  }
+
+  .mission-block {
+    margin-top: 2rem;
+  }
+
+  .mission-block p {
+    color: var(--color-body);
+    font-size: var(--text-lg);
+    line-height: 1.7;
+  }
+
+  .values-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .values-list li {
+    position: relative;
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .values-list li::before {
+    content: "";
+    position: absolute;
+    top: 0.7em;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-gold-500);
+  }
+</style>

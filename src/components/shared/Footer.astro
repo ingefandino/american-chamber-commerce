@@ -1,0 +1,244 @@
+---
+import { Image } from "astro:assets";
+import logo from "@assets/webp/logo_blanco.png";
+import LanguageSwitcher from "@components/shared/LanguageSwitcher.astro";
+import { MAIN_NAV } from "@data/navigation";
+import { SITE } from "@data/site";
+import type { Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+interface Props {
+  lang: Lang;
+  pathname: string;
+}
+
+const { lang, pathname } = Astro.props;
+
+const text = {
+  en: {
+    navLabel: "Footer navigation",
+    legalLabel: "Legal",
+    contactLabel: "Contact",
+    tagline: SITE.tagline.en,
+    privacy: "Privacy",
+    terms: "Terms",
+    accessibility: "Accessibility",
+    rights: "All rights reserved.",
+    social: "Follow the Chamber",
+  },
+  es: {
+    navLabel: "Navegación del pie de página",
+    legalLabel: "Legal",
+    contactLabel: "Contacto",
+    tagline: SITE.tagline.es,
+    privacy: "Privacidad",
+    terms: "Términos",
+    accessibility: "Accesibilidad",
+    rights: "Todos los derechos reservados.",
+    social: "Sigue a la Cámara",
+  },
+}[lang];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <a
+          class="site-footer__logo"
+          href={localizedHref("home", lang)}
+          aria-label={SITE.name}
+        >
+          <Image
+            src={logo}
+            alt={SITE.name}
+            height={56}
+            widths={[160, 240]}
+            sizes="200px"
+            loading="lazy"
+          />
+        </a>
+        <p class="site-footer__tagline">{text.tagline}</p>
+        <ul class="site-footer__social" aria-label={text.social}>
+          <li>
+            <a href={SITE.social.linkedin} rel="noopener noreferrer">LinkedIn</a>
+          </li>
+          <li>
+            <a href={SITE.social.facebook} rel="noopener noreferrer">Facebook</a>
+          </li>
+          <li>
+            <a href={SITE.social.instagram} rel="noopener noreferrer">Instagram</a>
+          </li>
+          <li>
+            <a href={SITE.social.youtube} rel="noopener noreferrer">YouTube</a>
+          </li>
+        </ul>
+      </div>
+
+      <nav class="site-footer__nav" aria-label={text.navLabel}>
+        <ul>
+          {
+            MAIN_NAV.map((item) => (
+              <li>
+                <a href={localizedHref(item.key, lang)}>
+                  {item.labels[lang]}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="site-footer__contact">
+        <h2>{text.contactLabel}</h2>
+        <ul>
+          <li>
+            <a href={SITE.contact.emailHref}>{SITE.contact.email}</a>
+          </li>
+          <li>
+            <a href={SITE.contact.phoneHref}>{SITE.contact.phone}</a>
+          </li>
+          <li>{SITE.contact.address}</li>
+          <li>{SITE.contact.addressSecondary}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>
+        © {year} {SITE.name}. {text.rights}
+      </p>
+      <ul class="site-footer__legal" aria-label={text.legalLabel}>
+        <li>
+          <a href={localizedHref("privacy", lang)}>{text.privacy}</a>
+        </li>
+        <li>
+          <a href={localizedHref("terms", lang)}>{text.terms}</a>
+        </li>
+        <li>
+          <a href={localizedHref("accessibility", lang)}>
+            {text.accessibility}
+          </a>
+        </li>
+      </ul>
+      <LanguageSwitcher lang={lang} pathname={pathname} />
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: clamp(3rem, 6vw, 4.5rem) 2rem;
+    background: var(--color-navy-900);
+    color: rgb(255 255 255 / 0.72);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .site-footer__logo img {
+    width: auto;
+    height: 56px;
+    object-fit: contain;
+  }
+
+  .site-footer__tagline {
+    max-width: 36ch;
+    margin: 1rem 0;
+    font-size: var(--text-sm);
+  }
+
+  .site-footer__social,
+  .site-footer__nav ul,
+  .site-footer__contact ul,
+  .site-footer__legal {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+
+  .site-footer__social a,
+  .site-footer__nav a,
+  .site-footer__contact a {
+    color: rgb(255 255 255 / 0.78);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .site-footer__social a:hover,
+  .site-footer__social a:focus-visible,
+  .site-footer__nav a:hover,
+  .site-footer__nav a:focus-visible,
+  .site-footer__contact a:hover,
+  .site-footer__contact a:focus-visible,
+  .site-footer__legal a:hover,
+  .site-footer__legal a:focus-visible {
+    color: var(--color-white);
+    text-decoration: underline;
+    text-decoration-color: var(--color-gold-500);
+  }
+
+  .site-footer__nav ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.6rem 1rem;
+  }
+
+  .site-footer__contact h2 {
+    margin-bottom: 0.75rem;
+    color: var(--color-gold-300);
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .site-footer__contact li {
+    margin-bottom: 0.4rem;
+    font-size: var(--text-sm);
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: var(--text-xs);
+  }
+
+  .site-footer__bottom p {
+    margin: 0;
+  }
+
+  .site-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .site-footer__legal a {
+    color: rgb(255 255 255 / 0.78);
+    text-decoration: none;
+  }
+
+  @media (min-width: 900px) {
+    .site-footer__grid {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+</style>

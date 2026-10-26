@@ -1,0 +1,139 @@
+---
+import "@styles/global.css";
+import Seo from "@components/shared/Seo.astro";
+import Header from "@components/shared/Header.astro";
+import Footer from "@components/shared/Footer.astro";
+import { localizedHref } from "@lib/routes";
+
+const copy = {
+  en: {
+    eyebrow: "Error 404",
+    heading: "Page not found",
+    text: "The page you requested does not exist or has moved. Use the links below to continue.",
+    home: "Go to the home page",
+    membership: "Explore membership",
+    contact: "Contact the Chamber",
+  },
+  es: {
+    eyebrow: "Error 404",
+    heading: "Página no encontrada",
+    text: "La página que solicitaste no existe o se ha movido. Usa los enlaces para continuar.",
+    home: "Ir a la página de inicio",
+    membership: "Conocer la membresía",
+    contact: "Contactar a la Cámara",
+  },
+} as const;
+---
+
+<!doctype html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+    <Seo
+      lang="en"
+      pathname="/404/"
+      title="Page not found"
+      description="The requested page does not exist."
+      noIndex
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content / Saltar al contenido</a>
+
+    <div data-lang-block="en">
+      <Header lang="en" pathname="/en/" />
+    </div>
+    <div data-lang-block="es" hidden>
+      <Header lang="es" pathname="/es/" />
+    </div>
+
+    <main id="main" tabindex="-1">
+      {
+        (["en", "es"] as const).map((lang) => (
+          <section
+            class="section"
+            data-lang-block={lang}
+            hidden={lang === "es"}
+          >
+            <div class="container container--narrow not-found">
+              <p class="eyebrow">{copy[lang].eyebrow}</p>
+              <p class="not-found__code" aria-hidden="true">404</p>
+              <h1>{copy[lang].heading}</h1>
+              <p class="lead">{copy[lang].text}</p>
+              <div class="not-found__actions">
+                <a class="btn btn--primary" href={localizedHref("home", lang)}>
+                  {copy[lang].home}
+                </a>
+                <a
+                  class="btn btn--ghost"
+                  href={localizedHref("membership", lang)}
+                >
+                  {copy[lang].membership}
+                </a>
+                <a class="btn btn--ghost" href={localizedHref("contact", lang)}>
+                  {copy[lang].contact}
+                </a>
+              </div>
+            </div>
+          </section>
+        ))
+      }
+    </main>
+
+    <div data-lang-block="en">
+      <Footer lang="en" pathname="/en/" />
+    </div>
+    <div data-lang-block="es" hidden>
+      <Footer lang="es" pathname="/es/" />
+    </div>
+
+    <script>
+      import { initReveal } from "@scripts/reveal";
+
+      const lang = window.location.pathname.startsWith("/es/") ? "es" : "en";
+      document.documentElement.lang = lang === "es" ? "es-US" : "en-US";
+
+      document.querySelectorAll<HTMLElement>("[data-lang-block]").forEach(
+        (element) => {
+          element.hidden = element.dataset.langBlock !== lang;
+        },
+      );
+
+      initReveal();
+    </script>
+
+    <style>
+      .not-found {
+        padding-block: clamp(2rem, 6vw, 5rem);
+      }
+
+      .not-found__code {
+        margin: 0 0 0.5rem;
+        color: var(--color-gold-300);
+        font-family: var(--font-display);
+        font-size: clamp(4rem, 14vw, 9rem);
+        font-weight: 600;
+        line-height: 0.9;
+      }
+
+      .not-found__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.75rem;
+      }
+    </style>
+  </body>
+</html>

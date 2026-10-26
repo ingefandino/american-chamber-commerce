@@ -1,0 +1,185 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Sponsorship",
+    eyebrow: "Partnership",
+    heading: "Sponsorship opportunities",
+    lead: "Sponsorship is defined per event or program. The Chamber confirms deliverables, visibility, and fees in writing before anything is published.",
+    items: [
+      {
+        title: "Event sponsorship",
+        text: "Support a specific event or program. Visibility and deliverables depend on the event format.",
+      },
+      {
+        title: "Program partnership",
+        text: "Work with the Chamber on a defined program, series, or initiative.",
+      },
+      {
+        title: "Member promotion",
+        text: "Explore promotion through approved Chamber channels, subject to availability.",
+      },
+    ],
+    processTitle: "How it works",
+    process: [
+      "Tell us what you want to support and the audience you want to reach.",
+      "The Chamber confirms what is available and sends written terms.",
+      "Nothing is published or invoiced until both sides agree in writing.",
+    ],
+    contact: "Start a conversation",
+    directory: "View the member directory",
+    note: "Sponsorship is separate from membership dues and does not imply endorsement of your products or services.",
+  },
+  es: {
+    title: "Patrocinio",
+    eyebrow: "Alianzas",
+    heading: "Oportunidades de patrocinio",
+    lead: "El patrocinio se define por evento o programa. La Cámara confirma entregables, visibilidad y costos por escrito antes de publicar cualquier cosa.",
+    items: [
+      {
+        title: "Patrocinio de eventos",
+        text: "Apoya un evento o programa específico. La visibilidad y los entregables dependen del formato del evento.",
+      },
+      {
+        title: "Alianza de programa",
+        text: "Trabaja con la Cámara en un programa, serie o iniciativa definida.",
+      },
+      {
+        title: "Promoción de socios",
+        text: "Explora la promoción mediante canales aprobados de la Cámara, sujeta a disponibilidad.",
+      },
+    ],
+    processTitle: "Cómo funciona",
+    process: [
+      "Cuéntanos qué deseas apoyar y a qué audiencia quieres llegar.",
+      "La Cámara confirma qué está disponible y envía términos por escrito.",
+      "Nada se publica ni se factura hasta que ambas partes lo acuerden por escrito.",
+    ],
+    contact: "Iniciar una conversación",
+    directory: "Ver el directorio de socios",
+    note: "El patrocinio es independiente de la cuota de membresía y no implica respaldo a tus productos o servicios.",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/sponsorship/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      <ul class="sponsorship-grid">
+        {
+          text.items.map((item) => (
+            <li class="card sponsorship-card" data-reveal="up">
+              <h2>{item.title}</h2>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="sponsorship-process">
+        <div>
+          <h2>{text.processTitle}</h2>
+          <ol>
+            {
+              text.process.map((step) => (
+                <li>{step}</li>
+              ))
+            }
+          </ol>
+          <p class="sponsorship-note">{text.note}</p>
+        </div>
+        <div class="sponsorship-actions">
+          <a
+            class="btn btn--primary"
+            href={`${localizedHref("contact", lang)}?topic=sponsorship`}
+          >
+            {text.contact}
+          </a>
+          <a class="btn btn--ghost" href={localizedHref("members", lang)}>
+            {text.directory}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .sponsorship-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sponsorship-card {
+    margin: 0;
+    padding: 1.75rem;
+  }
+
+  .sponsorship-card h2 {
+    font-size: var(--text-lg);
+  }
+
+  .sponsorship-card p {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .sponsorship-process {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .sponsorship-process h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .sponsorship-process ol {
+    color: var(--color-body);
+  }
+
+  .sponsorship-note {
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .sponsorship-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 900px) {
+    .sponsorship-process {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+    }
+  }
+</style>

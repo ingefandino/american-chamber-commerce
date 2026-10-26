@@ -175,3 +175,55 @@ export function readMembershipForm(form: HTMLFormElement): MembershipFormValues 
     consent: data.get("consent") === "yes",
   };
 }
+
+export interface ContactFormValues {
+  name: string;
+  email: string;
+  phone: string;
+  topic: string;
+  message: string;
+  consent: boolean;
+}
+
+export type ContactField = keyof ContactFormValues;
+
+export function validateContactForm(
+  values: ContactFormValues,
+  lang: Lang = "en",
+): FormError<ContactField>[] {
+  const errors: FormError<ContactField>[] = [];
+  const messages = MESSAGES[lang];
+
+  const name = nameError(values.name, lang);
+  if (name) errors.push({ field: "name", message: name });
+
+  const email = emailError(values.email, lang);
+  if (email) errors.push({ field: "email", message: email });
+
+  const phone = phoneError(values.phone, lang);
+  if (phone) errors.push({ field: "phone", message: phone });
+
+  if (!trimmed(values.message)) {
+    errors.push({ field: "message", message: messages.required });
+  } else {
+    const message = messageError(values.message, lang);
+    if (message) errors.push({ field: "message", message });
+  }
+
+  const consent = consentError(values.consent, lang);
+  if (consent) errors.push({ field: "consent", message: consent });
+
+  return errors;
+}
+
+export function readContactForm(form: HTMLFormElement): ContactFormValues {
+  const data = new FormData(form);
+  return {
+    name: String(data.get("name") ?? ""),
+    email: String(data.get("email") ?? ""),
+    phone: String(data.get("phone") ?? ""),
+    topic: String(data.get("topic") ?? "general"),
+    message: String(data.get("message") ?? ""),
+    consent: data.get("consent") === "yes",
+  };
+}

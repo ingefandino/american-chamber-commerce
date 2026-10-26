@@ -138,9 +138,12 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
     });
   });
 
-  const header = document.querySelector<HTMLElement>("[data-site-header]");
+  const headers = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-site-header]"),
+  );
+  const updates: Array<() => void> = [];
 
-  if (header) {
+  headers.forEach((header) => {
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     );
@@ -153,9 +156,7 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
         current: window.scrollY,
         last,
         hidden,
-        menuOpen: Boolean(
-          document.querySelector("[data-mobile-menu][open]"),
-        ),
+        menuOpen: Boolean(document.querySelector("[data-mobile-menu][open]")),
         reducedMotion: reducedMotion.matches,
       });
 
@@ -165,6 +166,8 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
       last = window.scrollY;
       ticking = false;
     };
+
+    updates.push(update);
 
     window.addEventListener(
       "scroll",
@@ -176,7 +179,10 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
       { passive: true },
     );
 
-    menus.forEach((menu) => menu.addEventListener("toggle", update));
     update();
-  }
+  });
+
+  menus.forEach((menu) =>
+    menu.addEventListener("toggle", () => updates.forEach((update) => update())),
+  );
 </script>

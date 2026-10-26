@@ -1,0 +1,246 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+import newYork from "@assets/webp/about/new-york.webp";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "About",
+    eyebrow: "About the Chamber",
+    heading: "A chamber built on trust, connection, and representation",
+    lead: SITE.description.en,
+    missionTitle: "Our mission",
+    missionText: SITE.mission.en,
+    valuesTitle: "What we value",
+    links: [
+      {
+        title: "Mission, vision, and values",
+        text: "Read the full institutional statement.",
+        href: "/about/mission/",
+        cta: "Read more",
+      },
+      {
+        title: "Leadership",
+        text: "How leadership information is published and reviewed.",
+        href: "/about/leadership/",
+        cta: "View leadership",
+      },
+      {
+        title: "Governance",
+        text: "How the Chamber approves content and public positions.",
+        href: "/about/governance/",
+        cta: "View governance",
+      },
+    ],
+    contact: "Contact the Chamber",
+  },
+  es: {
+    title: "Nosotros",
+    eyebrow: "Sobre la Cámara",
+    heading: "Una cámara construida sobre confianza, conexión y representación",
+    lead: SITE.description.es,
+    missionTitle: "Nuestra misión",
+    missionText: SITE.mission.es,
+    valuesTitle: "Lo que valoramos",
+    links: [
+      {
+        title: "Misión, visión y valores",
+        text: "Lee la declaración institucional completa.",
+        href: "/about/mission/",
+        cta: "Leer más",
+      },
+      {
+        title: "Liderazgo",
+        text: "Cómo se publica y revisa la información de liderazgo.",
+        href: "/about/leadership/",
+        cta: "Ver liderazgo",
+      },
+      {
+        title: "Gobernanza",
+        text: "Cómo la Cámara aprueba contenido y posiciones públicas.",
+        href: "/about/governance/",
+        cta: "Ver gobernanza",
+      },
+    ],
+    contact: "Contactar a la Cámara",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/about/`}
+>
+  <section class="section">
+    <div class="container about-hero">
+      <div>
+        <p class="eyebrow">{text.eyebrow}</p>
+        <h1>{text.heading}</h1>
+        <p class="lead">{text.lead}</p>
+        <a class="btn btn--primary" href={localizedHref("contact", lang)}>
+          {text.contact}
+        </a>
+      </div>
+      <div class="about-media" data-reveal="zoom">
+        <Image
+          src={newYork}
+          alt={
+            lang === "es"
+              ? "Vista de una calle de Manhattan, Nueva York"
+              : "Street view of Midtown Manhattan, New York City"
+          }
+          widths={[360, 480, 640]}
+          sizes="(max-width: 900px) 100vw, 40vw"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <div class="about-mission">
+        <div>
+          <h2>{text.missionTitle}</h2>
+          <p>{text.missionText}</p>
+        </div>
+        <div>
+          <h2>{text.valuesTitle}</h2>
+          <ul class="values-list">
+            {
+              SITE.values[lang].map((value) => (
+                <li>{value}</li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <ul class="about-links">
+        {
+          text.links.map((link) => (
+            <li class="card about-link">
+              <h3>{link.title}</h3>
+              <p>{link.text}</p>
+              <a href={`/${lang}${link.href}`}>
+                {link.cta} <span aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .about-media {
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 4 / 5;
+  }
+
+  .about-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-mission {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .about-mission p {
+    color: var(--color-muted);
+  }
+
+  .values-list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .values-list li {
+    position: relative;
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--color-body);
+  }
+
+  .values-list li::before {
+    content: "";
+    position: absolute;
+    top: 0.7em;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-gold-500);
+  }
+
+  .about-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-link {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 1.5rem;
+  }
+
+  .about-link h3 {
+    font-size: var(--text-lg);
+  }
+
+  .about-link p {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .about-link a {
+    margin-top: auto;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (min-width: 900px) {
+    .about-hero {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    }
+
+    .about-mission {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+</style>

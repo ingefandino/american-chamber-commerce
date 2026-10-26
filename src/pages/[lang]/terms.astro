@@ -1,0 +1,136 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Terms of use",
+    eyebrow: "Legal",
+    heading: "Terms of use",
+    draft: "Draft for legal review",
+    updated: "Last updated: 26 October 2026",
+    notice:
+      "These terms are a working draft pending review by qualified counsel. Membership applications, sponsorships, and paid services will be governed by separate written terms.",
+    sections: [
+      {
+        heading: "Use of this site",
+        body: "You may use this site for lawful informational purposes. Do not attempt to disrupt the site, access private systems, or submit false information through the forms.",
+      },
+      {
+        heading: "Content and accuracy",
+        body: "We aim to keep published information accurate and current, but details such as dates, prices, availability, and program content can change. Archived or reviewed content is labeled when it is not final.",
+      },
+      {
+        heading: "Membership and services",
+        body: "Submitting an application or request does not create a membership, sponsorship, or service contract. Any engagement becomes effective only when the Chamber confirms it in writing and any applicable payment is completed.",
+      },
+      {
+        heading: "Intellectual property",
+        body: "The Chamber's name, logo, and site content may not be used in a way that suggests endorsement or partnership without written permission.",
+      },
+      {
+        heading: "External links",
+        body: "Links to third-party sites are provided for convenience. The Chamber is not responsible for their content, availability, or privacy practices.",
+      },
+      {
+        heading: "Contact",
+        body: "Questions about these terms can be sent to the Chamber using the contact details below.",
+      },
+    ],
+    contact: "Contact",
+  },
+  es: {
+    title: "Términos de uso",
+    eyebrow: "Legal",
+    heading: "Términos de uso",
+    draft: "Borrador para revisión legal",
+    updated: "Última actualización: 26 de octubre de 2026",
+    notice:
+      "Estos términos son un borrador de trabajo pendiente de revisión por asesoría calificada. Las solicitudes de membresía, patrocinios y servicios pagados se regirán por términos escritos separados.",
+    sections: [
+      {
+        heading: "Uso de este sitio",
+        body: "Puedes usar este sitio con fines informativos lícitos. No intentes interrumpir el sitio, acceder a sistemas privados ni enviar información falsa mediante los formularios.",
+      },
+      {
+        heading: "Contenido y exactitud",
+        body: "Procuramos mantener la información publicada exacta y actualizada, pero detalles como fechas, precios, disponibilidad y contenido de programas pueden cambiar. El contenido archivado o en revisión se identifica cuando no es definitivo.",
+      },
+      {
+        heading: "Membresía y servicios",
+        body: "Enviar una solicitud no crea una membresía, patrocinio ni contrato de servicio. Cualquier relación se perfecciona solo cuando la Cámara la confirma por escrito y se completa el pago aplicable.",
+      },
+      {
+        heading: "Propiedad intelectual",
+        body: "El nombre, logotipo y contenido de la Cámara no pueden usarse de forma que sugiera respaldo o alianza sin permiso escrito.",
+      },
+      {
+        heading: "Enlaces externos",
+        body: "Los enlaces a sitios de terceros se ofrecen por conveniencia. La Cámara no es responsable de su contenido, disponibilidad o prácticas de privacidad.",
+      },
+      {
+        heading: "Contacto",
+        body: "Las preguntas sobre estos términos pueden enviarse a la Cámara usando los datos de contacto a continuación.",
+      },
+    ],
+    contact: "Contacto",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.notice}
+  pathname={`/${lang}/terms/`}
+>
+  <section class="section">
+    <div class="container container--narrow">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="legal-meta">
+        <span class="badge">{text.draft}</span>
+        <span>{text.updated}</span>
+      </p>
+      <p class="callout">{text.notice}</p>
+
+      <div class="prose">
+        {
+          text.sections.map((section) => (
+            <>
+              <h2>{section.heading}</h2>
+              <p>{section.body}</p>
+            </>
+          ))
+        }
+        <h2>{text.contact}</h2>
+        <p>
+          <a href={SITE.contact.emailHref}>{SITE.contact.email}</a>
+          <br />
+          <a href={SITE.contact.phoneHref}>{SITE.contact.phone}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+</style>

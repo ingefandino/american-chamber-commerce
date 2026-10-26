@@ -1,0 +1,80 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Leadership",
+    eyebrow: "About",
+    heading: "Leadership",
+    lead: "Leadership information is published only after the Chamber confirms the person's role and authorization to appear on the website.",
+    emptyTitle: "Leadership profiles are being confirmed",
+    emptyText:
+      "The local project includes names and roles that have not been verified for publication. To avoid publishing unauthorized or outdated information, no profiles are shown here yet.",
+    contact: "Contact the Chamber",
+  },
+  es: {
+    title: "Liderazgo",
+    eyebrow: "Nosotros",
+    heading: "Liderazgo",
+    lead: "La información de liderazgo se publica solo después de que la Cámara confirma el cargo de la persona y su autorización para aparecer en el sitio web.",
+    emptyTitle: "Los perfiles de liderazgo están siendo confirmados",
+    emptyText:
+      "El proyecto local incluye nombres y cargos que no han sido verificados para publicación. Para evitar publicar información no autorizada o desactualizada, aún no se muestran perfiles aquí.",
+    contact: "Contactar a la Cámara",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/about/leadership/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      <div class="empty-state" data-reveal="up">
+        <h2>{text.emptyTitle}</h2>
+        <p>{text.emptyText}</p>
+        <a class="btn btn--primary" href={SITE.contact.emailHref}>
+          {text.contact}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .empty-state {
+    margin-top: 2.5rem;
+    padding: 2.5rem;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .empty-state h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .empty-state p {
+    max-width: 62ch;
+    color: var(--color-muted);
+  }
+</style>

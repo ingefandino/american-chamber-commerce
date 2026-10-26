@@ -1,0 +1,134 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Governance",
+    eyebrow: "About",
+    heading: "Governance and editorial responsibility",
+    lead: "Public positions, prices, member listings, and legal text are published only after the responsible body confirms them.",
+    items: [
+      {
+        title: "Content approval",
+        text: "Institutional claims, prices, policy positions, and member profiles require an identified approver before publication.",
+      },
+      {
+        title: "Editorial review",
+        text: "Items marked “under editorial review” are working content. They are not final positions, offers, or records.",
+      },
+      {
+        title: "Corrections and removal",
+        text: "The Chamber can correct or withdraw a price, event, person, logo, contact, or statement when the source or authorization changes.",
+      },
+      {
+        title: "Governance details",
+        text: "The current governing structure and approval roles are being documented with the client. No board or committee names are published without authorization.",
+      },
+    ],
+    contact: "Ask about governance",
+  },
+  es: {
+    title: "Gobernanza",
+    eyebrow: "Nosotros",
+    heading: "Gobernanza y responsabilidad editorial",
+    lead: "Las posiciones públicas, precios, listados de socios y textos legales se publican solo después de que el órgano responsable los confirma.",
+    items: [
+      {
+        title: "Aprobación de contenido",
+        text: "Las afirmaciones institucionales, precios, posiciones de política y perfiles de socios requieren un aprobador identificado antes de publicarse.",
+      },
+      {
+        title: "Revisión editorial",
+        text: "Los elementos marcados “en revisión editorial” son contenido de trabajo. No son posiciones, ofertas o registros definitivos.",
+      },
+      {
+        title: "Correcciones y retiro",
+        text: "La Cámara puede corregir o retirar un precio, evento, persona, logotipo, contacto o declaración cuando cambia la fuente o la autorización.",
+      },
+      {
+        title: "Detalles de gobernanza",
+        text: "La estructura de gobierno y los roles de aprobación actuales se están documentando con el cliente. No se publican nombres de directorio o comité sin autorización.",
+      },
+    ],
+    contact: "Consultar sobre gobernanza",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/about/governance/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      <ul class="governance-grid">
+        {
+          text.items.map((item, index) => (
+            <li class="card governance-card" data-reveal="up">
+              <span class="governance-card__index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h2>{item.title}</h2>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a class="btn btn--primary" href={SITE.contact.emailHref}>
+        {text.contact}
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .governance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .governance-card {
+    margin: 0;
+    padding: 1.75rem;
+  }
+
+  .governance-card__index {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--color-gold-600);
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .governance-card h2 {
+    font-size: var(--text-lg);
+  }
+
+  .governance-card p {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+</style>

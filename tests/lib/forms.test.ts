@@ -116,3 +116,59 @@ describe("readMembershipForm", () => {
     expect(values.consent).toBe(true);
   });
 });
+
+import {
+  readContactForm,
+  validateContactForm,
+  type ContactFormValues,
+} from "@lib/forms";
+
+const validContact: ContactFormValues = {
+  name: "Ana García",
+  email: "ana@example.com",
+  phone: "",
+  topic: "membership",
+  message: "I would like more information.",
+  consent: true,
+};
+
+describe("validateContactForm", () => {
+  it("accepts a valid contact message", () => {
+    expect(validateContactForm(validContact, "en")).toEqual([]);
+  });
+
+  it("requires a message and consent with localized messages", () => {
+    const errors = validateContactForm(
+      { ...validContact, message: "", consent: false },
+      "es",
+    );
+    expect(errors.map((error) => error.field)).toEqual(["message", "consent"]);
+    expect(errors[0].message).toBe("Este campo es obligatorio.");
+  });
+
+  it("validates email and optional phone", () => {
+    const errors = validateContactForm(
+      { ...validContact, email: "bad", phone: "abc" },
+      "en",
+    );
+    expect(errors.map((error) => error.field)).toEqual(["email", "phone"]);
+  });
+});
+
+describe("readContactForm", () => {
+  it("reads the topic and consent from the form", () => {
+    document.body.innerHTML = `
+      <form>
+        <input name="name" value="Ana" />
+        <input name="email" value="ana@example.com" />
+        <input name="phone" value="" />
+        <select name="topic"><option value="events" selected>Events</option></select>
+        <textarea name="message">Hello</textarea>
+        <input type="checkbox" name="consent" value="yes" checked />
+      </form>
+    `;
+    const values = readContactForm(document.querySelector("form")!);
+    expect(values.topic).toBe("events");
+    expect(values.consent).toBe(true);
+  });
+});
