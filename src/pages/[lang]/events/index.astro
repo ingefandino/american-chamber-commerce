@@ -1,0 +1,157 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import EventCard from "@components/events/EventCard.astro";
+import { getPastEvents, getUpcomingEvents } from "@data/events";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+const upcoming = getUpcomingEvents(lang);
+const past = getPastEvents(lang);
+
+const copy = {
+  en: {
+    title: "Events",
+    eyebrow: "Events",
+    heading: "Programs that inform and connect",
+    lead: "Browse upcoming Chamber events and the archived calendar. Every listing states its date, time zone, location, and status.",
+    upcoming: "Upcoming events",
+    emptyTitle: "No upcoming events are published yet",
+    emptyText:
+      "New events are added after the Chamber confirms the date, venue, and program. Contact us if you would like to be notified.",
+    contact: "Contact the events team",
+    past: "Past events",
+    pastNote:
+      "Archived listings come from the local project and remain under editorial review. They are not presented as upcoming events.",
+    review: "Under editorial review",
+  },
+  es: {
+    title: "Eventos",
+    eyebrow: "Eventos",
+    heading: "Programas que informan y conectan",
+    lead: "Consulta los próximos eventos de la Cámara y el calendario archivado. Cada registro indica fecha, zona horaria, lugar y estado.",
+    upcoming: "Próximos eventos",
+    emptyTitle: "Aún no hay eventos próximos publicados",
+    emptyText:
+      "Los nuevos eventos se agregan cuando la Cámara confirma la fecha, el lugar y el programa. Contáctanos si deseas recibir avisos.",
+    contact: "Contactar al equipo de eventos",
+    past: "Eventos pasados",
+    pastNote:
+      "Los registros archivados provienen del proyecto local y siguen en revisión editorial. No se presentan como eventos próximos.",
+    review: "En revisión editorial",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/events/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <h2>{text.upcoming}</h2>
+      {
+        upcoming.length > 0 ? (
+          <ul class="events-grid">
+            {upcoming.map((event) => (
+              <li>
+                <EventCard event={event} lang={lang} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="empty-state" data-reveal="up">
+            <h3>{text.emptyTitle}</h3>
+            <p>{text.emptyText}</p>
+            <a class="btn btn--primary" href={SITE.contact.emailHref}>
+              {text.contact}
+            </a>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>{text.past}</h2>
+      <p class="events-note">{text.pastNote}</p>
+      {
+        past.length > 0 ? (
+          <ul class="events-grid">
+            {past.map((event) => (
+              <li>
+                <EventCard event={event} lang={lang} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="events-note">
+            {lang === "es"
+              ? "No hay eventos pasados publicados en este idioma."
+              : "No past events are published in this language."}
+          </p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 1.25rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .events-grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  .events-grid :global(.event-card) {
+    width: 100%;
+  }
+
+  .events-note {
+    max-width: 72ch;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .empty-state {
+    padding: 2rem;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+  }
+
+  .empty-state h3 {
+    font-size: var(--text-xl);
+  }
+
+  .empty-state p {
+    max-width: 62ch;
+    color: var(--color-muted);
+  }
+</style>

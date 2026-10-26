@@ -1,0 +1,175 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  formatEventDate,
+  formatEventEndTime,
+  getEventBySlug,
+  getPublicEvents,
+  MODALITY_LABELS,
+  STATUS_LABELS,
+} from "@data/events";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return ["en", "es"].flatMap((lang) =>
+    getPublicEvents(lang as Lang).map((event) => ({
+      params: { lang, slug: event.slug },
+    })),
+  );
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+const slug = String(params.slug ?? "");
+const event = getEventBySlug(slug, lang);
+
+if (!event) {
+  return Astro.redirect(`/${lang}/events/`, 302);
+}
+
+const text = {
+  en: {
+    back: "All events",
+    when: "Date and time",
+    end: "Ends",
+    where: "Location",
+    format: "Format",
+    timezone: "Time zone",
+    status: "Status",
+    cta: "Ask about this event",
+    review:
+      "This is an archived event listing under editorial review. Confirm details with the Chamber before relying on them.",
+  },
+  es: {
+    back: "Todos los eventos",
+    when: "Fecha y hora",
+    end: "Finaliza",
+    where: "Lugar",
+    format: "Modalidad",
+    timezone: "Zona horaria",
+    status: "Estado",
+    cta: "Consultar por este evento",
+    review:
+      "Este es un registro archivado en revisión editorial. Confirma los detalles con la Cámara antes de utilizarlos.",
+  },
+}[lang];
+
+const mailto = `${SITE.contact.emailHref}?subject=${encodeURIComponent(
+  `${lang === "es" ? "Consulta de evento" : "Event inquiry"}: ${event.title[lang]}`,
+)}`;
+---
+
+<BaseLayout
+  lang={lang}
+  title={event.title[lang]}
+  description={event.summary[lang]}
+  pathname={`/${lang}/events/${event.slug}/`}
+>
+  <section class="section">
+    <div class="container event-detail">
+      <div>
+        <a class="event-back" href={localizedHref("events", lang)}>
+          <span aria-hidden="true">←</span> {text.back}
+        </a>
+        <p class="eyebrow">{STATUS_LABELS[event.status][lang]}</p>
+        <h1>{event.title[lang]}</h1>
+        <p class="lead">{event.summary[lang]}</p>
+
+        <div class="prose event-prose">
+          <p>{event.description[lang]}</p>
+        </div>
+
+        {event.editorialStatus === "needs-review" && (
+          <p class="callout event-review">{text.review}</p>
+        )}
+
+        <a class="btn btn--primary" href={mailto}>{event.ctaLabel[lang]}</a>
+      </div>
+
+      <aside class="event-aside card">
+        <h2>{text.when}</h2>
+        <p>{formatEventDate(event, lang)}</p>
+        <p>
+          {text.end}: {formatEventEndTime(event, lang)}
+        </p>
+        <h2>{text.where}</h2>
+        <p>{event.location.name}</p>
+        <p>
+          {event.location.city}
+          {event.location.address ? ` — ${event.location.address}` : ""}
+        </p>
+        <h2>{text.format}</h2>
+        <p>{MODALITY_LABELS[event.modality][lang]}</p>
+        <h2>{text.timezone}</h2>
+        <p>{event.timezone}</p>
+        <h2>{text.status}</h2>
+        <p>{STATUS_LABELS[event.status][lang]}</p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .event-detail {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .event-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-navy-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .event-back:hover,
+  .event-back:focus-visible {
+    color: var(--color-gold-600);
+  }
+
+  .event-prose {
+    margin-bottom: 1.5rem;
+  }
+
+  .event-review {
+    margin: 0 0 1.5rem;
+    font-size: var(--text-sm);
+  }
+
+  .event-aside {
+    padding: 1.75rem;
+  }
+
+  .event-aside h2 {
+    margin-top: 1.25rem;
+    color: var(--color-gold-600);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .event-aside h2:first-child {
+    margin-top: 0;
+  }
+
+  .event-aside p {
+    margin-bottom: 0.35rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (min-width: 900px) {
+    .event-detail {
+      grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.5fr);
+    }
+  }
+</style>
