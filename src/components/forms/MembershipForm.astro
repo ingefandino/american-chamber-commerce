@@ -24,9 +24,16 @@ const text = {
     consent:
       "I agree that the Chamber may contact me about this request. My details will not be sold or shared for unrelated marketing.",
     submit: "Send application request",
-    statusReady:
-      "Your details are valid. Submission will be enabled in the next step.",
+    statusLoading: "Sending your request…",
+    statusSuccess:
+      "Thank you. Your request was received and our team will contact you.",
     statusError: "Please review the highlighted fields.",
+    statusFailed:
+      "We could not send your request. Your details are still here, so you can try again.",
+    statusTimeout:
+      "The request took too long. Please try again or email the membership team.",
+    statusNotConfigured:
+      "The form is not available right now. Please email the membership team.",
     fallback:
       "If the form does not work, email the membership team directly.",
     required: "required",
@@ -47,9 +54,16 @@ const text = {
     consent:
       "Acepto que la Cámara me contacte sobre esta solicitud. Mis datos no se venderán ni se compartirán para marketing no relacionado.",
     submit: "Enviar solicitud",
-    statusReady:
-      "Tus datos son válidos. El envío se habilitará en el siguiente paso.",
+    statusLoading: "Enviando tu solicitud…",
+    statusSuccess:
+      "Gracias. Recibimos tu solicitud y nuestro equipo te contactará.",
     statusError: "Revisa los campos resaltados.",
+    statusFailed:
+      "No pudimos enviar tu solicitud. Tus datos siguen aquí, así que puedes intentarlo de nuevo.",
+    statusTimeout:
+      "La solicitud tardó demasiado. Inténtalo de nuevo o escribe al equipo de membresía.",
+    statusNotConfigured:
+      "El formulario no está disponible en este momento. Escribe al equipo de membresía.",
     fallback:
       "Si el formulario no funciona, escribe directamente al equipo de membresía.",
     required: "obligatorio",
@@ -102,11 +116,25 @@ const fields = [
   class="form"
   data-membership-form
   data-lang={lang}
-  data-ready-message={labels.statusReady}
+  data-loading-message={labels.statusLoading}
+  data-success-message={labels.statusSuccess}
   data-error-summary={labels.statusError}
+  data-failed-message={labels.statusFailed}
+  data-timeout-message={labels.statusTimeout}
+  data-not-configured-message={labels.statusNotConfigured}
   novalidate
 >
   <input type="hidden" name="form_type" value="membership_interest" />
+  <div class="form-honeypot" aria-hidden="true">
+    <label for="membership-botcheck">Leave this field empty</label>
+    <input
+      id="membership-botcheck"
+      name="botcheck"
+      type="text"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
   <fieldset>
     <legend class="sr-only">{labels.legend}</legend>
 
@@ -236,6 +264,11 @@ const fields = [
     validateMembershipForm,
     type FormError,
   } from "@lib/forms";
+  import {
+    buildMembershipPayload,
+    createSubmitLock,
+    submitToWeb3Forms,
+  } from "@lib/web3forms";
 
   const form = document.querySelector<HTMLFormElement>(
     "[data-membership-form]",
@@ -244,6 +277,11 @@ const fields = [
   if (form) {
     const lang = form.dataset.lang === "es" ? "es" : "en";
     const status = form.querySelector<HTMLElement>("[data-form-status]");
+    const submitButton = form.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    );
+    const originalLabel = submitButton?.textContent ?? "";
+    const lock = createSubmitLock();
 
     const clearError = (field: string) => {
       const error = form.querySelector<HTMLElement>(
@@ -286,7 +324,9 @@ const fields = [
           element.textContent = "";
         });
       form
-        .querySelectorAll<HTMLElement>("[name]")
+        .querySelectorAll<HTMLElement>(
+          "input:not([type='hidden']):not([name='botcheck']), select, textarea",
+        )
         .forEach((element) => element.setAttribute("aria-invalid", "false"));
 
       if (errors.length > 0) {
@@ -299,16 +339,54 @@ const fields = [
         return;
       }
 
-      if (status) {
-        status.textContent = form.dataset.readyMessage ?? "";
-        status.dataset.state = "ready";
-      }
-      form.dispatchEvent(
-        new CustomEvent("membership:valid", {
-          detail: values,
-          bubbles: true,
-        }),
-      );
+      const botcheck =
+        form.querySelector<HTMLInputElement>('[name="botcheck"]')?.value ?? "";
+
+      void lock.run(async () => {
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = form.dataset.loadingMessage ?? "";
+        }
+        form.setAttribute("aria-busy", "true");
+        if (status) {
+          status.textContent = form.dataset.loadingMessage ?? "";
+          status.dataset.state = "loading";
+        }
+
+        const result = await submitToWeb3Forms(
+          buildMembershipPayload(values, lang, botcheck),
+        );
+
+        if (result.status === "success" || result.status === "ignored") {
+          if (status) {
+            status.textContent = form.dataset.successMessage ?? "";
+            status.dataset.state = "success";
+          }
+          form.dispatchEvent(
+            new CustomEvent("membership:submitted", {
+              detail: { status: result.status },
+              bubbles: true,
+            }),
+          );
+        } else {
+          const message =
+            result.reason === "timeout"
+              ? form.dataset.timeoutMessage
+              : result.reason === "not-configured"
+                ? form.dataset.notConfiguredMessage
+                : form.dataset.failedMessage;
+          if (status) {
+            status.textContent = message ?? "";
+            status.dataset.state = "error";
+          }
+        }
+
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
+        form.removeAttribute("aria-busy");
+      });
     });
   }
 </script>
@@ -403,6 +481,14 @@ const fields = [
     min-height: auto;
     margin-top: 0.2rem;
     accent-color: var(--color-navy-700);
+  }
+
+  .form-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
   }
 
   .form-status {
