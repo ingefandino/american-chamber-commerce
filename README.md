@@ -18,6 +18,7 @@ pnpm build               # build estático en dist/
 pnpm validate            # rutas, enlaces, hreflang, sitemap y datos privados
 pnpm smoke               # smoke test de páginas críticas
 pnpm smoke:visual        # Chrome local: overflow 320–1440, slider, formularios, idioma y 404
+pnpm assets:social       # regenera og-image.jpg e iconos del manifest
 pnpm budget              # presupuestos de JS, HTML e imágenes
 pnpm ci                  # test + build + validate + smoke + budget
 ```

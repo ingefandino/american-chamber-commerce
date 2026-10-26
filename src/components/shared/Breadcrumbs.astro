@@ -1,0 +1,79 @@
+---
+import type { Lang } from "@lib/lang";
+import type { BreadcrumbItem } from "@lib/breadcrumbs";
+
+interface Props {
+  items: BreadcrumbItem[];
+  lang: Lang;
+}
+
+const { items, lang } = Astro.props;
+const label = lang === "es" ? "Ruta de navegación" : "Breadcrumb";
+---
+
+{
+  items.length > 0 && (
+    <nav class="breadcrumbs" aria-label={label}>
+      <div class="container">
+        <ol>
+          {items.map((item, index) => {
+            const isCurrent = index === items.length - 1;
+            return (
+              <li>
+                {isCurrent ? (
+                  <span aria-current="page">{item.name}</span>
+                ) : (
+                  <a href={item.href}>{item.name}</a>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </nav>
+  )
+}
+
+<style>
+  .breadcrumbs {
+    padding-top: 1rem;
+  }
+
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .breadcrumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0;
+  }
+
+  .breadcrumbs li + li::before {
+    content: "/";
+    color: var(--color-line);
+  }
+
+  .breadcrumbs a {
+    color: var(--color-navy-700);
+    text-decoration: none;
+  }
+
+  .breadcrumbs a:hover,
+  .breadcrumbs a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .breadcrumbs [aria-current="page"] {
+    color: var(--color-muted);
+  }
+</style>

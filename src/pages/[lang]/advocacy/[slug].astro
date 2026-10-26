@@ -9,6 +9,7 @@ import {
 import { SITE } from "@data/site";
 import { isLang, type Lang } from "@lib/lang";
 import { localizedHref } from "@lib/routes";
+import { policyArticleSchema } from "@lib/structuredData";
 
 export function getStaticPaths() {
   return ["en", "es"].flatMap((lang) =>
@@ -62,6 +63,7 @@ const text = {
   title={policy.title[lang]}
   description={policy.summary[lang]}
   pathname={`/${lang}/advocacy/${policy.slug}/`}
+  structuredData={policyArticleSchema(policy, lang)}
 >
   <section class="section">
     <div class="container policy-detail">

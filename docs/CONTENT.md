@@ -47,6 +47,8 @@ El sitio WordPress muestra un teléfono y un `mailto` distintos. **Debe confirma
 - Slider: 9 imágenes WebP del proyecto local.
 - Logos: `logo-acc.png` y `logo_blanco.png`.
 - Imagen de Nueva York: `about/new-york.webp`.
+- Imagen social: `public/og-image.jpg` (1200x630, generada desde New York + logo blanco).
+- Iconos de manifest: `public/icons/icon-192.png`, `icon-512.png` y `public/apple-touch-icon.png`.
 - No se publicaron logos de miembros, partners, comité o equipo.
 - Registrar licencia, autor, fecha y permiso de cada asset antes de producción.
 - No publicar fotos de personas sin consentimiento vigente.

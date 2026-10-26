@@ -68,7 +68,19 @@ Antes de publicar o actualizar:
 5. Registra causa, alcance, corrección y prevención.
 6. Si hay datos personales comprometidos, sigue el procedimiento legal aplicable.
 
-## 7. Accesibilidad y rendimiento
+## 7. SEO y previews sociales
+
+- `og-image.jpg` debe ser 1200x630, con logo aprobado y texto alternativo localizado.
+- Manifest e iconos 192/512 se regeneran con `pnpm assets:social`.
+- Antes de publicar, valida previews en:
+  - Facebook Sharing Debugger: https://developers.facebook.com/tools/debug/
+  - LinkedIn Post Inspector: https://www.linkedin.com/post-inspector/
+  - WhatsApp: prueba manual del enlace en móvil.
+- No cambies la URL estable `/og-image.jpg` sin invalidar cachés de redes sociales.
+- Mantén `canonical`, `hreflang`, `x-default`, sitemap y robots alineados con las rutas publicadas.
+- Staging debe construirse con `PUBLIC_NOINDEX=true` y autenticación del hosting.
+
+## 8. Accesibilidad y rendimiento
 
 Cadencia recomendada:
 
@@ -85,7 +97,7 @@ Presupuestos actuales (ver `scripts/check-budgets.mjs`):
 - Sin scroll horizontal desde 320 px (`pnpm smoke:visual`).
 - WCAG 2.2 AA como objetivo.
 
-## 8. Backups y recuperación
+## 9. Backups y recuperación
 
 - Conserva al menos dos releases completas.
 - Backup del docroot y de `.well-known` antes de cada cambio mayor.

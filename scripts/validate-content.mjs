@@ -3,6 +3,7 @@ import { existsSync } from "node:fs";
 import { readdir, readFile, stat } from "node:fs/promises";
 import { dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import sharp from "sharp";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const dist = join(root, "dist");
@@ -154,6 +155,100 @@ for (const file of pages) {
         /<link rel="alternate"[^>]+hreflang="en"/.test(html),
       `${route}: missing hreflang alternates`,
     );
+  }
+
+  const expectedCanonical =
+    route === "/404" ? `${site}/404/` : `${site}${route}`;
+  assert(
+    html.includes(`rel="canonical" href="${expectedCanonical}"`),
+    `${route}: canonical does not match the published URL`,
+  );
+  assert(
+    /rel="manifest" href="\/site.webmanifest"/.test(html),
+    `${route}: missing web manifest`,
+  );
+  assert(
+    /rel="apple-touch-icon"/.test(html),
+    `${route}: missing apple touch icon`,
+  );
+
+  for (const property of [
+    "og:type",
+    "og:site_name",
+    "og:title",
+    "og:description",
+    "og:url",
+    "og:locale",
+    "og:image",
+    "og:image:type",
+    "og:image:width",
+    "og:image:height",
+    "og:image:alt",
+  ]) {
+    assert(
+      new RegExp(`property="${property}"`).test(html),
+      `${route}: missing ${property}`,
+    );
+  }
+  assert(
+    html.includes(
+      'property="og:image" content="https://americanchamberofcommerce.us/og-image.jpg"',
+    ),
+    `${route}: og:image is not the stable social image`,
+  );
+  assert(
+    html.includes('property="og:image:width" content="1200"') &&
+      html.includes('property="og:image:height" content="630"'),
+    `${route}: og:image dimensions are not 1200x630`,
+  );
+  for (const name of [
+    "twitter:card",
+    "twitter:title",
+    "twitter:description",
+    "twitter:image",
+    "twitter:image:alt",
+  ]) {
+    assert(
+      new RegExp(`name="${name}"`).test(html),
+      `${route}: missing ${name}`,
+    );
+  }
+
+  const jsonLdMatch = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(
+    html,
+  );
+  assert(jsonLdMatch, `${route}: missing JSON-LD`);
+  if (jsonLdMatch) {
+    try {
+      const data = JSON.parse(jsonLdMatch[1]);
+      assert(
+        data["@context"] === "https://schema.org",
+        `${route}: invalid JSON-LD context`,
+      );
+      const types = (data["@graph"] ?? []).map((node) => node["@type"]);
+      assert(types.includes("Organization"), `${route}: missing Organization schema`);
+      assert(types.includes("WebSite"), `${route}: missing WebSite schema`);
+
+      const isHome = route === "/en/" || route === "/es/";
+      const is404 = route === "/404";
+      if (!isHome && !is404) {
+        assert(
+          types.includes("BreadcrumbList"),
+          `${route}: missing BreadcrumbList schema`,
+        );
+      }
+      if (/\/services\/[^/]+\/$/.test(route)) {
+        assert(types.includes("Service"), `${route}: missing Service schema`);
+      }
+      if (/\/events\/[^/]+\/$/.test(route)) {
+        assert(types.includes("Event"), `${route}: missing Event schema`);
+      }
+      if (/\/advocacy\/[^/]+\/$/.test(route)) {
+        assert(types.includes("Article"), `${route}: missing Article schema`);
+      }
+    } catch (error) {
+      errors.push(`${route}: invalid JSON-LD (${error.message})`);
+    }
   }
 
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);

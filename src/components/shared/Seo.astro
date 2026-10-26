@@ -8,7 +8,12 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "@lib/seo";
-import ogImage from "@assets/webp/about/new-york.webp";
+import {
+  buildJsonLdGraph,
+  serializeJsonLd,
+  type JsonLd,
+} from "@lib/structuredData";
+import type { BreadcrumbItem } from "@lib/breadcrumbs";
 
 interface Props {
   lang: Lang;
@@ -18,6 +23,9 @@ interface Props {
   noIndex?: boolean;
   type?: "website" | "article";
   availableLangs?: Lang[];
+  structuredData?: JsonLd | JsonLd[];
+  breadcrumbs?: BreadcrumbItem[];
+  imageAlt?: string;
 }
 
 const {
@@ -28,22 +36,46 @@ const {
   noIndex = false,
   type = "website",
   availableLangs = ["en", "es"],
+  structuredData = [],
+  breadcrumbs = [],
+  imageAlt,
 } = Astro.props;
 
 const site = Astro.site ?? SITE_URL;
 const canonical = absoluteUrl(pathname, site);
 const alternates = buildAlternates(pathname, site, availableLangs);
-const image = absoluteUrl(ogImage.src, site);
+const image = `${site.toString().replace(/\/$/, "")}/og-image.jpg`;
+const alt =
+  imageAlt ??
+  (lang === "es"
+    ? "American Chamber of Commerce — Nueva York"
+    : "American Chamber of Commerce — New York City");
 const robots = shouldNoIndex(noIndex)
   ? "noindex, nofollow"
   : "index, follow, max-image-preview:large";
 const fullTitle = formatTitle(title);
+const jsonLd = buildJsonLdGraph(
+  lang,
+  structuredData,
+  breadcrumbs,
+  site.toString(),
+);
+const alternateLocales = alternates
+  .filter(
+    (alternate) =>
+      alternate.hreflang !== lang && alternate.hreflang !== "x-default",
+  )
+  .map((alternate) => ogLocale(alternate.hreflang as Lang));
 ---
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
+<meta name="author" content={SITE_NAME} />
+<meta name="application-name" content={SITE_NAME} />
 <meta name="robots" content={robots} />
 <link rel="canonical" href={canonical} />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
 {alternates.map((alternate) => (
   <link
@@ -59,10 +91,20 @@ const fullTitle = formatTitle(title);
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:locale" content={ogLocale(lang)} />
+{alternateLocales.map((locale) => (
+  <meta property="og:locale:alternate" content={locale} />
+))}
 <meta property="og:image" content={image} />
-<meta property="og:image:alt" content="New York skyline" />
+<meta property="og:image:secure_url" content={image} />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={alt} />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={image} />
+<meta name="twitter:image:alt" content={alt} />
+
+<script type="application/ld+json" set:html={serializeJsonLd(jsonLd)} />

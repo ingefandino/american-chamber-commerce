@@ -1,8 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   absoluteUrl,
   buildAlternates,
   formatTitle,
+  shouldNoIndex,
   SITE_URL,
 } from "@lib/seo";
 
@@ -32,6 +33,13 @@ describe("seo", () => {
 
   it("does not emit hreflang for unknown routes", () => {
     expect(buildAlternates("/en/does-not-exist/")).toEqual([]);
+  });
+
+  it("marks staging as noindex when the build flag is set", () => {
+    vi.stubEnv("PUBLIC_NOINDEX", "true");
+    expect(shouldNoIndex()).toBe(true);
+    vi.unstubAllEnvs();
+    expect(shouldNoIndex()).toBe(false);
   });
 
   it("limits hreflang to languages that actually have content", () => {

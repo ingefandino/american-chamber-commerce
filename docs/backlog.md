@@ -356,7 +356,7 @@ Como visitante, quiero ver el período de vigencia del sitio en el footer.
 
 ### ACC-023 — Implementar SEO completo y previews sociales
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-005, ACC-010
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-005, ACC-010
 
 Como propietario del sitio, quiero que cada página sea correctamente indexable y compartible para que los buscadores y redes sociales muestren información completa, imágenes y enlaces correctos.
 

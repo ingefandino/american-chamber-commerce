@@ -8,6 +8,7 @@ import {
 import { SITE } from "@data/site";
 import { isLang, type Lang } from "@lib/lang";
 import { localizedHref } from "@lib/routes";
+import { serviceSchema } from "@lib/structuredData";
 
 export function getStaticPaths() {
   const services = getPublishedServices();
@@ -58,6 +59,7 @@ const mailto = `${SITE.contact.emailHref}?subject=${encodeURIComponent(
   title={service.name[lang]}
   description={service.summary[lang]}
   pathname={pathname}
+  structuredData={serviceSchema(service, lang)}
 >
   <section class="section">
     <div class="container service-detail">

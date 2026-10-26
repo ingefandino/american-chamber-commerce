@@ -3,6 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { getNewsBySlug, getPublishedNews } from "@data/news";
 import { isLang, type Lang } from "@lib/lang";
 import { localizedHref } from "@lib/routes";
+import { newsArticleSchema } from "@lib/structuredData";
 
 export function getStaticPaths() {
   return ["en", "es"].flatMap((lang) =>
@@ -33,6 +34,7 @@ const text = {
   description={item.summary[lang]}
   pathname={`/${lang}/news/${item.slug}/`}
   availableLangs={item.translations}
+  structuredData={newsArticleSchema(item, lang)}
 >
   <section class="section">
     <div class="container container--narrow">

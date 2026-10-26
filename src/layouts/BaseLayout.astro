@@ -3,7 +3,10 @@ import "@styles/global.css";
 import Seo from "@components/shared/Seo.astro";
 import Header from "@components/shared/Header.astro";
 import Footer from "@components/shared/Footer.astro";
+import Breadcrumbs from "@components/shared/Breadcrumbs.astro";
 import { htmlLang, type Lang } from "@lib/lang";
+import { buildBreadcrumbs } from "@lib/breadcrumbs";
+import type { JsonLd } from "@lib/structuredData";
 
 interface Props {
   lang?: Lang;
@@ -12,6 +15,7 @@ interface Props {
   pathname?: string;
   noIndex?: boolean;
   availableLangs?: Lang[];
+  structuredData?: JsonLd | JsonLd[];
 }
 
 const {
@@ -20,9 +24,11 @@ const {
   description = "American Chamber of Commerce connects businesses with the resources, relationships, and representation they need to compete and grow.",
   noIndex = false,
   availableLangs = ["en", "es"],
+  structuredData = [],
 } = Astro.props;
 
 const pathname = Astro.props.pathname ?? Astro.url?.pathname ?? `/${lang}/`;
+const breadcrumbs = buildBreadcrumbs(pathname, lang, title);
 const skipLabel = lang === "es" ? "Saltar al contenido" : "Skip to content";
 const themeColor = "#0b2545";
 ---
@@ -52,6 +58,8 @@ const themeColor = "#0b2545";
       description={description}
       noIndex={noIndex}
       availableLangs={availableLangs}
+      structuredData={structuredData}
+      breadcrumbs={breadcrumbs}
     />
     <slot name="head" />
   </head>
@@ -59,6 +67,7 @@ const themeColor = "#0b2545";
     <a class="skip-link" href="#main">{skipLabel}</a>
     <Header lang={lang} pathname={pathname} availableLangs={availableLangs} />
     <main id="main" tabindex="-1">
+      <Breadcrumbs items={breadcrumbs} lang={lang} />
       <slot />
     </main>
     <Footer lang={lang} pathname={pathname} availableLangs={availableLangs} />

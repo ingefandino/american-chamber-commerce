@@ -18,7 +18,9 @@
     "smoke": "node scripts/smoke-test.mjs",
     "budget": "node scripts/check-budgets.mjs",
     "ci": "pnpm test && pnpm build && pnpm validate && pnpm smoke && pnpm budget",
-    "smoke:visual": "node scripts/visual-smoke.mjs"
+    "smoke:visual": "node scripts/visual-smoke.mjs",
+    "assets:social": "node scripts/generate-social-assets.mjs",
+    "seo:check": "node scripts/validate-content.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

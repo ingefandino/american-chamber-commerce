@@ -12,6 +12,7 @@ import {
 import { SITE } from "@data/site";
 import { isLang, type Lang } from "@lib/lang";
 import { localizedHref } from "@lib/routes";
+import { eventSchema } from "@lib/structuredData";
 
 export function getStaticPaths() {
   return ["en", "es"].flatMap((lang) =>
@@ -84,6 +85,7 @@ const mailto = `${SITE.contact.emailHref}?subject=${encodeURIComponent(
   description={event.summary[lang]}
   pathname={`/${lang}/events/${event.slug}/`}
   availableLangs={event.translations}
+  structuredData={eventSchema(event, lang)}
 >
   <section class="section">
     <div class="container event-detail">
