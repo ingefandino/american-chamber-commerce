@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import LanguageSwitcher from "@components/shared/LanguageSwitcher.astro";
+import Slider from "@components/sections/Slider.astro";
+import { getSlides } from "@data/slider";
 import { isLang, type Lang } from "@lib/lang";
 
 export function getStaticPaths() {
@@ -13,25 +14,19 @@ const lang: Lang = isLang(params.lang) ? params.lang : "en";
 const copy = {
   en: {
     title: "American Chamber of Commerce",
-    heading: "American Chamber of Commerce",
-    lead: "A member-driven chamber connecting businesses with the network, knowledge, and advocacy they need to grow.",
+    description:
+      "A member-driven chamber connecting businesses with the network, knowledge, and advocacy they need to grow.",
   },
   es: {
     title: "American Chamber of Commerce",
-    heading: "American Chamber of Commerce",
-    lead: "Una cámara impulsada por sus miembros que conecta empresas con la red, el conocimiento y la defensa que necesitan para crecer.",
+    description:
+      "Una cámara impulsada por sus miembros que conecta empresas con la red, el conocimiento y la defensa que necesitan para crecer.",
   },
 } as const;
 
 const content = copy[lang];
 ---
 
-<BaseLayout lang={lang} title={content.title} description={content.lead}>
-  <section class="section">
-    <div class="container">
-      <LanguageSwitcher lang={lang} pathname={Astro.url.pathname} />
-      <h1>{content.heading}</h1>
-      <p class="lead">{content.lead}</p>
-    </div>
-  </section>
+<BaseLayout lang={lang} title={content.title} description={content.description}>
+  <Slider slides={getSlides(lang)} lang={lang} />
 </BaseLayout>
