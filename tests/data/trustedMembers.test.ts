@@ -16,10 +16,8 @@ const verified: TrustedMember = {
 };
 
 describe("trusted members", () => {
-  it("publishes no company names without evidence", () => {
-    expect(getTrustedMemberNames()).toEqual([]);
-    const serialized = JSON.stringify(TRUSTED_MEMBERS);
-    for (const pendingName of [
+  it("publishes the eight client-confirmed members in order", () => {
+    expect(getTrustedMemberNames()).toEqual([
       "Harbor & Co.",
       "Meridian Group",
       "Union Steelworks",
@@ -28,12 +26,11 @@ describe("trusted members", () => {
       "Northgate Foods",
       "Sterling Capital",
       "Willow Creek Bank",
-    ]) {
-      expect(serialized).not.toContain(pendingName);
-    }
+    ]);
+    expect(TRUSTED_MEMBERS).toHaveLength(8);
   });
 
-  it("only publishes approved and authorized members with a source", () => {
+  it("requires approval, authorization, source, and review date", () => {
     expect(isPublicTrustedMember(verified)).toBe(true);
     expect(
       isPublicTrustedMember({ ...verified, approved: false }),
@@ -47,9 +44,10 @@ describe("trusted members", () => {
     expect(
       isPublicTrustedMember({ ...verified, reviewedAt: "" }),
     ).toBe(false);
+    expect(isPublicTrustedMember({ ...verified, name: "   " })).toBe(false);
   });
 
-  it("returns the approved names in editorial order", () => {
+  it("returns only the approved names in editorial order", () => {
     const names = getTrustedMemberNames([
       verified,
       { ...verified, id: "second", name: "Second Company" },

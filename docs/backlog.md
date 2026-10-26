@@ -476,7 +476,7 @@ Como visitante, quiero identificar empresas miembro de distintos sectores para r
 - Se agregan pruebas de contenido, duplicación controlada, pausa/reduced motion y responsive.
 - La historia queda lista para `Done` después de ejecutar tests, build y smoke test visual.
 
-**Nota de implementación:** la franja se renderiza solo cuando `TRUSTED_MEMBERS` contiene empresas con `approved`, `authorized`, `source` y `reviewedAt`. La lista candidata de esta historia no se publica hasta recibir esa evidencia.
+**Nota de implementación:** la franja se renderiza solo cuando `TRUSTED_MEMBERS` contiene empresas con `approved`, `authorized`, `source` y `reviewedAt`. Los ocho nombres de esta historia fueron confirmados por el cliente como miembros reales el 2026-10-26.
 
 ## Orden recomendado
 

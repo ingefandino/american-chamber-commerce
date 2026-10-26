@@ -27,7 +27,7 @@ Este documento evita publicar datos heredados como si fueran definitivos. La fue
 | Liderazgo, comité, equipo | Proyecto local | `do-not-publish` | Nombres y cargos sin autorización verificada. |
 | Advocacy | Sitio público, observado 2026-10-26 | `needs-review` | Temas, no posiciones legislativas aprobadas. |
 | Noticias | Sin fuente verificada | `empty` | No se inventan artículos. |
-| Empresas de la franja de confianza | Sin fuente autorizada | `empty` | No se publican nombres hasta verificar membresía, autorización y fuente. |
+| Empresas de la franja de confianza | Confirmación del cliente (2026-10-26) | `approved` | Ocho empresas confirmadas como miembros reales por el cliente. |
 | Recursos | Servicios publicados | `needs-review` | Enlaces navegacionales, sin promesas. |
 | Privacidad y términos | Borrador técnico | `needs-review` | Requieren revisión legal. |
 | Accesibilidad | Compromiso técnico | `approved` como declaración operativa | Revisar tras auditoría externa. |
@@ -89,7 +89,6 @@ El sitio WordPress muestra un teléfono y un `mailto` distintos. **Debe confirma
 ## 8. Franja de empresas de confianza
 
 - La franja se alimenta de `src/data/trustedMembers.ts` y solo muestra entradas con `approved`, `authorized`, `source` y `reviewedAt`.
-- Para publicar una empresa, agrega una entrada verificada y vuelve a construir el sitio; no es necesario modificar el componente.
-- No se publican los nombres candidatos del backlog (`Harbor & Co.`, `Meridian Group`, etc.) hasta contar con autorización y evidencia de membresía.
+- Los ocho nombres actuales fueron confirmados por el cliente como miembros reales el 2026-10-26; esa confirmación es la fuente registrada.
+- Para publicar una empresa nueva, agrega una entrada verificada y vuelve a construir el sitio; no es necesario modificar el componente.
 - La animación se pausa con el control visible, se desactiva con `prefers-reduced-motion` y muestra los nombres de forma estática sin JavaScript.
-- El validador de contenido bloquea el build si detecta un nombre candidato no verificado en el HTML publicado.

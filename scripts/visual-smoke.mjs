@@ -251,6 +251,66 @@ try {
     "slider: pause toggle did not report pressed",
   );
 
+  const marquee = page.locator("[data-member-marquee]");
+  const marqueeTrack = page.locator("[data-marquee-track]");
+  const marqueeToggle = page.locator("[data-marquee-toggle]");
+  check((await marquee.count()) === 1, "marquee: section is missing");
+  check(
+    (await page.locator('.member-marquee__group:not([aria-hidden]) li').count()) ===
+      8,
+    "marquee: expected 8 member names",
+  );
+  check(
+    (await marqueeTrack.evaluate(
+      (element) => getComputedStyle(element).animationName,
+    )) === "member-marquee-scroll",
+    "marquee: animation is not running",
+  );
+  await marqueeToggle.click();
+  check(
+    (await marquee.evaluate((element) => element.dataset.paused)) === "true",
+    "marquee: pause toggle did not pause",
+  );
+  check(
+    (await marqueeTrack.evaluate(
+      (element) => getComputedStyle(element).animationPlayState,
+    )) === "paused",
+    "marquee: animation did not pause",
+  );
+  check(
+    (await marqueeToggle.getAttribute("aria-pressed")) === "true",
+    "marquee: pause toggle did not report pressed",
+  );
+  await marqueeToggle.click();
+  check(
+    (await marqueeTrack.evaluate(
+      (element) => getComputedStyle(element).animationPlayState,
+    )) === "running",
+    "marquee: animation did not resume",
+  );
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(`${base}/en/`, { waitUntil: "domcontentloaded" });
+  check(
+    (await marqueeTrack.evaluate(
+      (element) => getComputedStyle(element).animationName,
+    )) === "none",
+    "marquee: animation still runs under reduced motion",
+  );
+  check(
+    (await page
+      .locator('.member-marquee__group[aria-hidden="true"]')
+      .evaluate((element) => getComputedStyle(element).display)) === "none",
+    "marquee: duplicate group is visible under reduced motion",
+  );
+  check(
+    (await marqueeToggle.evaluate(
+      (element) => getComputedStyle(element).display,
+    )) === "none",
+    "marquee: pause control is visible under reduced motion",
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+
   await page.goto(`${base}/en/contact/`, { waitUntil: "domcontentloaded" });
   await page.locator('[data-contact-form] button[type="submit"]').click();
   check(
@@ -408,5 +468,5 @@ if (failures.length) {
 }
 
 console.log(
-  "✓ Visual smoke passed: overflow, slider, forms, language scroll, and 404.",
+  "✓ Visual smoke passed: overflow, slider, marquee, forms, language scroll, and 404.",
 );

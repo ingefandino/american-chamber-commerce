@@ -357,17 +357,6 @@ for (const file of files.filter((candidate) => candidate.endsWith(".css"))) {
   }
 }
 
-const pendingMemberNames = [
-  "Harbor & Co.",
-  "Meridian Group",
-  "Union Steelworks",
-  "Ashford Partners",
-  "Beacon Logistics",
-  "Northgate Foods",
-  "Sterling Capital",
-  "Willow Creek Bank",
-];
-
 for (const file of publicPages) {
   const html = await readFile(file, "utf8");
   assert(
@@ -376,12 +365,6 @@ for (const file of publicPages) {
     ),
     `${routeOf(file)}: possible private data leaked into HTML`,
   );
-  for (const name of pendingMemberNames) {
-    assert(
-      !html.includes(name),
-      `${routeOf(file)}: unverified member name published (${name})`,
-    );
-  }
 }
 
 const manifestFile = join(dist, "site.webmanifest");
