@@ -13,9 +13,26 @@ const target = localizedHref("home", DEFAULT_LANG);
     <title>American Chamber of Commerce</title>
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={target} />
-    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <meta http-equiv="refresh" content={`1; url=${target}`} />
   </head>
   <body>
     <p><a href={target}>Continue to the American Chamber of Commerce</a></p>
+    <script>
+      import { DEFAULT_LANG, LANG_COOKIE, normalizeLang } from "@lib/lang";
+
+      const preference = document.cookie
+        .split(";")
+        .map((part) => part.trim())
+        .find((part) => part.startsWith(`${LANG_COOKIE}=`))
+        ?.split("=")
+        .slice(1)
+        .join("=");
+
+      const lang = normalizeLang(preference, DEFAULT_LANG);
+      const destination = lang === DEFAULT_LANG ? `/${DEFAULT_LANG}/` : `/${lang}/`;
+      if (location.pathname !== destination) {
+        location.replace(destination);
+      }
+    </script>
   </body>
 </html>

@@ -1,0 +1,123 @@
+---
+import { type Lang } from "@lib/lang";
+import { equivalentHref } from "@lib/routes";
+
+interface Props {
+  lang: Lang;
+  pathname: string;
+}
+
+const { lang, pathname } = Astro.props;
+
+const otherLang: Lang = lang === "en" ? "es" : "en";
+const targetHref = equivalentHref(pathname, otherLang);
+const currentHref = equivalentHref(pathname, lang) ?? `/${lang}/`;
+
+const labels = {
+  en: {
+    group: "Select language",
+    current: "Current language: English",
+    switchTo: "View this page in Spanish",
+    currentShort: "EN",
+    otherShort: "ES",
+  },
+  es: {
+    group: "Seleccionar idioma",
+    current: "Idioma actual: Español",
+    switchTo: "Ver esta página en inglés",
+    currentShort: "ES",
+    otherShort: "EN",
+  },
+} as const;
+
+const text = labels[lang];
+---
+
+{
+  targetHref && (
+    <nav class="language-switcher" aria-label={text.group}>
+      <a
+        class="language-switcher__option is-current"
+        href={currentHref}
+        hreflang={lang}
+        lang={lang}
+        aria-current="page"
+      >
+        {text.currentShort}
+        <span class="sr-only"> — {text.current}</span>
+      </a>
+      <span class="language-switcher__divider" aria-hidden="true">/</span>
+      <a
+        class="language-switcher__option"
+        href={targetHref}
+        hreflang={otherLang}
+        lang={otherLang}
+        aria-label={text.switchTo}
+        data-language-switch={otherLang}
+      >
+        {text.otherShort}
+      </a>
+    </nav>
+  )
+}
+
+<style>
+  .language-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.2rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.9);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .language-switcher__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.15rem;
+    min-height: 2rem;
+    padding: 0.25rem 0.45rem;
+    border-radius: var(--radius-pill);
+    color: var(--color-muted);
+    text-decoration: none;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .language-switcher__option:hover,
+  .language-switcher__option:focus-visible {
+    background: var(--color-surface-alt);
+    color: var(--color-navy-800);
+  }
+
+  .language-switcher__option.is-current {
+    background: var(--color-navy-800);
+    color: var(--color-white);
+  }
+
+  .language-switcher__divider {
+    color: var(--color-line);
+    font-weight: 400;
+  }
+</style>
+
+<script>
+  import { LANG_COOKIE, LANG_COOKIE_MAX_AGE } from "@lib/lang";
+
+  document
+    .querySelectorAll<HTMLAnchorElement>("[data-language-switch]")
+    .forEach((link) => {
+      link.addEventListener("click", () => {
+        const lang = link.dataset.languageSwitch;
+        if (!lang) return;
+        const secure = location.protocol === "https:" ? "; Secure" : "";
+        document.cookie = `${LANG_COOKIE}=${lang}; Max-Age=${LANG_COOKIE_MAX_AGE}; Path=/; SameSite=Lax${secure}`;
+      });
+    });
+</script>
