@@ -1,0 +1,115 @@
+---
+import {
+  POLICY_LEVEL_LABELS,
+  POLICY_STATUS_LABELS,
+  type PolicyItem,
+} from "@data/policies";
+import type { Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+interface Props {
+  policy: PolicyItem;
+  lang: Lang;
+}
+
+const { policy, lang } = Astro.props;
+const href = `${localizedHref("advocacy", lang)}${policy.slug}/`;
+---
+
+<article class="policy-card" data-reveal="up">
+  <p class="policy-card__meta">
+    <span>{POLICY_LEVEL_LABELS[policy.level][lang]}</span>
+    <span aria-hidden="true">·</span>
+    <span>{POLICY_STATUS_LABELS[policy.status][lang]}</span>
+  </p>
+  <h3>
+    <a href={href}>{policy.title[lang]}</a>
+  </h3>
+  <p class="policy-card__summary">{policy.summary[lang]}</p>
+  <p class="policy-card__review">
+    <span class="badge">
+      {policy.reviewStatus === "needs-review"
+        ? lang === "es"
+          ? "En revisión editorial"
+          : "Under editorial review"
+        : lang === "es"
+          ? "Aprobado"
+          : "Approved"}
+    </span>
+    <time datetime={policy.date}>{policy.date}</time>
+  </p>
+  <a class="policy-card__link" href={href}>
+    {lang === "es" ? "Ver prioridad" : "View priority"}
+    <span aria-hidden="true">→</span>
+  </a>
+</article>
+
+<style>
+  .policy-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .policy-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 0.5rem;
+    color: var(--color-gold-600);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .policy-card h3 {
+    margin-bottom: 0.5rem;
+    font-size: var(--text-xl);
+  }
+
+  .policy-card h3 a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .policy-card h3 a:hover,
+  .policy-card h3 a:focus-visible {
+    color: var(--color-navy-700);
+    text-decoration: underline;
+    text-decoration-color: var(--color-gold-500);
+    text-decoration-thickness: 2px;
+  }
+
+  .policy-card__summary {
+    margin: 0 0 1rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .policy-card__review {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1rem;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .policy-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: auto;
+    color: var(--color-navy-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

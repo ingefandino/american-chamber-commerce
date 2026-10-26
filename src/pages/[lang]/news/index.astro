@@ -1,0 +1,136 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getPublishedNews } from "@data/news";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+const news = getPublishedNews(lang);
+
+const copy = {
+  en: {
+    title: "News",
+    eyebrow: "News",
+    heading: "News and insights",
+    lead: "Updates on the issues and events shaping our members. Every published item must carry a source and an editorial status.",
+    emptyTitle: "No news items are published yet",
+    emptyText:
+      "The Chamber publishes news only after the source and editorial approval are confirmed. In the meantime, you can read the policy priorities or contact the team.",
+    advocacy: "Read policy priorities",
+    contact: "Contact the Chamber",
+  },
+  es: {
+    title: "Noticias",
+    eyebrow: "Noticias",
+    heading: "Noticias e ideas",
+    lead: "Actualizaciones sobre los temas y eventos que afectan a nuestros socios. Cada elemento publicado debe incluir fuente y estado editorial.",
+    emptyTitle: "Aún no hay noticias publicadas",
+    emptyText:
+      "La Cámara publica noticias solo después de confirmar la fuente y la aprobación editorial. Mientras tanto, puedes leer las prioridades de política o contactar al equipo.",
+    advocacy: "Leer prioridades de política",
+    contact: "Contactar a la Cámara",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/news/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      {
+        news.length > 0 ? (
+          <ul class="news-list">
+            {news.map((item) => (
+              <li>
+                <article class="card news-item">
+                  <h2>
+                    <a href={`${localizedHref("news", lang)}${item.slug}/`}>
+                      {item.title[lang]}
+                    </a>
+                  </h2>
+                  <p>{item.summary[lang]}</p>
+                  <p class="news-item__meta">
+                    <time datetime={item.publishedAt}>{item.publishedAt}</time>
+                    <span aria-hidden="true">·</span>
+                    <span>{item.source}</span>
+                  </p>
+                </article>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="empty-state" data-reveal="up">
+            <h2>{text.emptyTitle}</h2>
+            <p>{text.emptyText}</p>
+            <div class="empty-state__actions">
+              <a class="btn btn--primary" href={localizedHref("advocacy", lang)}>
+                {text.advocacy}
+              </a>
+              <a class="btn btn--ghost" href={SITE.contact.emailHref}>
+                {text.contact}
+              </a>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .empty-state {
+    margin-top: 2.5rem;
+    padding: 2.5rem;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .empty-state h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .empty-state p {
+    max-width: 62ch;
+    color: var(--color-muted);
+  }
+
+  .empty-state__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .news-list {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .news-list > li {
+    margin: 0;
+  }
+
+  .news-item {
+    padding: 1.75rem;
+  }
+</style>

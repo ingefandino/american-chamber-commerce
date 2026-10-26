@@ -1,0 +1,147 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { RESOURCES } from "@data/resources";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Resources",
+    eyebrow: "Resources",
+    heading: "Resources for growing companies",
+    lead: "Practical starting points for research, publications, workspace, and trade support. Each resource links to a published service.",
+    review: "Under editorial review",
+    note: "Resource pages summarize what the Chamber can help coordinate. Availability, fees, and deliverables are confirmed directly with the Chamber.",
+    contact: "Ask about a resource",
+  },
+  es: {
+    title: "Recursos",
+    eyebrow: "Recursos",
+    heading: "Recursos para empresas en crecimiento",
+    lead: "Puntos de partida prácticos para investigación, publicaciones, espacio de trabajo y apoyo comercial. Cada recurso enlaza a un servicio publicado.",
+    review: "En revisión editorial",
+    note: "Las páginas de recursos resumen lo que la Cámara puede ayudar a coordinar. La disponibilidad, los costos y los entregables se confirman directamente con la Cámara.",
+    contact: "Consultar por un recurso",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/resources/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      <ul class="resource-grid">
+        {
+          RESOURCES.map((resource) => (
+            <li class="resource-card" data-reveal="up">
+              <p class="resource-card__category">{resource.category[lang]}</p>
+              <h2>{resource.title[lang]}</h2>
+              <p>{resource.summary[lang]}</p>
+              <p class="resource-card__review">
+                <span class="badge">{text.review}</span>
+              </p>
+              <a
+                class="resource-card__link"
+                href={`${localizedHref(resource.hrefKey, lang)}${resource.hrefSuffix ?? ""}`}
+              >
+                {lang === "es" ? "Ver recurso" : "View resource"}
+                <span aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="resources-footer">
+        <p>{text.note}</p>
+        <a class="btn btn--primary" href={SITE.contact.emailHref}>
+          {text.contact}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.25rem;
+    margin: 2.5rem 0 2rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .resource-card {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 1.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .resource-card__category {
+    margin: 0 0 0.5rem;
+    color: var(--color-gold-600);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .resource-card h2 {
+    margin-bottom: 0.5rem;
+    font-size: var(--text-xl);
+  }
+
+  .resource-card p {
+    margin: 0 0 1rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .resource-card__review {
+    margin-top: auto;
+  }
+
+  .resource-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    color: var(--color-navy-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .resources-footer {
+    max-width: 72ch;
+  }
+
+  .resources-footer p {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+</style>

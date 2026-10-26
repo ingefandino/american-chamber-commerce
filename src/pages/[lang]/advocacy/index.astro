@@ -1,0 +1,125 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PolicyCard from "@components/advocacy/PolicyCard.astro";
+import { POLICIES } from "@data/policies";
+import { isLang, type Lang } from "@lib/lang";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+
+const copy = {
+  en: {
+    title: "Advocacy",
+    eyebrow: "Advocacy",
+    heading: "A voice for business",
+    lead: "The Chamber follows policy topics that affect the business community. Each item states its level, date, source, and editorial status.",
+    disclaimerTitle: "How to read this page",
+    disclaimer:
+      "A topic listed here is not an approved legislative position. The Chamber publishes a position only after the responsible body approves it.",
+    noticeTitle: "Editorial status",
+    notice:
+      "These summaries reflect topics observed on the public website on 26 October 2026. They remain under editorial review until the Chamber confirms the wording.",
+  },
+  es: {
+    title: "Defensa",
+    eyebrow: "Defensa",
+    heading: "Una voz para las empresas",
+    lead: "La Cámara sigue temas de política que afectan a la comunidad empresarial. Cada elemento indica su nivel, fecha, fuente y estado editorial.",
+    disclaimerTitle: "Cómo leer esta página",
+    disclaimer:
+      "Un tema listado aquí no es una postura legislativa aprobada. La Cámara publica una postura solo después de que el órgano responsable la aprueba.",
+    noticeTitle: "Estado editorial",
+    notice:
+      "Estos resúmenes reflejan temas observados en el sitio público el 26 de octubre de 2026. Permanecen en revisión editorial hasta que la Cámara confirme el texto.",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/advocacy/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      <div class="advocacy-notice callout" data-reveal="up">
+        <h2>{text.noticeTitle}</h2>
+        <p>{text.notice}</p>
+      </div>
+
+      <ul class="policy-grid">
+        {
+          POLICIES.map((policy) => (
+            <li>
+              <PolicyCard policy={policy} lang={lang} />
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="advocacy-disclaimer">
+        <h2>{text.disclaimerTitle}</h2>
+        <p>{text.disclaimer}</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .advocacy-notice {
+    max-width: 72ch;
+    margin: 2rem 0;
+  }
+
+  .advocacy-notice h2 {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .policy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.25rem;
+    margin: 0 0 2.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .policy-grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  .policy-grid :global(.policy-card) {
+    width: 100%;
+  }
+
+  .advocacy-disclaimer {
+    max-width: 72ch;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .advocacy-disclaimer h2 {
+    font-size: var(--text-xl);
+  }
+
+  .advocacy-disclaimer p {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+</style>

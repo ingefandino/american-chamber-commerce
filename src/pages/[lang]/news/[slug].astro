@@ -1,0 +1,74 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getNewsBySlug, getPublishedNews } from "@data/news";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return ["en", "es"].flatMap((lang) =>
+    getPublishedNews(lang as Lang).map((item) => ({
+      params: { lang, slug: item.slug },
+    })),
+  );
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+const slug = String(params.slug ?? "");
+const item = getNewsBySlug(slug, lang);
+
+if (!item) {
+  return Astro.redirect(`/${lang}/news/`, 302);
+}
+
+const text = {
+  en: { back: "All news", source: "Source", published: "Published" },
+  es: { back: "Todas las noticias", source: "Fuente", published: "Publicado" },
+}[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={item.title[lang]}
+  description={item.summary[lang]}
+  pathname={`/${lang}/news/${item.slug}/`}
+>
+  <section class="section">
+    <div class="container container--narrow">
+      <a class="news-back" href={localizedHref("news", lang)}>
+        <span aria-hidden="true">←</span> {text.back}
+      </a>
+      <h1>{item.title[lang]}</h1>
+      <p class="lead">{item.summary[lang]}</p>
+      <p class="news-meta">
+        <time datetime={item.publishedAt}>{item.publishedAt}</time>
+        <span aria-hidden="true">·</span>
+        <span>{text.source}: {item.source}</span>
+      </p>
+      <div class="prose">
+        <p>{item.body[lang]}</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .news-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-navy-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .news-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+</style>

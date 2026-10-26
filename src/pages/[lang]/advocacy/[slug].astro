@@ -1,0 +1,174 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  getPolicyBySlug,
+  POLICIES,
+  POLICY_LEVEL_LABELS,
+  POLICY_STATUS_LABELS,
+} from "@data/policies";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  return ["en", "es"].flatMap((lang) =>
+    POLICIES.map((policy) => ({
+      params: { lang, slug: policy.slug },
+    })),
+  );
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+const slug = String(params.slug ?? "");
+const policy = getPolicyBySlug(slug);
+
+if (!policy) {
+  return Astro.redirect(`/${lang}/advocacy/`, 302);
+}
+
+const text = {
+  en: {
+    back: "All priorities",
+    level: "Level",
+    status: "Status",
+    date: "Date",
+    source: "Source",
+    position: "Approved position",
+    noPosition:
+      "No approved public position is published for this item yet. The summary describes a topic area, not a legislative stance.",
+    review:
+      "This item is under editorial review. Do not treat it as an official position until the Chamber approves it.",
+    contact: "Contact public affairs",
+  },
+  es: {
+    back: "Todas las prioridades",
+    level: "Nivel",
+    status: "Estado",
+    date: "Fecha",
+    source: "Fuente",
+    position: "Posición aprobada",
+    noPosition:
+      "Aún no se publica una posición pública aprobada para este tema. El resumen describe un área temática, no una postura legislativa.",
+    review:
+      "Este elemento está en revisión editorial. No lo trates como una posición oficial hasta que la Cámara lo apruebe.",
+    contact: "Contactar asuntos públicos",
+  },
+}[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={policy.title[lang]}
+  description={policy.summary[lang]}
+  pathname={`/${lang}/advocacy/${policy.slug}/`}
+>
+  <section class="section">
+    <div class="container policy-detail">
+      <div>
+        <a class="policy-back" href={localizedHref("advocacy", lang)}>
+          <span aria-hidden="true">←</span> {text.back}
+        </a>
+        <p class="eyebrow">{POLICY_LEVEL_LABELS[policy.level][lang]}</p>
+        <h1>{policy.title[lang]}</h1>
+        <p class="lead">{policy.summary[lang]}</p>
+
+        {policy.reviewStatus === "needs-review" && (
+          <p class="callout policy-review">{text.review}</p>
+        )}
+
+        <div class="prose">
+          <h2>{text.position}</h2>
+          <p>{policy.approvedPosition?.[lang] ?? text.noPosition}</p>
+        </div>
+
+        <a class="btn btn--primary" href={SITE.contact.emailHref}>
+          {text.contact}
+        </a>
+      </div>
+
+      <aside class="policy-aside card">
+        <dl>
+          <dt>{text.level}</dt>
+          <dd>{POLICY_LEVEL_LABELS[policy.level][lang]}</dd>
+          <dt>{text.status}</dt>
+          <dd>{POLICY_STATUS_LABELS[policy.status][lang]}</dd>
+          <dt>{text.date}</dt>
+          <dd><time datetime={policy.date}>{policy.date}</time></dd>
+          <dt>{text.source}</dt>
+          <dd>
+            <a href={policy.source.url} rel="noopener noreferrer">
+              {policy.source.label}
+            </a>
+            <br />
+            <span class="policy-aside__observed">
+              {lang === "es" ? "Observado" : "Observed"}: {policy.source.observedAt}
+            </span>
+          </dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .policy-detail {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .policy-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-navy-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .policy-review {
+    margin: 0 0 1.5rem;
+    font-size: var(--text-sm);
+  }
+
+  .policy-aside {
+    padding: 1.75rem;
+  }
+
+  .policy-aside dl {
+    margin: 0;
+  }
+
+  .policy-aside dt {
+    margin-top: 1rem;
+    color: var(--color-gold-600);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .policy-aside dt:first-child {
+    margin-top: 0;
+  }
+
+  .policy-aside dd {
+    margin: 0.2rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .policy-aside__observed {
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  @media (min-width: 900px) {
+    .policy-detail {
+      grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.5fr);
+    }
+  }
+</style>
