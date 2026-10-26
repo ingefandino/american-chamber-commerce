@@ -1,0 +1,66 @@
+---
+import { type Lang, ogLocale } from "@lib/lang";
+import {
+  absoluteUrl,
+  buildAlternates,
+  formatTitle,
+  shouldNoIndex,
+  SITE_NAME,
+  SITE_URL,
+} from "@lib/seo";
+import ogImage from "@assets/webp/about/new-york.webp";
+
+interface Props {
+  lang: Lang;
+  pathname: string;
+  title: string;
+  description: string;
+  noIndex?: boolean;
+  type?: "website" | "article";
+}
+
+const {
+  lang,
+  pathname,
+  title,
+  description,
+  noIndex = false,
+  type = "website",
+} = Astro.props;
+
+const site = Astro.site ?? SITE_URL;
+const canonical = absoluteUrl(pathname, site);
+const alternates = buildAlternates(pathname, site);
+const image = absoluteUrl(ogImage.src, site);
+const robots = shouldNoIndex(noIndex)
+  ? "noindex, nofollow"
+  : "index, follow, max-image-preview:large";
+const fullTitle = formatTitle(title);
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={robots} />
+<link rel="canonical" href={canonical} />
+
+{alternates.map((alternate) => (
+  <link
+    rel="alternate"
+    hreflang={alternate.hreflang}
+    href={alternate.href}
+  />
+))}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={ogLocale(lang)} />
+<meta property="og:image" content={image} />
+<meta property="og:image:alt" content="New York skyline" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />

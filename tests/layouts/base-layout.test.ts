@@ -5,7 +5,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 async function render(lang: "en" | "es", body: string) {
   const container = await AstroContainer.create();
   return container.renderToString(BaseLayout, {
-    props: { lang, title: "Test page", description: "Test description" },
+    props: { lang, title: "Test page", description: "Test description", pathname: `/${lang}/` },
     slots: { default: body },
   });
 }
@@ -32,7 +32,7 @@ describe("BaseLayout", () => {
 
   it("sets title and description metadata", async () => {
     const html = await render("en", "<h1>Hello</h1>");
-    expect(html).toContain("<title>Test page</title>");
+    expect(html).toContain("<title>Test page | American Chamber of Commerce</title>");
     expect(html).toContain('name="description"');
     expect(html).toContain('name="viewport"');
   });

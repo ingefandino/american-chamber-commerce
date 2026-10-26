@@ -1,11 +1,13 @@
 ---
 import "@styles/global.css";
+import Seo from "@components/shared/Seo.astro";
 import { htmlLang, type Lang } from "@lib/lang";
 
 interface Props {
   lang?: Lang;
   title: string;
   description?: string;
+  pathname?: string;
   noIndex?: boolean;
 }
 
@@ -16,6 +18,7 @@ const {
   noIndex = false,
 } = Astro.props;
 
+const pathname = Astro.props.pathname ?? Astro.url?.pathname ?? `/${lang}/`;
 const skipLabel = lang === "es" ? "Saltar al contenido" : "Skip to content";
 const themeColor = "#0b2545";
 ---
@@ -25,9 +28,6 @@ const themeColor = "#0b2545";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content={themeColor} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -37,6 +37,13 @@ const themeColor = "#0b2545";
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap"
+    />
+    <Seo
+      lang={lang}
+      pathname={pathname}
+      title={title}
+      description={description}
+      noIndex={noIndex}
     />
     <slot name="head" />
   </head>

@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
@@ -7,6 +8,18 @@ const root = fileURLToPath(new URL(".", import.meta.url));
 // https://astro.build/config
 export default defineConfig({
   site: "https://americanchamberofcommerce.us",
+  integrations: [
+    sitemap({
+      filter: (page) => page !== "https://americanchamberofcommerce.us/",
+      i18n: {
+        defaultLocale: "en",
+        locales: {
+          en: "en-US",
+          es: "es-US",
+        },
+      },
+    }),
+  ],
   image: {
     service: {
       entrypoint: "astro/assets/services/sharp",
