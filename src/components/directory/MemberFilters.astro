@@ -1,0 +1,220 @@
+---
+import type { Lang } from "@lib/lang";
+
+interface Props {
+  lang: Lang;
+  basePath: string;
+  sectors: string[];
+  query?: string;
+  sector?: string;
+}
+
+const { lang, basePath, sectors, query = "", sector = "" } = Astro.props;
+
+const text = {
+  en: {
+    searchLabel: "Search members",
+    searchPlaceholder: "Name, sector, or city",
+    sectorLabel: "Sector",
+    allSectors: "All sectors",
+    apply: "Search",
+    clear: "Clear filters",
+    noResults: "No members match these filters.",
+    results: "members found.",
+    region: "Member search",
+  },
+  es: {
+    searchLabel: "Buscar socios",
+    searchPlaceholder: "Nombre, sector o ciudad",
+    sectorLabel: "Sector",
+    allSectors: "Todos los sectores",
+    apply: "Buscar",
+    clear: "Limpiar filtros",
+    noResults: "Ningún socio coincide con estos filtros.",
+    results: "socios encontrados.",
+    region: "Búsqueda de socios",
+  },
+}[lang];
+---
+
+<form
+  class="member-filters"
+  method="get"
+  action={basePath}
+  role="search"
+  aria-label={text.region}
+  data-directory-filters
+  data-no-results={text.noResults}
+  data-results={text.results}
+>
+  <div class="member-filters__field">
+    <label for="directory-query">{text.searchLabel}</label>
+    <input
+      id="directory-query"
+      name="q"
+      type="search"
+      value={query}
+      placeholder={text.searchPlaceholder}
+      autocomplete="off"
+    />
+  </div>
+
+  <div class="member-filters__field">
+    <label for="directory-sector">{text.sectorLabel}</label>
+    <select id="directory-sector" name="sector">
+      <option value="">{text.allSectors}</option>
+      {
+        sectors.map((item) => (
+          <option value={item} selected={item === sector}>
+            {item}
+          </option>
+        ))
+      }
+    </select>
+  </div>
+
+  <div class="member-filters__actions">
+    <button class="btn btn--primary" type="submit">{text.apply}</button>
+    <a class="btn btn--ghost" href={basePath} data-directory-clear>
+      {text.clear}
+    </a>
+  </div>
+</form>
+
+<p class="member-filters__status" data-directory-status role="status" aria-live="polite" />
+
+<script>
+  import { normalizeSearch } from "@lib/directory";
+
+  const form = document.querySelector<HTMLFormElement>(
+    "[data-directory-filters]",
+  );
+  const container = document.querySelector<HTMLElement>("[data-directory]");
+
+  if (form && container) {
+    const queryInput = form.querySelector<HTMLInputElement>('[name="q"]');
+    const sectorInput = form.querySelector<HTMLSelectElement>(
+      '[name="sector"]',
+    );
+    const status = document.querySelector<HTMLElement>(
+      "[data-directory-status]",
+    );
+    const members = Array.from(
+      container.querySelectorAll<HTMLElement>("[data-member]"),
+    );
+
+    const apply = (query: string, sector: string) => {
+      const normalizedQuery = normalizeSearch(query);
+      const normalizedSector = normalizeSearch(sector);
+      let visible = 0;
+
+      members.forEach((member) => {
+        const text = normalizeSearch(member.dataset.search ?? "");
+        const memberSector = normalizeSearch(member.dataset.sector ?? "");
+        const show =
+          (!normalizedQuery || text.includes(normalizedQuery)) &&
+          (!normalizedSector || memberSector === normalizedSector);
+        member.hidden = !show;
+        if (show) visible += 1;
+      });
+
+      if (status) {
+        status.textContent =
+          visible === 0
+            ? (form.dataset.noResults ?? "")
+            : `${visible} ${form.dataset.results ?? ""}`;
+      }
+    };
+
+    const syncFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("q") ?? "";
+      const sector = params.get("sector") ?? "";
+      if (queryInput) queryInput.value = query;
+      if (sectorInput) sectorInput.value = sector;
+      apply(query, sector);
+    };
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const query = queryInput?.value ?? "";
+      const sector = sectorInput?.value ?? "";
+      const params = new URLSearchParams();
+      if (query.trim()) params.set("q", query.trim());
+      if (sector.trim()) params.set("sector", sector.trim());
+      const next = params.toString();
+      const url = `${window.location.pathname}${next ? `?${next}` : ""}`;
+      window.history.replaceState({}, "", url);
+      apply(query, sector);
+    });
+
+    form.querySelector("[data-directory-clear]")?.addEventListener("click", () => {
+      if (queryInput) queryInput.value = "";
+      if (sectorInput) sectorInput.value = "";
+      apply("", "");
+    });
+
+    if (window.location.search) {
+      syncFromUrl();
+    }
+  }
+</script>
+
+<style>
+  .member-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 1rem;
+    align-items: end;
+    margin: 2rem 0 1rem;
+    padding: 1.25rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+  }
+
+  .member-filters__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .member-filters__field label {
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .member-filters__field input,
+  .member-filters__field select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: var(--text-base);
+  }
+
+  .member-filters__field input:focus-visible,
+  .member-filters__field select:focus-visible {
+    border-color: var(--color-navy-600);
+    outline: 2px solid var(--color-navy-600);
+    outline-offset: 1px;
+  }
+
+  .member-filters__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .member-filters__status {
+    min-height: 1.4rem;
+    margin: 0 0 1rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+</style>

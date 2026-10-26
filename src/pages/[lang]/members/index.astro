@@ -1,7 +1,9 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import MemberCard from "@components/directory/MemberCard.astro";
+import MemberFilters from "@components/directory/MemberFilters.astro";
 import { getPublicMembers } from "@data/members";
+import { memberSearchText } from "@lib/directory";
 import { SITE } from "@data/site";
 import { isLang, type Lang } from "@lib/lang";
 import { localizedHref } from "@lib/routes";
@@ -56,13 +58,24 @@ const text = copy[lang];
 
       {
         members.length > 0 ? (
-          <ul class="members-grid">
-            {members.map((member) => (
-              <li>
-                <MemberCard member={member} lang={lang} />
-              </li>
-            ))}
-          </ul>
+          <div data-directory>
+            <MemberFilters
+              lang={lang}
+              basePath={`/${lang}/members/`}
+              sectors={[...new Set(members.map((member) => member.sector[lang]))]}
+            />
+            <ul class="members-grid">
+              {members.map((member) => (
+                <li
+                  data-member
+                  data-search={memberSearchText(member, lang)}
+                  data-sector={member.sector[lang]}
+                >
+                  <MemberCard member={member} lang={lang} />
+                </li>
+              ))}
+            </ul>
+          </div>
         ) : (
           <div class="empty-state" data-reveal="up">
             <h2>{text.emptyTitle}</h2>
@@ -95,6 +108,10 @@ const text = copy[lang];
   .members-grid > li {
     display: flex;
     margin: 0;
+  }
+
+  .members-grid > li[hidden] {
+    display: none;
   }
 
   .members-grid :global(.member-card) {
