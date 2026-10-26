@@ -50,6 +50,12 @@ jobs:
       - name: Enforce performance budgets
         run: pnpm budget
 
+      - name: Install Chromium for visual smoke
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Visual smoke (overflow, slider, forms, language, 404)
+        run: pnpm smoke:visual
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:

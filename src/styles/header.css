@@ -143,6 +143,10 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
+.site-header__mobile:not([open]) .site-header__mobile-panel {
+  display: none;
+}
+
 .site-header__mobile-panel {
   position: absolute;
   inset: 100% 0 auto;

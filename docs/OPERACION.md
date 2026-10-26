@@ -72,7 +72,7 @@ Antes de publicar o actualizar:
 
 Cadencia recomendada:
 
-- En cada PR: pruebas, build, presupuestos y smoke.
+- En cada PR: pruebas, build, presupuestos, smoke y visual smoke.
 - Mensual: teclado, foco, contraste, lector de pantalla básico y 320 px.
 - Trimestral: Lighthouse/Core Web Vitals, enlaces, dependencias y headers.
 - Semestral: revisión de contenido, derechos de assets, precios y contactos.
@@ -82,7 +82,7 @@ Presupuestos actuales (ver `scripts/check-budgets.mjs`):
 - JS total < 350 KB; archivo JS < 120 KB.
 - HTML < 350 KB por página.
 - Imagen individual < 700 KB; total de imágenes < 8 MB.
-- Sin scroll horizontal desde 320 px.
+- Sin scroll horizontal desde 320 px (`pnpm smoke:visual`).
 - WCAG 2.2 AA como objetivo.
 
 ## 8. Backups y recuperación
