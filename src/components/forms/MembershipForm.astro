@@ -1,0 +1,432 @@
+---
+import { MEMBERSHIP_PLANS } from "@data/memberships";
+import type { Lang } from "@lib/lang";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const text = {
+  en: {
+    legend: "Your details",
+    firstName: "First name",
+    lastName: "Last name",
+    email: "Work email",
+    company: "Company",
+    phone: "Phone (optional)",
+    level: "Membership level",
+    levelPlaceholder: "Select a level",
+    levelUnsure: "Not sure yet",
+    message: "How can we help? (optional)",
+    messageHint: "Up to 800 characters.",
+    consent:
+      "I agree that the Chamber may contact me about this request. My details will not be sold or shared for unrelated marketing.",
+    submit: "Send application request",
+    statusReady:
+      "Your details are valid. Submission will be enabled in the next step.",
+    statusError: "Please review the highlighted fields.",
+    fallback:
+      "If the form does not work, email the membership team directly.",
+    required: "required",
+    formType: "Membership interest",
+  },
+  es: {
+    legend: "Tus datos",
+    firstName: "Nombre",
+    lastName: "Apellido",
+    email: "Correo de trabajo",
+    company: "Empresa",
+    phone: "Teléfono (opcional)",
+    level: "Nivel de membresía",
+    levelPlaceholder: "Selecciona un nivel",
+    levelUnsure: "Aún no estoy seguro",
+    message: "¿Cómo podemos ayudarte? (opcional)",
+    messageHint: "Hasta 800 caracteres.",
+    consent:
+      "Acepto que la Cámara me contacte sobre esta solicitud. Mis datos no se venderán ni se compartirán para marketing no relacionado.",
+    submit: "Enviar solicitud",
+    statusReady:
+      "Tus datos son válidos. El envío se habilitará en el siguiente paso.",
+    statusError: "Revisa los campos resaltados.",
+    fallback:
+      "Si el formulario no funciona, escribe directamente al equipo de membresía.",
+    required: "obligatorio",
+    formType: "Interés de membresía",
+  },
+} as const;
+
+const labels = text[lang];
+
+const fields = [
+  {
+    name: "firstName",
+    label: labels.firstName,
+    type: "text",
+    autocomplete: "given-name",
+    required: true,
+  },
+  {
+    name: "lastName",
+    label: labels.lastName,
+    type: "text",
+    autocomplete: "family-name",
+    required: true,
+  },
+  {
+    name: "email",
+    label: labels.email,
+    type: "email",
+    autocomplete: "email",
+    required: true,
+  },
+  {
+    name: "company",
+    label: labels.company,
+    type: "text",
+    autocomplete: "organization",
+    required: true,
+  },
+  {
+    name: "phone",
+    label: labels.phone,
+    type: "tel",
+    autocomplete: "tel",
+    required: false,
+  },
+] as const;
+---
+
+<form
+  class="form"
+  data-membership-form
+  data-lang={lang}
+  data-ready-message={labels.statusReady}
+  data-error-summary={labels.statusError}
+  novalidate
+>
+  <input type="hidden" name="form_type" value="membership_interest" />
+  <fieldset>
+    <legend class="sr-only">{labels.legend}</legend>
+
+    <div class="form-grid">
+      {
+        fields.map((field) => (
+          <div class:list={["form-field", { "form-field--full": field.name === "company" }]}>
+            <label for={`membership-${field.name}`}>
+              {field.label}
+              {field.required && (
+                <span class="form-required" aria-hidden="true">
+                  *
+                </span>
+              )}
+            </label>
+            <input
+              id={`membership-${field.name}`}
+              name={field.name}
+              type={field.type}
+              autocomplete={field.autocomplete}
+              required={field.required}
+              aria-describedby={`membership-${field.name}-error`}
+              aria-invalid="false"
+            />
+            <p
+              class="form-error"
+              id={`membership-${field.name}-error`}
+              data-error-for={field.name}
+              aria-live="polite"
+            />
+          </div>
+        ))
+      }
+
+      <div class="form-field">
+        <label for="membership-level">
+          {labels.level}
+          <span class="form-required" aria-hidden="true">*</span>
+        </label>
+        <select
+          id="membership-level"
+          name="membershipLevel"
+          required
+          aria-describedby="membership-level-error"
+          aria-invalid="false"
+        >
+          <option value="">{labels.levelPlaceholder}</option>
+          {
+            MEMBERSHIP_PLANS.map((plan) => (
+              <option value={plan.slug}>{plan.name}</option>
+            ))
+          }
+          <option value="not-sure">{labels.levelUnsure}</option>
+        </select>
+        <p
+          class="form-error"
+          id="membership-level-error"
+          data-error-for="membershipLevel"
+          aria-live="polite"
+        />
+      </div>
+
+      <div class="form-field form-field--full">
+        <label for="membership-message">{labels.message}</label>
+        <textarea
+          id="membership-message"
+          name="message"
+          rows="5"
+          maxlength="800"
+          aria-describedby="membership-message-hint membership-message-error"
+          aria-invalid="false"
+        />
+        <p class="form-hint" id="membership-message-hint">
+          {labels.messageHint}
+        </p>
+        <p
+          class="form-error"
+          id="membership-message-error"
+          data-error-for="message"
+          aria-live="polite"
+        />
+      </div>
+
+      <div class="form-field form-field--full form-consent">
+        <label for="membership-consent">
+          <input
+            id="membership-consent"
+            name="consent"
+            type="checkbox"
+            value="yes"
+            required
+            aria-describedby="membership-consent-error"
+            aria-invalid="false"
+          />
+          <span>{labels.consent}</span>
+        </label>
+        <p
+          class="form-error"
+          id="membership-consent-error"
+          data-error-for="consent"
+          aria-live="polite"
+        />
+      </div>
+    </div>
+  </fieldset>
+
+  <p class="form-status" data-form-status role="status" aria-live="polite" />
+
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit">{labels.submit}</button>
+  </div>
+
+  <noscript>
+    <p class="form-noscript">
+      {labels.fallback}
+      <a href="mailto:info@americanchamberofcommerce.us">
+        info@americanchamberofcommerce.us
+      </a>
+    </p>
+  </noscript>
+</form>
+
+<script>
+  import {
+    focusFirstError,
+    readMembershipForm,
+    validateMembershipForm,
+    type FormError,
+  } from "@lib/forms";
+
+  const form = document.querySelector<HTMLFormElement>(
+    "[data-membership-form]",
+  );
+
+  if (form) {
+    const lang = form.dataset.lang === "es" ? "es" : "en";
+    const status = form.querySelector<HTMLElement>("[data-form-status]");
+
+    const clearError = (field: string) => {
+      const error = form.querySelector<HTMLElement>(
+        `[data-error-for="${field}"]`,
+      );
+      const input = form.querySelector<HTMLElement>(`[name="${field}"]`);
+      if (error) error.textContent = "";
+      input?.setAttribute("aria-invalid", "false");
+    };
+
+    const showErrors = (errors: FormError[]) => {
+      for (const error of errors) {
+        const target = form.querySelector<HTMLElement>(
+          `[data-error-for="${error.field}"]`,
+        );
+        const input = form.querySelector<HTMLElement>(
+          `[name="${error.field}"]`,
+        );
+        if (target) target.textContent = error.message;
+        input?.setAttribute("aria-invalid", "true");
+      }
+    };
+
+    form.addEventListener("input", (event) => {
+      const target = event.target as HTMLElement;
+      if (target?.getAttribute("name")) {
+        clearError(target.getAttribute("name") ?? "");
+      }
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const values = readMembershipForm(form);
+      const errors = validateMembershipForm(values, lang);
+
+      form
+        .querySelectorAll<HTMLElement>("[data-error-for]")
+        .forEach((element) => {
+          element.textContent = "";
+        });
+      form
+        .querySelectorAll<HTMLElement>("[name]")
+        .forEach((element) => element.setAttribute("aria-invalid", "false"));
+
+      if (errors.length > 0) {
+        showErrors(errors);
+        if (status) {
+          status.textContent = form.dataset.errorSummary ?? "";
+          status.dataset.state = "error";
+        }
+        focusFirstError(form, errors);
+        return;
+      }
+
+      if (status) {
+        status.textContent = form.dataset.readyMessage ?? "";
+        status.dataset.state = "ready";
+      }
+      form.dispatchEvent(
+        new CustomEvent("membership:valid", {
+          detail: values,
+          bubbles: true,
+        }),
+      );
+    });
+  }
+</script>
+
+<style>
+  .form fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 1.25rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-field--full {
+    grid-column: 1 / -1;
+  }
+
+  .form-field label {
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .form-required {
+    color: var(--color-red-600);
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: var(--text-base);
+  }
+
+  .form-field textarea {
+    resize: vertical;
+  }
+
+  .form-field input:focus-visible,
+  .form-field select:focus-visible,
+  .form-field textarea:focus-visible {
+    border-color: var(--color-navy-600);
+    outline: 2px solid var(--color-navy-600);
+    outline-offset: 1px;
+  }
+
+  .form-field [aria-invalid="true"] {
+    border-color: var(--color-red-600);
+  }
+
+  .form-error {
+    min-height: 1.1rem;
+    margin: 0;
+    color: var(--color-red-600);
+    font-size: var(--text-xs);
+  }
+
+  .form-hint {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .form-consent label {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .form-consent input {
+    width: 1.15rem;
+    height: 1.15rem;
+    min-height: auto;
+    margin-top: 0.2rem;
+    accent-color: var(--color-navy-700);
+  }
+
+  .form-status {
+    min-height: 1.5rem;
+    margin: 1rem 0 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .form-status[data-state="error"] {
+    color: var(--color-red-600);
+  }
+
+  .form-status[data-state="ready"] {
+    color: var(--color-navy-700);
+  }
+
+  .form-actions {
+    margin-top: 1.25rem;
+  }
+
+  .form-noscript {
+    margin-top: 1rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+</style>

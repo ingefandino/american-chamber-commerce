@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import MembershipForm from "@components/forms/MembershipForm.astro";
 import { SITE } from "@data/site";
 import { isLang, type Lang } from "@lib/lang";
 import { localizedHref } from "@lib/routes";
@@ -24,9 +25,15 @@ const copy = {
       "Preferred membership level",
       "A short description of your business",
     ],
-    email: "Email the membership team",
     plans: "Review membership levels",
-    note: "The online application form is being prepared. Until it is available, you can contact the membership team directly.",
+    fallbackLabel: "Prefer email?",
+    fallback: "Contact the membership team directly.",
+    asideTitle: "How this works",
+    aside: [
+      "We review your request and confirm the appropriate level.",
+      "We contact you to complete the application and payment details.",
+      "Your membership begins once the application is approved and paid.",
+    ],
   },
   es: {
     title: "Solicitar membresía",
@@ -40,9 +47,15 @@ const copy = {
       "Nivel de membresía preferido",
       "Una breve descripción de tu negocio",
     ],
-    email: "Escribir al equipo de membresía",
     plans: "Revisar niveles de membresía",
-    note: "El formulario en línea está en preparación. Mientras tanto, puedes contactar directamente al equipo de membresía.",
+    fallbackLabel: "¿Prefieres escribir?",
+    fallback: "Contacta directamente al equipo de membresía.",
+    asideTitle: "Cómo funciona",
+    aside: [
+      "Revisamos tu solicitud y confirmamos el nivel adecuado.",
+      "Te contactamos para completar la solicitud y los datos de pago.",
+      "La membresía comienza cuando la solicitud es aprobada y pagada.",
+    ],
   },
 } as const;
 
@@ -62,26 +75,38 @@ const text = copy[lang];
         <h1>{text.heading}</h1>
         <p class="lead">{text.lead}</p>
 
-        <h2>{text.prepareTitle}</h2>
-        <ul class="apply-list">
-          {
-            text.prepare.map((item) => (
-              <li>{item}</li>
-            ))
-          }
-        </ul>
+        <MembershipForm lang={lang} />
 
-        <div class="apply-actions">
-          <a class="btn btn--primary" href={SITE.contact.emailHref}>
-            {text.email}
-          </a>
+        <p class="apply-fallback">
+          {text.fallbackLabel}
+          <a href={SITE.contact.emailHref}>{text.fallback}</a>
+        </p>
+      </div>
+
+      <aside class="apply-aside">
+        <div class="card apply-aside__card">
+          <h2>{text.asideTitle}</h2>
+          <ol>
+            {
+              text.aside.map((step) => (
+                <li>{step}</li>
+              ))
+            }
+          </ol>
           <a class="btn btn--ghost" href={localizedHref("plans", lang)}>
             {text.plans}
           </a>
         </div>
-      </div>
-      <aside class="apply-note card">
-        <p>{text.note}</p>
+        <div class="card apply-aside__card">
+          <h2>{text.prepareTitle}</h2>
+          <ul>
+            {
+              text.prepare.map((item) => (
+                <li>{item}</li>
+              ))
+            }
+          </ul>
+        </div>
       </aside>
     </div>
   </section>
@@ -94,35 +119,34 @@ const text = copy[lang];
     align-items: start;
   }
 
-  .apply-list {
-    margin: 1rem 0 1.75rem;
-    color: var(--color-body);
+  .apply-aside {
+    display: grid;
+    gap: 1.25rem;
   }
 
-  .apply-list li {
-    margin-bottom: 0.5rem;
-  }
-
-  .apply-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-  .apply-note {
+  .apply-aside__card {
     padding: 1.5rem;
-    border-left: 4px solid var(--color-gold-500);
+  }
+
+  .apply-aside__card h2 {
+    font-size: var(--text-xl);
+  }
+
+  .apply-aside__card ul,
+  .apply-aside__card ol {
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
 
-  .apply-note p {
-    margin: 0;
+  .apply-fallback {
+    margin-top: 1.5rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
   }
 
   @media (min-width: 900px) {
     .apply-layout {
-      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.5fr);
     }
   }
 </style>
