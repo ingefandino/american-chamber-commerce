@@ -1,0 +1,138 @@
+---
+import { Image } from "astro:assets";
+import logo from "@assets/webp/logo-acc.png";
+import "@styles/header.css";
+import LanguageSwitcher from "@components/shared/LanguageSwitcher.astro";
+import { HEADER_UI } from "@data/navigationLabels.en";
+import { MAIN_NAV, PRIMARY_CTA } from "@data/navigation";
+import { type Lang } from "@lib/lang";
+import { localizedHref, matchRoute, type RouteKey } from "@lib/routes";
+
+interface Props {
+  lang: Lang;
+  pathname: string;
+}
+
+const { lang, pathname } = Astro.props;
+const text = HEADER_UI[lang];
+const current = matchRoute(pathname)?.key;
+
+const sectionOf = (key: RouteKey): RouteKey => {
+  if (key === "mission" || key === "leadership" || key === "governance") {
+    return "about";
+  }
+  if (key === "benefits" || key === "plans" || key === "apply") {
+    return "membership";
+  }
+  if (key === "sponsorship" || key === "partners") {
+    return "partners";
+  }
+  return key;
+};
+
+const activeSection = current ? sectionOf(current) : null;
+const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
+---
+
+<header class="site-header" data-site-header>
+  <div class="container site-header__inner">
+    <a
+      class="site-header__logo"
+      href={localizedHref("home", lang)}
+      aria-label={text.home}
+    >
+      <Image
+        src={logo}
+        alt={text.logoAlt}
+        height={48}
+        widths={[160, 240, 320]}
+        sizes="(max-width: 640px) 160px, 240px"
+        loading="eager"
+      />
+    </a>
+
+    <nav class="site-header__nav" aria-label={text.primaryNav}>
+      <ul>
+        {
+          MAIN_NAV.map((item) => {
+            const isActive = activeSection === sectionOf(item.key);
+            return (
+              <li>
+                <a
+                  href={localizedHref(item.key, lang)}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {item.labels[lang]}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <LanguageSwitcher lang={lang} pathname={pathname} />
+      <a class="btn btn--primary site-header__cta" href={ctaHref}>
+        {PRIMARY_CTA.labels[lang]}
+      </a>
+    </div>
+
+    <details class="site-header__mobile" data-mobile-menu>
+      <summary aria-label={text.openMenu}>
+        <span class="site-header__menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </summary>
+      <div class="site-header__mobile-panel">
+        <nav aria-label={text.mobileNav}>
+          <ul>
+            {
+              MAIN_NAV.map((item) => {
+                const isActive = activeSection === sectionOf(item.key);
+                return (
+                  <li>
+                    <a
+                      href={localizedHref(item.key, lang)}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      {item.labels[lang]}
+                    </a>
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </nav>
+        <div class="site-header__mobile-actions">
+          <LanguageSwitcher lang={lang} pathname={pathname} />
+          <a class="btn btn--primary" href={ctaHref}>
+            {PRIMARY_CTA.labels[lang]}
+          </a>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>
+
+<script>
+  const menus = document.querySelectorAll<HTMLDetailsElement>(
+    "[data-mobile-menu]",
+  );
+
+  menus.forEach((menu) => {
+    menu.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !menu.open) return;
+      menu.open = false;
+      menu.querySelector<HTMLElement>("summary")?.focus();
+    });
+
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.open = false;
+      });
+    });
+  });
+</script>

@@ -1,6 +1,7 @@
 ---
 import "@styles/global.css";
 import Seo from "@components/shared/Seo.astro";
+import Header from "@components/shared/Header.astro";
 import { htmlLang, type Lang } from "@lib/lang";
 
 interface Props {
@@ -49,7 +50,7 @@ const themeColor = "#0b2545";
   </head>
   <body>
     <a class="skip-link" href="#main">{skipLabel}</a>
-    <slot name="header" />
+    <Header lang={lang} pathname={pathname} />
     <main id="main" tabindex="-1">
       <slot />
     </main>
