@@ -397,7 +397,7 @@ Como visitante, quiero contactar rápidamente a la cámara por WhatsApp desde cu
 
 ### ACC-025 — Añadir botón para volver al inicio
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-008, ACC-021
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-008, ACC-021
 
 Como visitante, quiero volver rápidamente al inicio de la página después de hacer scroll.
 

@@ -4,6 +4,7 @@ import Seo from "@components/shared/Seo.astro";
 import Header from "@components/shared/Header.astro";
 import Footer from "@components/shared/Footer.astro";
 import WhatsAppButton from "@components/shared/WhatsAppButton.astro";
+import BackToTop from "@components/shared/BackToTop.astro";
 import Breadcrumbs from "@components/shared/Breadcrumbs.astro";
 import { htmlLang, type Lang } from "@lib/lang";
 import { buildBreadcrumbs } from "@lib/breadcrumbs";
@@ -73,6 +74,7 @@ const themeColor = "#0b2545";
     </main>
     <Footer lang={lang} pathname={pathname} availableLangs={availableLangs} />
     <WhatsAppButton lang={lang} />
+    <BackToTop lang={lang} />
     <slot name="footer" />
     <script>
       import { initReveal } from "@scripts/reveal";

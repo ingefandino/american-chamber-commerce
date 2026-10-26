@@ -80,6 +80,12 @@ for (const item of cases) {
       `${item.route}: WhatsApp rel`,
     );
   }
+  const backToTop = document.querySelector("[data-back-to-top]");
+  check(backToTop, `${item.route}: back-to-top button`);
+  if (backToTop) {
+    check(backToTop.hasAttribute("hidden"), `${item.route}: back-to-top starts hidden`);
+    check(backToTop.getAttribute("aria-label"), `${item.route}: back-to-top label`);
+  }
 
   if (item.slider) {
     check(document.querySelector("[data-slider]"), `${item.route}: slider`);

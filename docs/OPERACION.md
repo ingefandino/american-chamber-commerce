@@ -47,6 +47,7 @@ Cada publicación debe registrar: autor, aprobador, fuente, fecha de revisión, 
 - No subas documentos privados por formularios en V1.
 - No registres payloads con datos personales en consola ni en analítica.
 - El botón de WhatsApp usa `https://wa.me/13473012169`; confirma el número con el owner y evita duplicarlo en otros componentes.
+- El botón de volver arriba aparece después de 480 px de scroll y devuelve el foco a `main`; respeta reduced motion.
 
 ## 5. Contenido sensible
 

@@ -173,6 +173,41 @@ try {
   );
   await page.emulateMedia({ reducedMotion: "no-preference" });
 
+  await page.goto(`${base}/en/`, { waitUntil: "domcontentloaded" });
+  const backToTop = page.locator("[data-back-to-top]");
+  check(await backToTop.count() === 1, "Back to top: button is missing");
+  check(
+    await backToTop.evaluate((element) => element.hasAttribute("hidden")),
+    "Back to top: visible before scrolling",
+  );
+  await page.evaluate(() => window.scrollTo(0, 1200));
+  await page.waitForTimeout(150);
+  check(
+    await backToTop.evaluate((element) => !element.hasAttribute("hidden")),
+    "Back to top: did not appear after scrolling",
+  );
+  await backToTop.click();
+  await page.waitForTimeout(650);
+  check(
+    (await page.evaluate(() => window.scrollY)) < 10,
+    "Back to top: did not return to the top",
+  );
+  check(
+    (await page.evaluate(() => document.activeElement?.id)) === "main",
+    "Back to top: did not move focus to main",
+  );
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.waitForTimeout(50);
+  const backToTopTransition = await backToTop.evaluate(
+    (element) => getComputedStyle(element).transitionDuration,
+  );
+  check(
+    Number.parseFloat(backToTopTransition) <= 0.001,
+    `Back to top: transition still active under reduced motion (${backToTopTransition})`,
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+
   const firstDot = await page.locator("[data-slider-dot]").first();
   check(
     (await firstDot.getAttribute("aria-selected")) === "true",

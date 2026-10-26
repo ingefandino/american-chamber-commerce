@@ -1,0 +1,126 @@
+---
+import { Image } from "astro:assets";
+import arrowTop from "@assets/icons/arrow_top.svg";
+import type { Lang } from "@lib/lang";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const label = lang === "es" ? "Volver al inicio" : "Back to top";
+---
+
+<button
+  class="back-to-top"
+  type="button"
+  data-back-to-top
+  aria-label={label}
+  hidden
+>
+  <Image
+    src={arrowTop}
+    alt=""
+    width={22}
+    height={22}
+    aria-hidden="true"
+    loading="eager"
+  />
+</button>
+
+<script>
+  import { scrollBehavior, shouldShowBackToTop } from "@lib/scroll";
+
+  const button = document.querySelector<HTMLButtonElement>(
+    "[data-back-to-top]",
+  );
+
+  if (button) {
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+    let ticking = false;
+
+    const update = () => {
+      button.hidden = !shouldShowBackToTop(window.scrollY);
+      ticking = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(update);
+      },
+      { passive: true },
+    );
+
+    button.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: scrollBehavior(reducedMotion.matches),
+      });
+      document.querySelector<HTMLElement>("main")?.focus({
+        preventScroll: true,
+      });
+    });
+
+    update();
+  }
+</script>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 68px);
+    z-index: 89;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-navy-800);
+    color: var(--color-white);
+    box-shadow: 0 8px 20px -10px rgb(7 26 48 / 0.6);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .back-to-top:hover,
+  .back-to-top:focus-visible {
+    background: var(--color-navy-700);
+    transform: translateY(-2px);
+  }
+
+  .back-to-top:focus-visible {
+    outline: 3px solid var(--color-gold-500);
+    outline-offset: 3px;
+  }
+
+  .back-to-top :global(img) {
+    width: 22px;
+    height: 22px;
+    filter: invert(1);
+  }
+
+  @media (max-width: 480px) {
+    .back-to-top {
+      right: max(0.85rem, env(safe-area-inset-right));
+      bottom: calc(max(0.85rem, env(safe-area-inset-bottom)) + 64px);
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top {
+      transition: none;
+    }
+  }
+</style>
