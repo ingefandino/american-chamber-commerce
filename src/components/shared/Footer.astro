@@ -40,7 +40,12 @@ const text = {
   },
 }[lang];
 
-const year = new Date().getFullYear();
+const copyrightStartYear = 2024;
+const currentYear = new Date().getFullYear();
+const copyrightYears =
+  currentYear > copyrightStartYear
+    ? `${copyrightStartYear}-${currentYear}`
+    : String(copyrightStartYear);
 ---
 
 <footer class="site-footer">
@@ -109,7 +114,7 @@ const year = new Date().getFullYear();
 
     <div class="site-footer__bottom">
       <p>
-        © {year} {SITE.name}. {text.rights}
+        © {copyrightYears} {SITE.name}. {text.rights}
       </p>
       <ul class="site-footer__legal" aria-label={text.legalLabel}>
         <li>

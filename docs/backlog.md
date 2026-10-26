@@ -338,13 +338,90 @@ Como responsable técnico, quiero publicar una versión estable y recuperable.
 - No hay errores críticos de accesibilidad ni scroll horizontal.
 - Se conserva la versión anterior y el rollback se prueba.
 
+### ACC-022 — Mostrar rango dinámico de copyright en el footer
+
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-020
+
+Como visitante, quiero ver el período de vigencia del sitio en el footer.
+
+**Alcance exclusivo:** mostrar `© 2024-{año actual}` en inglés y español. No modificar navegación, contacto ni textos legales.
+
+**TDD / aceptación:**
+
+- La prueba verifica que el footer muestra `© 2024-` seguido del año actual.
+- El año se calcula dinámicamente y no queda fijado manualmente en el HTML.
+- Si el año actual es 2024, se muestra `© 2024` sin repetir el año.
+- El cambio funciona en ambas versiones de idioma.
+- La historia queda lista para `Done` después de ejecutar tests y build.
+
+### ACC-023 — Implementar SEO completo y previews sociales
+
+**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-005, ACC-010
+
+Como propietario del sitio, quiero que cada página sea correctamente indexable y compartible para que los buscadores y redes sociales muestren información completa, imágenes y enlaces correctos.
+
+**Alcance exclusivo:** SEO técnico, metadata social y datos estructurados. No modificar el contenido editorial ni la identidad visual aprobada.
+
+**Aceptación:**
+
+- Cada página tiene `title`, `description`, `canonical`, idioma y URL absoluta únicos.
+- Cada página tiene Open Graph completo: `og:title`, `og:description`, `og:url`, `og:type`, `og:site_name`, `og:locale` y `og:image`.
+- La imagen social se visualiza correctamente al compartir el enlace por WhatsApp, Facebook, LinkedIn y otras plataformas, incluyendo logo o imagen aprobada, dimensiones y `og:image:alt`.
+- Se incluyen metadatos de Twitter/X con `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image` y texto alternativo cuando corresponda.
+- Se generan `hreflang` para inglés, español y `x-default` únicamente cuando la ruta traducida existe.
+- Se implementan `sitemap.xml`, `robots.txt`, favicon, manifest y exclusión de staging/404 de indexación.
+- Se agregan datos estructurados JSON-LD válidos para la organización, sitio web, breadcrumbs, eventos y páginas aplicables, sin inventar datos.
+- Las imágenes relevantes tienen `alt`, URL absoluta para compartir y formato/tamaño apropiado para previews sociales.
+- Se agregan pruebas automatizadas para metadata, rutas, imágenes sociales, JSON-LD y exclusiones de indexación.
+- Se valida el resultado con build, smoke tests y herramientas de preview social antes de marcar la tarea como `Done`.
+
+### ACC-024 — Añadir botón flotante de WhatsApp
+
+**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-006, ACC-021
+
+Como visitante, quiero contactar rápidamente a la cámara por WhatsApp desde cualquier página.
+
+**Alcance exclusivo:** botón flotante fijo en la esquina inferior derecha, enlazado al número oficial `+1 (347) 301-2169`, con animación visual de ondas expansivas que se desvanecen progresivamente. No modificar formularios ni el contenido del footer.
+
+**Aceptación:**
+
+- El botón usa el enlace oficial `https://wa.me/13473012169`.
+- El enlace funciona en desktop y mobile, abre WhatsApp de forma segura y tiene `rel="noopener noreferrer"` cuando corresponda.
+- El botón tiene nombre accesible, foco visible y tamaño táctil adecuado.
+- La animación muestra ondas concéntricas tipo piedra sobre el agua, se desvanece sin bloquear la interacción y no genera scroll horizontal.
+- La animación se desactiva cuando el usuario solicita `prefers-reduced-motion: reduce`.
+- El botón mantiene contraste suficiente sobre fondos claros y oscuros.
+- Se valida que no cubra controles críticos en móvil, formularios ni el botón de volver arriba.
+- Se agregan pruebas del número, enlace, accesibilidad y estado reduced motion.
+- La historia queda lista para `Done` después de ejecutar tests, build y smoke test responsive.
+
+### ACC-025 — Añadir botón para volver al inicio
+
+**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-008, ACC-021
+
+Como visitante, quiero volver rápidamente al inicio de la página después de hacer scroll.
+
+**Alcance exclusivo:** botón flotante de volver arriba usando el icono existente `/Users/jf/efa/american-chamber-commerce/src/assets/icons/arrow_top.svg`. No modificar el botón de WhatsApp ni la navegación principal.
+
+**Aceptación:**
+
+- El botón aparece únicamente después de superar un umbral razonable de scroll.
+- Al activarlo, devuelve el foco y la vista al inicio de la página.
+- Tiene nombre accesible, foco visible y funciona con teclado.
+- Usa el icono `arrow_top.svg` con texto alternativo o etiqueta accesible correcta.
+- El desplazamiento suave respeta `prefers-reduced-motion: reduce`.
+- No genera scroll horizontal ni cubre el botón de WhatsApp, formularios u otros controles críticos.
+- Se valida en móvil y escritorio.
+- Se agregan pruebas del umbral, activación, accesibilidad y reduced motion.
+- La historia queda lista para `Done` después de ejecutar tests, build y smoke test responsive.
+
 ## Orden recomendado
 
 1. ACC-001 a ACC-005: base, pruebas e idiomas.
 2. ACC-006 a ACC-010: navegación, animaciones, slider y home.
 3. ACC-011 a ACC-013: membresías y primer formulario real.
 4. ACC-014 a ACC-020: capacidades editoriales y de comunidad, una por una.
-5. ACC-021: endurecimiento y publicación.
+5. ACC-021 a ACC-025: endurecimiento, SEO, accesos rápidos, detalles finales y publicación.
 
 ## Regla de rollback
 
