@@ -106,3 +106,13 @@ Presupuestos actuales (ver `scripts/check-budgets.mjs`):
 - No dependas de `robots.txt` para ocultar staging.
 - Prueba el rollback en staging antes del cutover.
 - Documenta la fecha y el responsable de cada backup.
+
+## 10. Navegación multidioma y scroll
+
+- El selector de idioma guarda en `sessionStorage` la posición relativa de lectura antes de navegar y la restaura en la página equivalente.
+- La restauración se basa en la proporción del documento, no en píxeles absolutos, para tolerar diferencias de alto entre traducciones.
+- El registro expira a los 60 segundos y solo se aplica si la ruta de destino coincide; si la página equivalente no existe o no se puede restaurar, se abre desde el inicio.
+- La restauración es instantánea y respeta `prefers-reduced-motion`. No se fuerza desplazamiento animado.
+- El foco vuelve al selector equivalente (header o footer) con `preventScroll`, sin alterar la posición restaurada.
+- Sin JavaScript, el enlace de idioma sigue funcionando y abre la página desde el inicio.
+- El comportamiento se cubre con pruebas unitarias y con `pnpm smoke:visual` desde la parte superior, el punto medio y el footer en ambos idiomas.

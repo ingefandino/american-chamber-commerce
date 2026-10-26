@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import LanguageSwitcher from "@components/shared/LanguageSwitcher.astro";
 
@@ -16,6 +17,7 @@ describe("LanguageSwitcher", () => {
     expect(html).toContain('hreflang="es"');
     expect(html).toContain('aria-label="View this page in Spanish"');
     expect(html).toContain('aria-current="page"');
+    expect(html).toContain('data-placement="header"');
   });
 
   it("does not render when the translation is not published", async () => {
@@ -28,6 +30,29 @@ describe("LanguageSwitcher", () => {
     const html = await render("es", "/es/membership/plans/");
     expect(html).toContain('href="/en/membership/plans/"');
     expect(html).toContain('aria-label="Ver esta página en inglés"');
+  });
+
+  it("labels the switcher placement for scroll restoration", async () => {
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(LanguageSwitcher, {
+      props: {
+        lang: "en",
+        pathname: "/en/",
+        placement: "footer",
+      },
+    });
+    expect(html).toContain('data-placement="footer"');
+  });
+
+  it("stores the scroll position before navigating", () => {
+    const source = readFileSync(
+      new URL("../../src/components/shared/LanguageSwitcher.astro", import.meta.url),
+      "utf8",
+    );
+    expect(source).toContain("createLanguageScrollRecord");
+    expect(source).toContain("sessionStorage.setItem");
+    expect(source).toContain("event.metaKey");
+    expect(source).toContain("event.ctrlKey");
   });
 
   it("hides the switch when the target language is not available", async () => {

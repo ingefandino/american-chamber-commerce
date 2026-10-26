@@ -6,9 +6,15 @@ interface Props {
   lang: Lang;
   pathname: string;
   availableLangs?: Lang[];
+  placement?: string;
 }
 
-const { lang, pathname, availableLangs = ["en", "es"] } = Astro.props;
+const {
+  lang,
+  pathname,
+  availableLangs = ["en", "es"],
+  placement = "header",
+} = Astro.props;
 
 const otherLang: Lang = lang === "en" ? "es" : "en";
 const targetHref = availableLangs.includes(otherLang)
@@ -59,6 +65,7 @@ const text = labels[lang];
         lang={otherLang}
         aria-label={text.switchTo}
         data-language-switch={otherLang}
+        data-placement={placement}
       >
         {text.otherShort}
       </a>
@@ -114,15 +121,45 @@ const text = labels[lang];
 
 <script>
   import { LANG_COOKIE, LANG_COOKIE_MAX_AGE } from "@lib/lang";
+  import {
+    createLanguageScrollRecord,
+    LANGUAGE_SCROLL_KEY,
+  } from "@lib/scrollRestoration";
 
   document
     .querySelectorAll<HTMLAnchorElement>("[data-language-switch]")
     .forEach((link) => {
-      link.addEventListener("click", () => {
+      link.addEventListener("click", (event) => {
         const lang = link.dataset.languageSwitch;
         if (!lang) return;
+
         const secure = location.protocol === "https:" ? "; Secure" : "";
         document.cookie = `${LANG_COOKIE}=${lang}; Max-Age=${LANG_COOKIE_MAX_AGE}; Path=/; SameSite=Lax${secure}`;
+
+        if (
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) {
+          return;
+        }
+
+        try {
+          const target = new URL(link.href, location.href);
+          const record = createLanguageScrollRecord({
+            from: `${location.pathname}${location.search}${location.hash}`,
+            target: `${target.pathname}${target.search}${target.hash}`,
+            scrollY: window.scrollY,
+            scrollHeight: document.documentElement.scrollHeight,
+            viewportHeight: window.innerHeight,
+            placement: link.dataset.placement ?? "header",
+          });
+          sessionStorage.setItem(LANGUAGE_SCROLL_KEY, JSON.stringify(record));
+        } catch {
+          // Storage can be unavailable (for example in private mode).
+        }
       });
     });
 </script>

@@ -73,7 +73,12 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
     </nav>
 
     <div class="site-header__actions">
-      <LanguageSwitcher lang={lang} pathname={pathname} availableLangs={availableLangs} />
+      <LanguageSwitcher
+        lang={lang}
+        pathname={pathname}
+        availableLangs={availableLangs}
+        placement="header-desktop"
+      />
       <a class="btn btn--primary site-header__cta" href={ctaHref}>
         {PRIMARY_CTA.labels[lang]}
       </a>
@@ -108,7 +113,12 @@ const ctaHref = localizedHref(PRIMARY_CTA.key, lang);
           </ul>
         </nav>
         <div class="site-header__mobile-actions">
-          <LanguageSwitcher lang={lang} pathname={pathname} availableLangs={availableLangs} />
+          <LanguageSwitcher
+            lang={lang}
+            pathname={pathname}
+            availableLangs={availableLangs}
+            placement="header-mobile"
+          />
           <a class="btn btn--primary" href={ctaHref}>
             {PRIMARY_CTA.labels[lang]}
           </a>

@@ -36,4 +36,12 @@ describe("BaseLayout", () => {
     expect(html).toContain('name="description"');
     expect(html).toContain('name="viewport"');
   });
+
+  it("bootstraps language scroll restoration without animated scrolling", async () => {
+    const html = await render("en", "<h1>Hello</h1>");
+    expect(html).toContain('"acc:language-scroll"');
+    expect(html).toContain("astro:page-load");
+    expect(html).toContain('scrollBehavior = "auto"');
+    expect(html).toContain("preventScroll: true");
+  });
 });

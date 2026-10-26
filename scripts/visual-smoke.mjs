@@ -282,12 +282,108 @@ try {
     "contact form: data was cleared after failure",
   );
 
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${base}/en/`, { waitUntil: "domcontentloaded" });
-  await page.locator('.site-footer a[data-language-switch="es"]').click();
-  await page.waitForURL("**/es/");
+
+  const scrollState = () =>
+    page.evaluate(() => {
+      const max = Math.max(
+        0,
+        document.documentElement.scrollHeight - window.innerHeight,
+      );
+      return {
+        y: window.scrollY,
+        ratio: max > 0 ? window.scrollY / max : 0,
+        lang: document.documentElement.lang,
+        activePlacement:
+          document.activeElement?.getAttribute("data-placement") ?? null,
+        activeSwitch: document.activeElement?.hasAttribute(
+          "data-language-switch",
+        ),
+      };
+    });
+
+  const scrollToRatio = async (ratio) => {
+    await page.evaluate((value) => {
+      const max = Math.max(
+        0,
+        document.documentElement.scrollHeight - window.innerHeight,
+      );
+      window.scrollTo({ top: max * value, left: 0, behavior: "instant" });
+    }, ratio);
+    await page.waitForTimeout(100);
+  };
+
+  const languageLink = (placement) =>
+    page
+      .locator(
+        `.language-switcher [data-language-switch][data-placement="${placement}"]`,
+      )
+      .first();
+
+  const keyboardSwitch = async (placement, url) => {
+    await languageLink(placement).evaluate((element) =>
+      element.focus({ preventScroll: true }),
+    );
+    await page.keyboard.press("Enter");
+    await page.waitForURL(url);
+    await page.waitForTimeout(150);
+  };
+
+  const clickSwitch = async (placement, url) => {
+    await languageLink(placement).click();
+    await page.waitForURL(url);
+    await page.waitForTimeout(150);
+  };
+
+  await keyboardSwitch("header-desktop", "**/es/");
+  let state = await scrollState();
+  check(state.lang === "es-US", "language switch: document language did not change");
   check(
-    (await page.evaluate(() => document.documentElement.lang)) === "es-US",
-    "language switch: document language did not change",
+    state.ratio <= 0.02,
+    `language switch: top position was not preserved (${state.ratio})`,
+  );
+
+  await keyboardSwitch("header-desktop", "**/en/");
+  state = await scrollState();
+  check(
+    state.ratio <= 0.02,
+    `language switch: top position was not preserved in English (${state.ratio})`,
+  );
+
+  await page.goto(`${base}/en/about/`, { waitUntil: "domcontentloaded" });
+  await scrollToRatio(0.45);
+  const midpoint = await scrollState();
+  await keyboardSwitch("header-desktop", "**/es/about/");
+  state = await scrollState();
+  check(
+    Math.abs(state.ratio - midpoint.ratio) <= 0.06,
+    `language switch: midpoint was not preserved (${midpoint.ratio} -> ${state.ratio})`,
+  );
+  check(
+    state.activeSwitch && state.activePlacement === "header-desktop",
+    "language switch: focus did not return to the activated control",
+  );
+
+  await scrollToRatio(0.6);
+  const spanishMidpoint = await scrollState();
+  await keyboardSwitch("header-desktop", "**/en/about/");
+  state = await scrollState();
+  check(
+    Math.abs(state.ratio - spanishMidpoint.ratio) <= 0.06,
+    `language switch: Spanish midpoint was not preserved (${spanishMidpoint.ratio} -> ${state.ratio})`,
+  );
+
+  await scrollToRatio(1);
+  await clickSwitch("footer", "**/es/about/");
+  state = await scrollState();
+  check(
+    state.ratio >= 0.9,
+    `language switch: footer position was not preserved (${state.ratio})`,
+  );
+  check(
+    state.activeSwitch && state.activePlacement === "footer",
+    "language switch: footer control did not regain focus",
   );
 
   await page.goto(`${base}/es/does-not-exist`, { waitUntil: "domcontentloaded" });
@@ -311,4 +407,6 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("✓ Visual smoke passed: overflow, slider, forms, language, and 404.");
+console.log(
+  "✓ Visual smoke passed: overflow, slider, forms, language scroll, and 404.",
+);

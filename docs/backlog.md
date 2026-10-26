@@ -436,7 +436,7 @@ Como visitante, quiero identificar la web de American Chamber en la pestaña y f
 
 ### ACC-027 — Preservar la posición de scroll al cambiar de idioma
 
-**Prioridad:** P0 · **Estado:** pendiente · **Dependencias:** ACC-004, ACC-006
+**Prioridad:** P0 · **Estado:** completado · **Dependencias:** ACC-004, ACC-006
 
 Como visitante, quiero conservar mi posición de lectura cuando cambio entre inglés y español.
 
