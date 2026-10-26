@@ -1,0 +1,153 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  ACCESS_LABELS,
+  getPublishedServices,
+  getServiceBySlug,
+} from "@data/services";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+import { localizedHref } from "@lib/routes";
+
+export function getStaticPaths() {
+  const services = getPublishedServices();
+  return ["en", "es"].flatMap((lang) =>
+    services.map((service) => ({
+      params: { lang, slug: service.slug },
+    })),
+  );
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+const slug = String(params.slug ?? "");
+const service = getServiceBySlug(slug);
+
+if (!service) {
+  return Astro.redirect(`/${lang}/services/`, 302);
+}
+
+const copy = {
+  en: {
+    back: "All services",
+    audience: "Who it is for",
+    access: "Access",
+    cta: "Request information",
+    reviewNote:
+      "This service description is under editorial review. Confirm availability, fees, and deliverables with the Chamber before making a decision.",
+  },
+  es: {
+    back: "Todos los servicios",
+    audience: "Para quién es",
+    access: "Acceso",
+    cta: "Solicitar información",
+    reviewNote:
+      "La descripción de este servicio está en revisión editorial. Confirma disponibilidad, costos y entregables con la Cámara antes de tomar una decisión.",
+  },
+} as const;
+
+const text = copy[lang];
+const pathname = `/${lang}/services/${service.slug}/`;
+const mailto = `${SITE.contact.emailHref}?subject=${encodeURIComponent(
+  `${lang === "es" ? "Consulta de servicio" : "Service inquiry"}: ${service.name[lang]}`,
+)}`;
+---
+
+<BaseLayout
+  lang={lang}
+  title={service.name[lang]}
+  description={service.summary[lang]}
+  pathname={pathname}
+>
+  <section class="section">
+    <div class="container service-detail">
+      <div>
+        <a class="service-back" href={localizedHref("services", lang)}>
+          <span aria-hidden="true">←</span> {text.back}
+        </a>
+        <p class="eyebrow">{ACCESS_LABELS[service.access][lang]}</p>
+        <h1>{service.name[lang]}</h1>
+        <p class="lead">{service.summary[lang]}</p>
+
+        <div class="prose service-prose">
+          <p>{service.description[lang]}</p>
+        </div>
+
+        {service.editorialStatus === "needs-review" && (
+          <p class="callout service-review">{text.reviewNote}</p>
+        )}
+
+        <a class="btn btn--primary" href={mailto}>{text.cta}</a>
+      </div>
+
+      <aside class="service-aside card">
+        <h2>{text.audience}</h2>
+        <p>{service.audience[lang]}</p>
+        <h2>{text.access}</h2>
+        <p>{ACCESS_LABELS[service.access][lang]}</p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service-detail {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .service-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-navy-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .service-back:hover,
+  .service-back:focus-visible {
+    color: var(--color-gold-600);
+  }
+
+  .service-prose {
+    margin-bottom: 1.5rem;
+  }
+
+  .service-review {
+    margin: 0 0 1.5rem;
+    font-size: var(--text-sm);
+  }
+
+  .service-aside {
+    padding: 1.75rem;
+  }
+
+  .service-aside h2 {
+    margin-top: 1.25rem;
+    font-size: var(--text-base);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-gold-600);
+  }
+
+  .service-aside h2:first-child {
+    margin-top: 0;
+  }
+
+  .service-aside p {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (min-width: 900px) {
+    .service-detail {
+      grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.5fr);
+    }
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ServiceCard from "@components/services/ServiceCard.astro";
+import { getPublishedServices } from "@data/services";
+import { SITE } from "@data/site";
+import { isLang, type Lang } from "@lib/lang";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const params = Astro.params;
+const lang: Lang = isLang(params.lang) ? params.lang : "en";
+const services = getPublishedServices();
+
+const copy = {
+  en: {
+    title: "Services",
+    eyebrow: "Services",
+    heading: "Practical support for companies doing business across borders",
+    lead: "Explore the services the Chamber can help coordinate. Each engagement is scoped in advance, and fees or membership access are confirmed before work begins.",
+    cta: "Ask about a service",
+    note: "Service availability, fees, and deliverables are confirmed directly with the Chamber. Nothing on this page is a guarantee of a commercial result.",
+  },
+  es: {
+    title: "Servicios",
+    eyebrow: "Servicios",
+    heading: "Apoyo práctico para empresas que hacen negocios entre mercados",
+    lead: "Explora los servicios que la Cámara puede ayudar a coordinar. Cada servicio se define con anticipación, y los costos o el acceso según membresía se confirman antes de comenzar.",
+    cta: "Consultar por un servicio",
+    note: "La disponibilidad, los costos y los entregables se confirman directamente con la Cámara. Nada en esta página constituye una garantía de resultado comercial.",
+  },
+} as const;
+
+const text = copy[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.lead}
+  pathname={`/${lang}/services/`}
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">{text.eyebrow}</p>
+      <h1>{text.heading}</h1>
+      <p class="lead">{text.lead}</p>
+
+      <ul class="services-grid">
+        {
+          services.map((service) => (
+            <li>
+              <ServiceCard service={service} lang={lang} />
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="services-actions">
+        <a class="btn btn--primary" href={SITE.contact.emailHref}>
+          {text.cta}
+        </a>
+      </div>
+      <p class="services-note">{text.note}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.25rem;
+    margin: 2.5rem 0 2rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .services-grid > li {
+    display: flex;
+    margin: 0;
+  }
+
+  .services-grid :global(.service-card) {
+    width: 100%;
+  }
+
+  .services-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .services-note {
+    max-width: 72ch;
+    margin: 1.5rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+</style>
