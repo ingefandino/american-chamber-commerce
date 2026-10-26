@@ -39,8 +39,9 @@ Fuente: proyecto local (`src/data/site.ts`).
 - Teléfono: `+1 (904) 397-3437`
 - Dirección: `753 East Tremont, Bronx, New York 10457, USA`
 - Dirección secundaria: `111 E Monument Ave Ste 327, Bronx, New York, USA`
+- WhatsApp: `+1 (347) 301-2169` (`https://wa.me/13473012169`), según ACC-024.
 
-El sitio WordPress muestra un teléfono y un `mailto` distintos. **Debe confirmarse el dato oficial antes de producción.** Mientras no se confirme, este contenido queda `needs-review`.
+El sitio WordPress muestra un teléfono y un `mailto` distintos. **Debe confirmarse el dato oficial antes de producción.** Mientras no se confirme, este contenido queda `needs-review`. El número de WhatsApp se toma del requisito ACC-024 y también requiere confirmación del owner.
 
 ## 4. Assets
 

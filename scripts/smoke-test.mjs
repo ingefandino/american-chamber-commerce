@@ -68,6 +68,18 @@ for (const item of cases) {
     document.querySelector('link[rel="canonical"]'),
     `${item.route}: canonical`,
   );
+  const whatsapp = document.querySelector("[data-whatsapp]");
+  check(whatsapp, `${item.route}: WhatsApp button`);
+  if (whatsapp) {
+    check(
+      whatsapp.getAttribute("href")?.startsWith("https://wa.me/13473012169"),
+      `${item.route}: WhatsApp official number`,
+    );
+    check(
+      whatsapp.getAttribute("rel") === "noopener noreferrer",
+      `${item.route}: WhatsApp rel`,
+    );
+  }
 
   if (item.slider) {
     check(document.querySelector("[data-slider]"), `${item.route}: slider`);

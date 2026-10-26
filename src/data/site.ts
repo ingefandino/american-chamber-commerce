@@ -51,6 +51,15 @@ export const SITE = {
     postalCode: "10457",
     timezone: "America/New_York",
   },
+  whatsapp: {
+    number: "13473012169",
+    display: "+1 (347) 301-2169",
+    href: "https://wa.me/13473012169",
+    message: {
+      en: "Hello, I would like information about the American Chamber of Commerce.",
+      es: "Hola, deseo información sobre American Chamber of Commerce.",
+    },
+  },
   social: {
     facebook: "https://facebook.com/americanchamberofcommerce",
     linkedin: "https://linkedin.com/company/americanchamberofcommerce",
@@ -69,6 +78,12 @@ export const SITE = {
   vision: Record<Lang, string>;
   values: Record<Lang, string[]>;
   contact: Record<string, string>;
+  whatsapp: {
+    number: string;
+    display: string;
+    href: string;
+    message: Record<Lang, string>;
+  };
   social: Record<string, string>;
   reviewStatus: "needs-review";
 };

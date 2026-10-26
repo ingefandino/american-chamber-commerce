@@ -377,7 +377,7 @@ Como propietario del sitio, quiero que cada página sea correctamente indexable 
 
 ### ACC-024 — Añadir botón flotante de WhatsApp
 
-**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-006, ACC-021
+**Prioridad:** P1 · **Estado:** completado · **Dependencias:** ACC-006, ACC-021
 
 Como visitante, quiero contactar rápidamente a la cámara por WhatsApp desde cualquier página.
 
@@ -415,13 +415,32 @@ Como visitante, quiero volver rápidamente al inicio de la página después de h
 - Se agregan pruebas del umbral, activación, accesibilidad y reduced motion.
 - La historia queda lista para `Done` después de ejecutar tests, build y smoke test responsive.
 
+### ACC-026 — Agregar favicon institucional
+
+**Prioridad:** P1 · **Estado:** pendiente · **Dependencias:** ACC-002, ACC-005
+
+Como visitante, quiero identificar la web de American Chamber en la pestaña y favoritos del navegador.
+
+**Alcance exclusivo:** agregar el favicon institucional aprobado y conectarlo al layout base. No modificar el logo del header, el logo social ni la identidad visual.
+
+**Aceptación:**
+
+- El favicon utiliza un asset institucional aprobado.
+- Se configura mediante `<link rel="icon">` en el layout base.
+- Se incluye formato compatible con navegadores modernos y fallback `.ico` cuando corresponda.
+- Se agrega `apple-touch-icon` si existe un asset aprobado para dispositivos Apple.
+- La referencia funciona desde las rutas `/en/`, `/es/`, 404 y páginas internas.
+- No se publican rutas rotas ni assets inexistentes.
+- Se agrega una prueba o smoke test que verifique la referencia del favicon.
+- La historia queda lista para `Done` después de ejecutar tests y build.
+
 ## Orden recomendado
 
 1. ACC-001 a ACC-005: base, pruebas e idiomas.
 2. ACC-006 a ACC-010: navegación, animaciones, slider y home.
 3. ACC-011 a ACC-013: membresías y primer formulario real.
 4. ACC-014 a ACC-020: capacidades editoriales y de comunidad, una por una.
-5. ACC-021 a ACC-025: endurecimiento, SEO, accesos rápidos, detalles finales y publicación.
+5. ACC-021 a ACC-026: endurecimiento, SEO, accesos rápidos, identidad y publicación.
 
 ## Regla de rollback
 

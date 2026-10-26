@@ -147,6 +147,32 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${base}/en/`, { waitUntil: "domcontentloaded" });
 
+  const whatsapp = page.locator("[data-whatsapp]");
+  check(await whatsapp.count() === 1, "WhatsApp: button is missing");
+  const whatsappBox = await whatsapp.boundingBox();
+  check(
+    Boolean(whatsappBox && whatsappBox.width >= 44 && whatsappBox.height >= 44),
+    "WhatsApp: touch target is smaller than 44px",
+  );
+  check(
+    (await whatsapp.getAttribute("href"))?.startsWith(
+      "https://wa.me/13473012169",
+    ),
+    "WhatsApp: official number is not used",
+  );
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.waitForTimeout(50);
+  const waveAnimation = await page
+    .locator(".whatsapp-button__wave")
+    .first()
+    .evaluate((element) => getComputedStyle(element).animationName);
+  check(
+    waveAnimation === "none",
+    `WhatsApp: ripple still animates under reduced motion (${waveAnimation})`,
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+
   const firstDot = await page.locator("[data-slider-dot]").first();
   check(
     (await firstDot.getAttribute("aria-selected")) === "true",

@@ -46,6 +46,7 @@ Cada publicación debe registrar: autor, aprobador, fuente, fecha de revisión, 
 - Rota la access key si hay spam o exposición.
 - No subas documentos privados por formularios en V1.
 - No registres payloads con datos personales en consola ni en analítica.
+- El botón de WhatsApp usa `https://wa.me/13473012169`; confirma el número con el owner y evita duplicarlo en otros componentes.
 
 ## 5. Contenido sensible
 
